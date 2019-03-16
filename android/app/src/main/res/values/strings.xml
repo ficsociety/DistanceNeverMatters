@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">DistanceNeverMatters</string>
+    <string name="title_activity_main_screen">MainScreenActivity</string>
+    <string name="all">Todas</string>
+    <string name="master">Master</string>
+    <string name="player">Jugador</string>
+    <string name="start">Inicio</string>
+    <string name="game_name_placeholder">Nombre de la partida</string>
+    <string name="game_description_placeholder">Descripción de la partida</string>
 </resources>
