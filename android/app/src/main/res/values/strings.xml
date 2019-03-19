@@ -7,4 +7,8 @@
     <string name="start">Inicio</string>
     <string name="game_name_placeholder">Nombre de la partida</string>
     <string name="game_description_placeholder">Descripción de la partida</string>
+    <string name="name">Nombre</string>
+    <string name="maps">Mapas</string>
+    <string name="create">Crear</string>
+    <string name="markers_models">Marcadores - Modelos</string>
 </resources>
