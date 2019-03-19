@@ -13,6 +13,10 @@
             android:name=".MainScreenActivity"
             android:label="@string/title_activity_main_screen"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".CreateGameActivity"
+            android:label="@string/create_game_title"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
