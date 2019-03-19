@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <EditText
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:id = "@+id/editTextUser"
+        android:hint = "Introduce usuario"
+        android:ems="15"
+        android:focusable = "true"
+        android:textColorHighlight = "#ff7eff15"
+        android:textColorHint = "#6E6E6E"
+        android:layout_marginTop = "20pt"
+        android:layout_gravity="center_horizontal" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/password"
+        android:ems="15"
+        android:id="@+id/editTextPassword"
+        android:layout_marginTop = "20pt"
+        android:textColorHint="#6E6E6E"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="230dp"
+        android:layout_height="53dp"
+        android:text="iniciar sesión"
+        android:id="@+id/login"
+        android:layout_marginTop = "30pt"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_horizontal" />
+
+
+    <Button
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="230dp"
+        android:layout_height="53dp"
+        android:text="Registrarse"
+        android:id="@+id/register"
+        android:layout_gravity="center_horizontal" />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/login_google"
+        android:layout_width="230dp"
+        android:layout_height="53dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop = "20pt"/>
+
+    <!--com.facebook.login.widget.LoginButton
+        android:id="@+id/login_facebook"
+        android:layout_width="230dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"/>
+
+    <com.twitter.sdk.android.core.identity.TwitterLoginButton
+        android:id="@+id/login_twitter"
+        android:layout_width="230dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"/-->
+
+</LinearLayout>
+
