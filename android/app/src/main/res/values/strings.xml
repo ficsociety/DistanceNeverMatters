@@ -13,4 +13,5 @@
     <string name="markers_models">Marcadores - Modelos</string>
     <string name="create_game_title">Crear partida</string>
     <string name="password">Contraseña</string>
+    <string name="games">Partidas</string>
 </resources>
