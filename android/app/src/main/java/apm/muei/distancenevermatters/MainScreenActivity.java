@@ -98,11 +98,13 @@ public class MainScreenActivity extends AppCompatActivity {
                 status = (ImageView) itemView.findViewById(R.id.imageView);
 
                 // onClickListener for the game item
-                // TODO replace LoginActivity with EditGameActivity
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(MainScreenActivity.this, LoginActivity.class);
+                        CharSequence text = "Detalles partida";
+                        Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
+                        toast.show();
+                        Intent intent = new Intent(MainScreenActivity.this, GameDetailsActivity.class);
                         startActivity(intent);
                     }
                 });
