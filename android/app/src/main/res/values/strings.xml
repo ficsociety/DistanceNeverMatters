@@ -14,4 +14,5 @@
     <string name="create_game_title">Crear partida</string>
     <string name="password">Contraseña</string>
     <string name="games">Partidas</string>
+    <string name="register">Registro</string>
 </resources>

@@ -1,19 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".RegisterActivity">
 
-    <Button
-        android:id="@+id/button2"
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="140pt"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="120dp"
+        app:srcCompat="@drawable/logo"
+        android:layout_marginTop = "10pt"/>
+
+    <EditText
+        android:id="@+id/editTextUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="skipToMain"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</android.support.constraint.ConstraintLayout>
+        android:layout_gravity="center_horizontal"
+        android:ems="15"
+        android:focusable="true"
+        android:hint="Nombre de usuario"
+        android:textColorHighlight="#ff7eff15"
+        android:layout_marginTop = "15pt"
+        android:textColorHint="#6E6E6E"
+        />
+
+    <EditText
+        android:id="@+id/editTextRePass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:ems="15"
+        android:focusable="true"
+        android:hint="Correo electrónico"
+        android:textColorHighlight="#ff7eff15"
+        android:textColorHint="#6E6E6E"
+        android:layout_marginTop = "5pt" />
+
+    <EditText
+        android:id="@+id/editTextPass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:ems="15"
+        android:focusable="true"
+        android:hint="Contraseña"
+        android:inputType="textPassword"
+        android:textColorHighlight="#ff7eff15"
+        android:textColorHint="#6E6E6E"
+        android:layout_marginTop = "5pt" />
+
+    <EditText
+        android:id="@+id/editTextEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:ems="15"
+        android:focusable="true"
+        android:hint="Repetir Contraseña"
+        android:inputType="textPassword"
+        android:textColorHighlight="#ff7eff15"
+        android:textColorHint="#6E6E6E"
+        android:layout_marginTop = "5pt" />
+
+    <Button
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="230dp"
+        android:layout_height="50dp"
+        android:text="Registrarse"
+        android:id="@+id/register"
+        android:layout_marginTop = "30pt"
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>
