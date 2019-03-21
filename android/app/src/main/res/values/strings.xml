@@ -15,4 +15,14 @@
     <string name="password">Contraseña</string>
     <string name="games">Partidas</string>
     <string name="register">Registro</string>
+    <string name="details">Detalles</string>
+    <string name="invite">Invitar</string>
+    <string name="delete">Eliminar partida</string>
+    <string name="description">Descripción</string>
+    <string name="creationdate">Fecha de creación</string>
+    <string name="participate">Participantes</string>
+    <string name="descriptionshort">Breve descripción de la Partida cuántas líneas.</string>
+    <string name="date">01/01/2019</string>
+    <string name="player1">Jugador 1</string>
+    <string name="player2">Jugador 2</string>
 </resources>
