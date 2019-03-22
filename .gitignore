@@ -32,12 +32,10 @@ ExportedObj/
 sysinfo.txt
 
 # Builds
-*.apk
 *.unitypackage
 
 # Android
 # Built application files
-*.apk
 *.ap_
 *.aab
 
