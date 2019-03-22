@@ -20,8 +20,8 @@
     <string name="delete">Eliminar partida</string>
     <string name="description">Descripción</string>
     <string name="creationdate">Fecha de creación</string>
-    <string name="participate">Participantes</string>
-    <string name="descriptionshort">Breve descripción de la Partida cuántas líneas.</string>
+    <string name="participants">Participantes</string>
+    <string name="descriptionshort">Breve descripción de la Partida en unas cuantas líneas.</string>
     <string name="date">01/01/2019</string>
     <string name="player1">Jugador 1</string>
     <string name="player2">Jugador 2</string>
