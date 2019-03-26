@@ -11,7 +11,7 @@
 
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/appBarLayout"
+        android:id="@+id/regAppBar"
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
         android:theme="@style/AppTheme.AppBarOverlay"
@@ -21,7 +21,7 @@
         app:layout_constraintVertical_chainStyle="packed">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/regToolbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
@@ -35,14 +35,14 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
+        app:layout_constraintTop_toBottomOf="@+id/regAppBar">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <Button
-                android:id="@+id/register"
+                android:id="@+id/regBtnRegister"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -58,11 +58,11 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextEmail"
+                app:layout_constraintTop_toBottomOf="@+id/regEditTextEmail"
                 app:layout_constraintVertical_bias="0.366" />
 
             <EditText
-                android:id="@+id/editTextUsername"
+                android:id="@+id/regEditTextUsername"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -77,10 +77,10 @@
                 android:textColorHint="#6E6E6E"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/logo" />
+                app:layout_constraintTop_toBottomOf="@+id/regImgLogo" />
 
             <ImageView
-                android:id="@+id/logo"
+                android:id="@+id/regImgLogo"
                 android:layout_width="0dp"
                 android:layout_height="94dp"
                 android:layout_marginStart="16dp"
@@ -97,7 +97,7 @@
                 tools:srcCompat="@drawable/logo" />
 
             <EditText
-                android:id="@+id/editTextEmail"
+                android:id="@+id/regEditTextEmail"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -113,10 +113,10 @@
                 android:textColorHint="#6E6E6E"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextPass" />
+                app:layout_constraintTop_toBottomOf="@+id/regEditTextPass" />
 
             <EditText
-                android:id="@+id/editTextPass"
+                android:id="@+id/regEditTextPass"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -132,10 +132,10 @@
                 android:textColorHint="#6E6E6E"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextRePass" />
+                app:layout_constraintTop_toBottomOf="@+id/regEditTextRepass" />
 
             <EditText
-                android:id="@+id/editTextRePass"
+                android:id="@+id/regEditTextRepass"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -151,7 +151,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.506"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextUsername" />
+                app:layout_constraintTop_toBottomOf="@+id/regEditTextUsername" />
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 
