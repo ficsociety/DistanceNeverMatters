@@ -1,5 +1,6 @@
 package apm.muei.distancenevermatters;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,7 +21,9 @@ import android.widget.Toast;
 
 import butterknife.OnClick;
 
-public class GameList extends Fragment {
+public class GameListFragment extends Fragment {
+
+    OnGameDetailsListener mListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -84,41 +87,43 @@ public class GameList extends Fragment {
 
         // TODO Populate RecyclerView with real data
         RecyclerView recyclerView = rootView.findViewById(R.id.recyclerView);
-        GameList.GameAdapter adapter = new GameList.GameAdapter();
+        GameListFragment.GameAdapter adapter = new GameListFragment.GameAdapter();
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         return rootView;
     }
 
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
-//    }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnGameDetailsListener) {
+            mListener = (OnGameDetailsListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnStartGameListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
 
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    public interface OnGameDetailsListener {
+        // TODO: Update arguments
+        void onGameSelected();
     }
 
     // RecyclerAdapter for game list
-    public class GameAdapter extends RecyclerView.Adapter<GameList.GameAdapter.GameViewHolder> {
+    public class GameAdapter extends RecyclerView.Adapter<GameListFragment.GameAdapter.GameViewHolder> {
         // TODO Declare dataset attribute
 
         // ViewHolder for game list items
@@ -143,8 +148,17 @@ public class GameList extends Fragment {
                         CharSequence text = "Detalles partida";
                         Toast toast = Toast.makeText(getActivity().getApplicationContext(), text, Toast.LENGTH_SHORT);
                         toast.show();
-                        Intent intent = new Intent(getActivity(), GameDetailsActivity.class);
-                        startActivity(intent);
+                        mListener.onGameSelected();
+                    }
+                });
+
+                // onClickListener for the game item
+                start.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        CharSequence text = "Empezando partida";
+                        Toast toast = Toast.makeText(getActivity().getApplicationContext(), text, Toast.LENGTH_SHORT);
+                        toast.show();
                     }
                 });
             }
@@ -156,16 +170,16 @@ public class GameList extends Fragment {
         }
 
         @Override
-        public GameList.GameAdapter.GameViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public GameListFragment.GameAdapter.GameViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View gameView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.game_list_item, parent, false);
 
-            GameList.GameAdapter.GameViewHolder viewHolder = new GameList.GameAdapter.GameViewHolder(gameView);
+            GameListFragment.GameAdapter.GameViewHolder viewHolder = new GameListFragment.GameAdapter.GameViewHolder(gameView);
             return viewHolder;
         }
 
         @Override
-        public void onBindViewHolder(GameList.GameAdapter.GameViewHolder holder, int position) {
+        public void onBindViewHolder(GameListFragment.GameAdapter.GameViewHolder holder, int position) {
             /* TODO get element from dataset at this position
              * and replace the contents of the view holder with that element */
         }
@@ -177,14 +191,4 @@ public class GameList extends Fragment {
         }
     }
 
-    // onClick callback for start button
-    @OnClick(R.id.startGameBtn)
-    public void onStartGame(View view) { startGame(); }
-
-    private void startGame() {
-        // TODO replace this toast with code to start the game
-        CharSequence text = "Empezando partida";
-        Toast toast = Toast.makeText(getActivity().getApplicationContext(), text, Toast.LENGTH_SHORT);
-        toast.show();
-    }
 }
