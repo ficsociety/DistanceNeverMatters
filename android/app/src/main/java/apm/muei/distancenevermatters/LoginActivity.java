@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.SignInButton;
@@ -66,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void signIn() {
-        Intent intent = new Intent(this, MainScreenActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
@@ -96,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void handleSignInResult(GoogleSignInResult result) {
         if (result.isSuccess()) {
-            Intent intent = new Intent(this, MainScreenActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         } else {
 

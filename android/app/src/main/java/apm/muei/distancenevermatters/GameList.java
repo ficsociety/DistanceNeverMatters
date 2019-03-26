@@ -1,9 +1,11 @@
 package apm.muei.distancenevermatters;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,26 +18,36 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainScreenActivity extends AppCompatActivity {
+import butterknife.OnClick;
+
+public class GameList extends Fragment {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_screen);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        // Inflate the layout for this fragment
+        View rootView = inflater.inflate(R.layout.fragment_game_list, container, false);
+
+        Toolbar toolbar = rootView.findViewById(R.id.toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
         // Fab callback
-        FloatingActionButton fab = findViewById(R.id.fab);
+        FloatingActionButton fab = rootView.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainScreenActivity.this, CreateGameActivity.class));
+                startActivity(new Intent(getActivity(), CreateGameActivity.class));
             }
         });
 
         // OnTabSelectedListener
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        TabLayout tabLayout = rootView.findViewById(R.id.tabLayout);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             // TODO get games matching filter
             @Override
@@ -55,7 +67,7 @@ public class MainScreenActivity extends AppCompatActivity {
                         text = "Mostrando partidas con rol de jugador";
                         break;
                 }
-                Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getActivity().getApplicationContext(), text, Toast.LENGTH_SHORT);
                 toast.show();
             }
 
@@ -71,15 +83,42 @@ public class MainScreenActivity extends AppCompatActivity {
         });
 
         // TODO Populate RecyclerView with real data
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        GameAdapter adapter = new GameAdapter();
+        RecyclerView recyclerView = rootView.findViewById(R.id.recyclerView);
+        GameList.GameAdapter adapter = new GameList.GameAdapter();
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        return rootView;
+    }
+
+//    @Override
+//    public void onAttach(Context context) {
+//        super.onAttach(context);
+//        if (context instanceof OnFragmentInteractionListener) {
+//            mListener = (OnFragmentInteractionListener) context;
+//        } else {
+//            throw new RuntimeException(context.toString()
+//                    + " must implement OnFragmentInteractionListener");
+//        }
+//    }
+
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
     }
 
     // RecyclerAdapter for game list
-    public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder> {
+    public class GameAdapter extends RecyclerView.Adapter<GameList.GameAdapter.GameViewHolder> {
         // TODO Declare dataset attribute
 
         // ViewHolder for game list items
@@ -94,7 +133,7 @@ public class MainScreenActivity extends AppCompatActivity {
 
                 nameView = (TextView) itemView.findViewById(R.id.textView);
                 descriptionView = (TextView) itemView.findViewById(R.id.textView2);
-                start = (Button) itemView.findViewById(R.id.button);
+                start = (Button) itemView.findViewById(R.id.startGameBtn);
                 status = (ImageView) itemView.findViewById(R.id.imageView);
 
                 // onClickListener for the game item
@@ -102,9 +141,9 @@ public class MainScreenActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         CharSequence text = "Detalles partida";
-                        Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
+                        Toast toast = Toast.makeText(getActivity().getApplicationContext(), text, Toast.LENGTH_SHORT);
                         toast.show();
-                        Intent intent = new Intent(MainScreenActivity.this, GameDetailsActivity.class);
+                        Intent intent = new Intent(getActivity(), GameDetailsActivity.class);
                         startActivity(intent);
                     }
                 });
@@ -117,16 +156,16 @@ public class MainScreenActivity extends AppCompatActivity {
         }
 
         @Override
-        public GameViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public GameList.GameAdapter.GameViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View gameView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.game_list_item, parent, false);
 
-            GameViewHolder viewHolder = new GameViewHolder(gameView);
+            GameList.GameAdapter.GameViewHolder viewHolder = new GameList.GameAdapter.GameViewHolder(gameView);
             return viewHolder;
         }
 
         @Override
-        public void onBindViewHolder(GameViewHolder holder, int position) {
+        public void onBindViewHolder(GameList.GameAdapter.GameViewHolder holder, int position) {
             /* TODO get element from dataset at this position
              * and replace the contents of the view holder with that element */
         }
@@ -139,18 +178,13 @@ public class MainScreenActivity extends AppCompatActivity {
     }
 
     // onClick callback for start button
-    public void startGame(View view) {
+    @OnClick(R.id.startGameBtn)
+    public void onStartGame(View view) { startGame(); }
+
+    private void startGame() {
         // TODO replace this toast with code to start the game
         CharSequence text = "Empezando partida";
-        Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(getActivity().getApplicationContext(), text, Toast.LENGTH_SHORT);
         toast.show();
     }
-
-    // onClick calback for 'all' tab
-    public void showAllGames(View view) {
-        CharSequence text = "Mostrando todas las partidas";
-        Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
-        toast.show();
-    }
-
 }

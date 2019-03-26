@@ -46,7 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
         CharSequence text = "Registrando y logueando user...";
         Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
         toast.show();
-        Intent intent = new Intent(this, MainScreenActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
