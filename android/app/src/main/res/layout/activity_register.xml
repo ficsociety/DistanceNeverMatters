@@ -2,7 +2,6 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
 
     android:layout_height="match_parent"
@@ -41,25 +40,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/regBtnRegister"
-                style="@style/Widget.AppCompat.Button.Colored"
+            <ImageView
+                android:id="@+id/regImgLogo"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="100dp"
-                android:layout_marginLeft="100dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="100dp"
-                android:layout_marginRight="100dp"
-                android:layout_marginBottom="32dp"
-                android:onClick="onPressRegister"
-                android:text="Registrarse"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="94dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:contentDescription="@string/logoDescription"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/regEditTextEmail"
-                app:layout_constraintVertical_bias="0.366" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/logo"
+                tools:srcCompat="@drawable/logo" />
 
             <EditText
                 android:id="@+id/regEditTextUsername"
@@ -72,29 +69,13 @@
                 android:layout_marginRight="16dp"
                 android:ems="15"
                 android:focusable="true"
-                android:hint="Nombre de usuario"
+                android:hint="@string/username"
+                android:inputType="text"
                 android:textColorHighlight="#ff7eff15"
                 android:textColorHint="#6E6E6E"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/regImgLogo" />
-
-            <ImageView
-                android:id="@+id/regImgLogo"
-                android:layout_width="0dp"
-                android:layout_height="94dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/logo"
-                tools:srcCompat="@drawable/logo" />
 
             <EditText
                 android:id="@+id/regEditTextEmail"
@@ -107,13 +88,14 @@
                 android:layout_marginRight="16dp"
                 android:ems="15"
                 android:focusable="true"
-                android:hint="Repetir Contraseña"
-                android:inputType="textPassword"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
                 android:textColorHighlight="#ff7eff15"
                 android:textColorHint="#6E6E6E"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.506"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/regEditTextPass" />
+                app:layout_constraintTop_toBottomOf="@+id/regEditTextUsername" />
 
             <EditText
                 android:id="@+id/regEditTextPass"
@@ -126,13 +108,13 @@
                 android:layout_marginRight="16dp"
                 android:ems="15"
                 android:focusable="true"
-                android:hint="Contraseña"
+                android:hint="@string/password"
                 android:inputType="textPassword"
                 android:textColorHighlight="#ff7eff15"
                 android:textColorHint="#6E6E6E"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/regEditTextRepass" />
+                app:layout_constraintTop_toBottomOf="@+id/regEditTextEmail" />
 
             <EditText
                 android:id="@+id/regEditTextRepass"
@@ -145,13 +127,34 @@
                 android:layout_marginRight="16dp"
                 android:ems="15"
                 android:focusable="true"
-                android:hint="Correo electrónico"
+                android:hint="@string/repeatPassword"
+                android:inputType="textPassword"
                 android:textColorHighlight="#ff7eff15"
                 android:textColorHint="#6E6E6E"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.506"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/regEditTextUsername" />
+                app:layout_constraintTop_toBottomOf="@+id/regEditTextPass" />
+
+            <Button
+                android:id="@+id/regBtnRegister"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="100dp"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="100dp"
+                android:layout_marginRight="100dp"
+                android:layout_marginBottom="32dp"
+                android:onClick="onPressRegister"
+                android:text="@string/registrarse"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/regEditTextRepass"
+                app:layout_constraintVertical_bias="0.366" />
+
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 
