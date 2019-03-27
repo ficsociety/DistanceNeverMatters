@@ -23,9 +23,18 @@ public class GameDetailsFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_game_details, container, false);
 
-        Toolbar toolbar = rootView.findViewById(R.id.toolbar);
+        Toolbar toolbar = getActivity().findViewById(R.id.mainToolbar);
         // Debería ser el nombre de la partida ¿?
         ((AppCompatActivity) getActivity()).setTitle("Detalles partida");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                Toast.makeText(getActivity().getApplicationContext(),
+                        "Mostrando lista de partidas", Toast.LENGTH_SHORT).show();
+                getActivity().onBackPressed();
+            }
+        });
 
         Button button1 = rootView.findViewById(R.id.buttonInvit);
         button1.setOnClickListener(new View.OnClickListener() {
