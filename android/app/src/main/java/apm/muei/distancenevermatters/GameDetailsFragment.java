@@ -10,8 +10,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
+
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class GameDetailsFragment extends Fragment {
 
@@ -46,11 +48,12 @@ public class GameDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_game_details, container, false);
+        ButterKnife.bind(this, rootView);
         setHasOptionsMenu(true);
 
         Toolbar toolbar = getActivity().findViewById(R.id.mainToolbar);
         // Debería ser el nombre de la partida ¿?
-        ((AppCompatActivity) getActivity()).setTitle("Detalles partida");
+        getActivity().setTitle("Detalles partida");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -61,26 +64,18 @@ public class GameDetailsFragment extends Fragment {
             }
         });
 
-        Button button1 = rootView.findViewById(R.id.buttonInvit);
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-
-                Toast.makeText(getActivity().getApplicationContext(),
-                        "Invitar usuarios a partida.", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-        Button button2 = rootView.findViewById(R.id.buttonDelGame);
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-
-                Toast.makeText(getActivity().getApplicationContext(),
-                        "Eliminar la partida.", Toast.LENGTH_SHORT).show();
-
-            }
-        });
         return rootView;
+    }
+
+    @OnClick(R.id.gdetBtnInvite)
+    public void onPressInvite(View view) {
+        Toast.makeText(getActivity().getApplicationContext(),
+                "Invitar usuarios a partida.", Toast.LENGTH_SHORT).show();
+    }
+
+    @OnClick(R.id.gdetBtnDelete)
+    public void onPressDelete(View view) {
+        Toast.makeText(getActivity().getApplicationContext(),
+                "Eliminar la partida.", Toast.LENGTH_SHORT).show();
     }
 }

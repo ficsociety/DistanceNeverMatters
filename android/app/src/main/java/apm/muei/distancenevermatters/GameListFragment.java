@@ -64,7 +64,7 @@ public class GameListFragment extends Fragment {
                 super(itemView);
 
                 nameView = (TextView) itemView.findViewById(R.id.textView);
-                descriptionView = (TextView) itemView.findViewById(R.id.textView2);
+                descriptionView = (TextView) itemView.findViewById(R.id.ginfTVdescription2);
                 start = (Button) itemView.findViewById(R.id.startGameBtn);
                 status = (ImageView) itemView.findViewById(R.id.imageView);
 
