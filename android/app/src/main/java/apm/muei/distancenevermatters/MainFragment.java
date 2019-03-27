@@ -30,7 +30,7 @@ public class MainFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
         Toolbar toolbar = rootView.findViewById(R.id.toolbar);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).setTitle("Lista de partidas");
 
         // Fab callback
         FloatingActionButton fab = rootView.findViewById(R.id.fab);

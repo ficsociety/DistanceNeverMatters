@@ -3,6 +3,7 @@ package apm.muei.distancenevermatters;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity
         implements GameListFragment.OnGameDetailsListener {
@@ -19,6 +20,9 @@ public class MainActivity extends AppCompatActivity
             if (savedInstanceState != null) {
                 return;
             }
+
+            Toolbar toolbar = findViewById(R.id.mainToolbar);
+            setSupportActionBar(toolbar);
 
             // Add the first fragment to the fragment container in the layout
             MainFragment firstFragment = new MainFragment();

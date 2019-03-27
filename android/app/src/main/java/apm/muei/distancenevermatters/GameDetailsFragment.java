@@ -1,9 +1,9 @@
 package apm.muei.distancenevermatters;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +22,10 @@ public class GameDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_game_details, container, false);
+
+        Toolbar toolbar = rootView.findViewById(R.id.toolbar);
+        // Debería ser el nombre de la partida ¿?
+        ((AppCompatActivity) getActivity()).setTitle("Detalles partida");
 
         Button button1 = rootView.findViewById(R.id.buttonInvit);
         button1.setOnClickListener(new View.OnClickListener() {
