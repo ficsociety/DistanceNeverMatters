@@ -1,16 +1,11 @@
 package apm.muei.distancenevermatters;
 
+
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,71 +14,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import butterknife.OnClick;
-
 public class GameListFragment extends Fragment {
 
-    OnGameDetailsListener mListener;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    private OnGameDetailsListener mListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_game_list, container, false);
-
-        Toolbar toolbar = rootView.findViewById(R.id.toolbar);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-
-        // Fab callback
-        FloatingActionButton fab = rootView.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity(), CreateGameActivity.class));
-            }
-        });
-
-        // OnTabSelectedListener
-        TabLayout tabLayout = rootView.findViewById(R.id.tabLayout);
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            // TODO get games matching filter
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                CharSequence text = "";
-                switch(tab.getPosition()) {
-                    // 'All' tab
-                    case 0:
-                        text = "Mostrando todas las partidas";
-                        break;
-                    // 'Master' tab
-                    case 1:
-                        text = "Mostrando partidas con rol de master";
-                        break;
-                    // 'Player' tab
-                    case 2:
-                        text = "Mostrando partidas con rol de jugador";
-                        break;
-                }
-                Toast toast = Toast.makeText(getActivity().getApplicationContext(), text, Toast.LENGTH_SHORT);
-                toast.show();
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-                // Nothing to do here for now
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-                // Nothing to do here for now
-            }
-        });
 
         // TODO Populate RecyclerView with real data
         RecyclerView recyclerView = rootView.findViewById(R.id.recyclerView);
@@ -101,22 +40,10 @@ public class GameListFragment extends Fragment {
             mListener = (OnGameDetailsListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnStartGameListener");
+                    + " must implement OnGameDetailsListener");
         }
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     */
     public interface OnGameDetailsListener {
         // TODO: Update arguments
         void onGameSelected();
