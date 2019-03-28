@@ -2,31 +2,31 @@ package apm.muei.distancenevermatters;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class GameCreatedActivity extends AppCompatActivity {
+
+    @BindView(R.id.gcreaFABshare)
+    Button gcreaFABshare;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //setTitle("Partida 1");
         setContentView(R.layout.activity_game_created);
 
-        Button button1 = (Button) findViewById(R.id.gcreaFABshare);
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
+        ButterKnife.bind(this);
+    }
 
-                Toast.makeText(getApplicationContext(),
-                        "Compartiendo código.", Toast.LENGTH_LONG).show();
-
-            }
-        });
-
-
+    @OnClick(R.id.gcreaFABshare)
+    public void shareGame(View view) {
+        Toast.makeText(getApplicationContext(),
+                "Compartir código.", Toast.LENGTH_LONG).show();
     }
 }
