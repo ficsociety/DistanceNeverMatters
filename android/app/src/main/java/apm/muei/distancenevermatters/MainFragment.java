@@ -18,7 +18,52 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class MainFragment extends Fragment {
+
+    @BindView(R.id.gListAddFab)
+    FloatingActionButton fab;
+
+    @OnClick(R.id.gListAddFab)
+    public void addGame(){
+        startActivity(new Intent(getActivity(), CreateGameActivity.class));
+    }
+
+    @BindView(R.id.gListViewPager)
+    ViewPager viewPager;
+
+    @BindView(R.id.gListTabLayout)
+    TabLayout tabLayout;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        // Inflate the layout for this fragment
+        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        ButterKnife.bind(this, rootView);
+        setHasOptionsMenu(true);
+
+        Toolbar toolbar = getActivity().findViewById(R.id.mainToolbar);
+
+        ((AppCompatActivity) getActivity()).setTitle("Lista de partidas");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
+        // Set the tabs
+        GameTabsPagerAdapter adapter = new GameTabsPagerAdapter(getActivity(), getChildFragmentManager());
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
+
+        return rootView;
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -35,44 +80,6 @@ public class MainFragment extends Fragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        setHasOptionsMenu(true);
-
-        Toolbar toolbar = getActivity().findViewById(R.id.mainToolbar);
-
-        ((AppCompatActivity) getActivity()).setTitle("Lista de partidas");
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-
-        // Fab callback
-        FloatingActionButton fab = rootView.findViewById(R.id.mainAddFab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity(), CreateGameActivity.class));
-            }
-        });
-
-        // Set the tabs
-        ViewPager viewPager = rootView.findViewById(R.id.gListViewPager);
-        GameTabsPagerAdapter adapter = new GameTabsPagerAdapter(getActivity(), getChildFragmentManager());
-        viewPager.setAdapter(adapter);
-
-        TabLayout tabLayout = rootView.findViewById(R.id.gListTabLayout);
-        tabLayout.setupWithViewPager(viewPager);
-
-        return rootView;
     }
 
     // PagerAdapter for tabs

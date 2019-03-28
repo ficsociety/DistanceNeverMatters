@@ -14,18 +14,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class GameListFragment extends Fragment {
 
     private OnGameDetailsListener mListener;
+
+    @BindView(R.id.gameRecyclerView)
+    RecyclerView recyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_game_list, container, false);
+        ButterKnife.bind(this, rootView);
 
         // TODO Populate RecyclerView with real data
-        RecyclerView recyclerView = rootView.findViewById(R.id.gameRecyclerView);
         GameListFragment.GameAdapter adapter = new GameListFragment.GameAdapter();
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -55,39 +62,37 @@ public class GameListFragment extends Fragment {
 
         // ViewHolder for game list items
         public class GameViewHolder extends RecyclerView.ViewHolder {
-            public TextView nameView;
-            public TextView descriptionView;
-            public Button start;
-            public ImageView status;
+
+            @BindView(R.id.gListTextViewName)
+            TextView nameView;
+
+            @BindView(R.id.gListTextViewDescription)
+            TextView descriptionView;
+
+            @BindView(R.id.gListBtnStart)
+            Button start;
+
+            @OnClick(R.id.gListBtnStart)
+            public void startGame() {
+                CharSequence text = "Empezando partida";
+                Toast toast = Toast.makeText(getActivity().getApplicationContext(), text, Toast.LENGTH_SHORT);
+                toast.show();
+            }
+
+            @BindView(R.id.gListImgStatus)
+            ImageView status;
+
+            @OnClick(R.id.gListItem)
+            public void showDetails() {
+                CharSequence text = "Detalles partida";
+                Toast toast = Toast.makeText(getActivity().getApplicationContext(), text, Toast.LENGTH_SHORT);
+                toast.show();
+                mListener.onGameSelected();
+            }
 
             public GameViewHolder(View itemView) {
                 super(itemView);
-
-                nameView = (TextView) itemView.findViewById(R.id.gListTextViewName);
-                descriptionView = (TextView) itemView.findViewById(R.id.ginfTVdescription2);
-                start = (Button) itemView.findViewById(R.id.gListBtnStart);
-                status = (ImageView) itemView.findViewById(R.id.gListImgStatus);
-
-                // onClickListener for the game item
-                itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        CharSequence text = "Detalles partida";
-                        Toast toast = Toast.makeText(getActivity().getApplicationContext(), text, Toast.LENGTH_SHORT);
-                        toast.show();
-                        mListener.onGameSelected();
-                    }
-                });
-
-                // onClickListener for the game item
-                start.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        CharSequence text = "Empezando partida";
-                        Toast toast = Toast.makeText(getActivity().getApplicationContext(), text, Toast.LENGTH_SHORT);
-                        toast.show();
-                    }
-                });
+                ButterKnife.bind(this, itemView);
             }
         }
 
