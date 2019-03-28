@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (findViewById(R.id.fragment_container) != null) {
+        if (findViewById(R.id.mainFragmentContainer) != null) {
 
             // If we are being restored, return or else we could end up
             // with overlapping fragments
@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity
             // Add the first fragment to the fragment container in the layout
             MainFragment firstFragment = new MainFragment();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_container, firstFragment).commit();
+                    .add(R.id.mainFragmentContainer, firstFragment).commit();
 
         }
     }
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity
         GameDetailsFragment newFragment = new GameDetailsFragment();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, newFragment);
+        transaction.replace(R.id.mainFragmentContainer, newFragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }

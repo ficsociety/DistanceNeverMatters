@@ -56,7 +56,7 @@ public class MainFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         // Fab callback
-        FloatingActionButton fab = rootView.findViewById(R.id.fab);
+        FloatingActionButton fab = rootView.findViewById(R.id.mainAddFab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,11 +65,11 @@ public class MainFragment extends Fragment {
         });
 
         // Set the tabs
-        ViewPager viewPager = rootView.findViewById(R.id.view_pager);
+        ViewPager viewPager = rootView.findViewById(R.id.gListViewPager);
         GameTabsPagerAdapter adapter = new GameTabsPagerAdapter(getActivity(), getChildFragmentManager());
         viewPager.setAdapter(adapter);
 
-        TabLayout tabLayout = rootView.findViewById(R.id.tabLayout);
+        TabLayout tabLayout = rootView.findViewById(R.id.gListTabLayout);
         tabLayout.setupWithViewPager(viewPager);
 
         return rootView;

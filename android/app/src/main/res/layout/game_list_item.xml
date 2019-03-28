@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/gListTextViewName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -16,12 +16,12 @@
         android:layout_marginRight="16dp"
         android:text="@string/game_name_placeholder"
         android:textColor="@android:color/black"
-        app:layout_constraintEnd_toStartOf="@+id/startGameBtn"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintEnd_toStartOf="@+id/gListBtnStart"
+        app:layout_constraintStart_toEndOf="@+id/gListImgStatus"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/gListImgStatus"
         android:layout_width="@dimen/state_dim"
         android:layout_height="@dimen/state_dim"
         android:layout_marginStart="16dp"
@@ -33,7 +33,7 @@
         app:srcCompat="@drawable/ic_game_state" />
 
     <Button
-        android:id="@+id/startGameBtn"
+        android:id="@+id/gListBtnStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -44,7 +44,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/gListTextViewDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -55,8 +55,8 @@
         android:text="@string/game_description_placeholder"
         android:textColor="@android:color/darker_gray"
         android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/startGameBtn"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintEnd_toStartOf="@+id/gListBtnStart"
+        app:layout_constraintStart_toEndOf="@+id/gListImgStatus"
+        app:layout_constraintTop_toBottomOf="@+id/gListTextViewName" />
 
 </android.support.constraint.ConstraintLayout>

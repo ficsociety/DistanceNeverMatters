@@ -25,7 +25,7 @@ public class GameListFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_game_list, container, false);
 
         // TODO Populate RecyclerView with real data
-        RecyclerView recyclerView = rootView.findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = rootView.findViewById(R.id.gameRecyclerView);
         GameListFragment.GameAdapter adapter = new GameListFragment.GameAdapter();
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -63,10 +63,10 @@ public class GameListFragment extends Fragment {
             public GameViewHolder(View itemView) {
                 super(itemView);
 
-                nameView = (TextView) itemView.findViewById(R.id.textView);
+                nameView = (TextView) itemView.findViewById(R.id.gListTextViewName);
                 descriptionView = (TextView) itemView.findViewById(R.id.ginfTVdescription2);
-                start = (Button) itemView.findViewById(R.id.startGameBtn);
-                status = (ImageView) itemView.findViewById(R.id.imageView);
+                start = (Button) itemView.findViewById(R.id.gListBtnStart);
+                status = (ImageView) itemView.findViewById(R.id.gListImgStatus);
 
                 // onClickListener for the game item
                 itemView.setOnClickListener(new View.OnClickListener() {
