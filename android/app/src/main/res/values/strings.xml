@@ -27,6 +27,9 @@
     <string name="player2">Jugador 2</string>
     <string name="logout">Cerrar sesión</string>
     <string name="edit">Editar</string>
+    <string name="game_created">Partida creada</string>
+    <string name="game_created_ok">¡Partida creada correctamente!</string>
+    <string name="game_created_share">Código para compartir: </string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
