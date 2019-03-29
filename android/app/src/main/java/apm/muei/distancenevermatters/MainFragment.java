@@ -17,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -74,9 +75,12 @@ public class MainFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.leaveApp:
-                getActivity().moveTaskToBack(true);
-                System.exit(1);
+            case R.id.logout:
+                CharSequence text = "Regresando a login";
+                Toast toast = Toast.makeText(getActivity().getApplicationContext(), text, Toast.LENGTH_SHORT);
+                toast.show();
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
             default:
                 return super.onOptionsItemSelected(item);
         }
