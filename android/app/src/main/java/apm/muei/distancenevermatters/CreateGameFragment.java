@@ -23,11 +23,11 @@ public class CreateGameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.create_game_view, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_create_game, container, false);
 
         ButterKnife.bind(this, rootView);
 
-        Toolbar toolbar = getActivity().findViewById(R.id.crateGameToolbar);
+        Toolbar toolbar = getActivity().findViewById(R.id.createGameToolbar);
         ((AppCompatActivity) getActivity()).setTitle("Crear partida");
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -51,8 +51,8 @@ public class CreateGameFragment extends Fragment {
     public void createGame(View view){
         Toast.makeText(getActivity().getApplicationContext(),
                 "Crear Partida", Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(getActivity(), GameCreatedActivity.class);
-        startActivity(intent);
+        // Intent intent = new Intent(getActivity(), GameCreatedActivity.class);
+        // startActivity(intent);
     }
 
     @OnClick({R.id.delete1, R.id.delete2})

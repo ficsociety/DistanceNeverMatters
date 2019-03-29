@@ -10,7 +10,7 @@ import butterknife.ButterKnife;
 public class CreateGameActivity extends AppCompatActivity {
 
 
-    @BindView(R.id.crateGameToolbar)
+    @BindView(R.id.createGameToolbar)
     Toolbar toolbar;
 
     @Override

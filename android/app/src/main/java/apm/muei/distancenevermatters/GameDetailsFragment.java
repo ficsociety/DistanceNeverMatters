@@ -31,7 +31,7 @@ public class GameDetailsFragment extends Fragment {
             case R.id.editGameDetails:
                 isChecked = item.isChecked();
                 item.setChecked(!isChecked);
-                CharSequence text = "Habilitando edicón...";
+                CharSequence text = "Habilitando edición...";
                 Toast toast = Toast.makeText(getActivity().getApplicationContext(), text, Toast.LENGTH_SHORT);
                 toast.show();
                 return true;
