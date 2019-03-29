@@ -20,6 +20,10 @@
             android:label="@string/create_game_title"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
+            android:name=".GameCreatedActivity"
+            android:label="Partida creada"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".RegisterActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".LoginActivity" android:theme="@style/AppTheme.NoActionBar">

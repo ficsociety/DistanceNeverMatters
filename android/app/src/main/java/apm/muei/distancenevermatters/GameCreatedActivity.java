@@ -12,10 +12,6 @@ import butterknife.OnClick;
 
 public class GameCreatedActivity extends AppCompatActivity {
 
-    @BindView(R.id.gcreaFABshare)
-    Button gcreaFABshare;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,7 +21,7 @@ public class GameCreatedActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.gcreaFABshare)
-    public void shareGame(View view) {
+    public void shareGame() {
         Toast.makeText(getApplicationContext(),
                 "Compartir código.", Toast.LENGTH_LONG).show();
     }

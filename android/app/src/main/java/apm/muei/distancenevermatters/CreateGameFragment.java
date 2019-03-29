@@ -1,23 +1,23 @@
 package apm.muei.distancenevermatters;
 
-import android.media.Image;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.BinderThread;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.Toast;
-
-import apm.muei.distancenevermatters.R;
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class CreateGameFragment extends Fragment {
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -26,6 +26,17 @@ public class CreateGameFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.create_game_view, container, false);
 
         ButterKnife.bind(this, rootView);
+
+        Toolbar toolbar = getActivity().findViewById(R.id.crateGameToolbar);
+        ((AppCompatActivity) getActivity()).setTitle("Crear partida");
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                Toast.makeText(getActivity().getApplicationContext(),
+                        "Mostrando lista de partidas", Toast.LENGTH_SHORT).show();
+                getActivity().onBackPressed();
+            }
+        });
 
         return rootView;
     }
@@ -40,6 +51,8 @@ public class CreateGameFragment extends Fragment {
     public void createGame(View view){
         Toast.makeText(getActivity().getApplicationContext(),
                 "Crear Partida", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(getActivity(), GameCreatedActivity.class);
+        startActivity(intent);
     }
 
     @OnClick({R.id.delete1, R.id.delete2})
