@@ -3,62 +3,35 @@ package apm.muei.distancenevermatters;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.Toast;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class CreateGameActivity extends AppCompatActivity {
 
+
+    @BindView(R.id.createGameToolbar)
+    Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Toolbar toolbar = findViewById(R.id.toolbar3);
-        setSupportActionBar(toolbar);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_game);
+        ButterKnife.bind(this);
 
+        if (findViewById(R.id.create_game_fragments) != null){
 
-        Button btnCreateGame = (Button) findViewById(R.id.btn_create_game);
-        btnCreateGame.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-
-                Toast.makeText(getApplicationContext(),
-                        "Crear Partida.", Toast.LENGTH_LONG).show();
-
+            if (savedInstanceState !=  null) {
+                return;
             }
-        });
 
-        Button btnAddMarker = (Button) findViewById(R.id.btn_add_marker_model);
-        btnAddMarker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
+            setSupportActionBar(toolbar);
 
-                Toast.makeText(getApplicationContext(),
-                        "Añadir marcador-modelo.", Toast.LENGTH_LONG).show();
+            CreateGameFragment createGameFragment = new CreateGameFragment();
 
-            }
-        });
-
-        ImageButton remove = findViewById(R.id.imageButton4);
-        remove.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                removeMarkerModel(view);
-            }
-        });
-
-        remove = findViewById(R.id.imageButton5);
-        remove.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                removeMarkerModel(view);
-            }
-        });
+            getSupportFragmentManager().beginTransaction().add(R.id.create_game_fragments, createGameFragment).commit();
+        }
     }
-    private void removeMarkerModel(View view) {
-        Toast.makeText(getApplicationContext(),
-                "Eliminar marcador-modelo.", Toast.LENGTH_LONG).show();
-    }
+
 
 }
