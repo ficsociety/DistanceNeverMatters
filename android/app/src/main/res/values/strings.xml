@@ -15,6 +15,11 @@
     <string name="password">Contraseña</string>
     <string name="games">Partidas</string>
     <string name="register">Registro</string>
+    <string name="registrarse">Registrarse</string>
+    <string name="logoDescription">Logo de la aplicación DNM</string>
+    <string name="username">Nombre de usuario</string>
+    <string name="email">Correo electrónico</string>
+    <string name="repeatPassword">Repetir contraseña</string>
     <string name="details">Detalles</string>
     <string name="invite">Invitar</string>
     <string name="delete">Eliminar partida</string>

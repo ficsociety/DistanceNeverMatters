@@ -5,17 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class RegisterActivity extends AppCompatActivity {
-
-    @BindView(R.id.register)
-    Button btnRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +18,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.regToolbar);
         setSupportActionBar(toolbar);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -37,7 +32,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    @OnClick(R.id.register)
+    @OnClick(R.id.regBtnRegister)
     public void onPressRegister(View view) {
         register();
     }
@@ -49,6 +44,4 @@ public class RegisterActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
-
-
 }
