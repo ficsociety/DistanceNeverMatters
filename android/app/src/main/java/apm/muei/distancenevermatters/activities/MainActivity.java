@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.FrameLayout;
 
 import apm.muei.distancenevermatters.adapters.GameRecyclerAdapter;
@@ -28,6 +29,9 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        // Be sure to ALWAYS set up the support action bar, or else getSupportActionBar could return null
+        setSupportActionBar(toolbar);
+
         if (fragmentContainer != null) {
 
             // If we are being restored, return or else we could end up
@@ -35,8 +39,6 @@ public class MainActivity extends AppCompatActivity
             if (savedInstanceState != null) {
                 return;
             }
-
-            setSupportActionBar(toolbar);
 
             // Add the first fragment to the fragment container in the layout
             MainFragment firstFragment = new MainFragment();

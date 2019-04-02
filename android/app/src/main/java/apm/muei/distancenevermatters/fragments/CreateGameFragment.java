@@ -29,8 +29,15 @@ public class CreateGameFragment extends Fragment {
 
         ButterKnife.bind(this, rootView);
 
+        return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
         Toolbar toolbar = getActivity().findViewById(R.id.createGameToolbar);
-        ((AppCompatActivity) getActivity()).setTitle("Crear partida");
+        toolbar.setTitle("Crear partida"); // TODO change for string resource
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
@@ -39,8 +46,6 @@ public class CreateGameFragment extends Fragment {
                 getActivity().onBackPressed();
             }
         });
-
-        return rootView;
     }
 
     @OnClick(R.id.btn_add_marker_model)

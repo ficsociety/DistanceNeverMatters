@@ -21,13 +21,14 @@ public class CreateGameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_game);
         ButterKnife.bind(this);
 
+        // Be sure to ALWAYS set up the support action bar, or else getSupportActionBar could return null
+        setSupportActionBar(toolbar);
+
         if (findViewById(R.id.create_game_fragments) != null){
 
             if (savedInstanceState !=  null) {
                 return;
             }
-
-            setSupportActionBar(toolbar);
 
             CreateGameFragment createGameFragment = new CreateGameFragment();
 

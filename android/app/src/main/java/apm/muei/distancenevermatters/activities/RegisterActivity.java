@@ -9,10 +9,14 @@ import android.widget.Toast;
 
 import apm.muei.distancenevermatters.R;
 import apm.muei.distancenevermatters.activities.MainActivity;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class RegisterActivity extends AppCompatActivity {
+
+    @BindView(R.id.regToolbar)
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +24,6 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
 
-        Toolbar toolbar = findViewById(R.id.regToolbar);
         setSupportActionBar(toolbar);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
