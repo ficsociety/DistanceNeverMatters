@@ -1,13 +1,10 @@
-package apm.muei.distancenevermatters;
+package apm.muei.distancenevermatters.fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +15,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import apm.muei.distancenevermatters.R;
+import apm.muei.distancenevermatters.activities.CreateGameActivity;
+import apm.muei.distancenevermatters.activities.LoginActivity;
+import apm.muei.distancenevermatters.adapters.GameTabsPagerAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -83,41 +85,6 @@ public class MainFragment extends Fragment {
                 startActivity(intent);
             default:
                 return super.onOptionsItemSelected(item);
-        }
-    }
-
-    // PagerAdapter for tabs
-    public class GameTabsPagerAdapter extends FragmentPagerAdapter {
-
-        private Context mContext;
-
-        public GameTabsPagerAdapter(Context context, FragmentManager fm) {
-            super(fm);
-            mContext = context;
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return new GameListFragment();
-        }
-
-        @Override
-        public int getCount() {
-            return 3;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch(position) {
-                case 0:
-                    return mContext.getString(R.string.all);
-                case 1:
-                    return mContext.getString(R.string.master);
-                case 2:
-                    return mContext.getString(R.string.player);
-                default:
-                    return null;
-            }
         }
     }
 
