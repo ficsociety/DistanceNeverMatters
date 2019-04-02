@@ -1,8 +1,11 @@
 package apm.muei.distancenevermatters.activities;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -13,6 +16,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import apm.muei.distancenevermatters.R;
+import apm.muei.distancenevermatters.dialogfragments.NoCameraDialogFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -35,6 +39,10 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Check if a camera is available before anything else
+        checkCamera();
+
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
@@ -48,6 +56,17 @@ public class LoginActivity extends AppCompatActivity {
                 .build();
 
 
+    }
+
+    private void checkCamera() {
+        // Check whether the device has a camera and an app to capture video
+        Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+
+        if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)
+            || takeVideoIntent.resolveActivity(getPackageManager()) == null) {
+            NoCameraDialogFragment dialog = new NoCameraDialogFragment();
+            dialog.show(getSupportFragmentManager(), "noCamera");
+        }
     }
 
     @OnClick(R.id.login_google)
