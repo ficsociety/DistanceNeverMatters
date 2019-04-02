@@ -1,8 +1,11 @@
 package apm.muei.distancenevermatters.fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -11,10 +14,17 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import apm.muei.distancenevermatters.R;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class CreateGameFragment extends Fragment {
+
+    OnGameCreatedListener mCallback;
+    public interface OnGameCreatedListener {
+        /** Called by CreateGameFragment when a game is created */
+        public void onGameCreated();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,6 +58,19 @@ public class CreateGameFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception.
+        try {
+            mCallback = (OnGameCreatedListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnGameCreatedListener");
+        }
+    }
+
     @OnClick(R.id.btn_add_marker_model)
     public void addMarkerModel(View view){
         Toast.makeText(getActivity().getApplicationContext(),
@@ -58,8 +81,9 @@ public class CreateGameFragment extends Fragment {
     public void createGame(View view){
         Toast.makeText(getActivity().getApplicationContext(),
                 "Crear Partida", Toast.LENGTH_LONG).show();
-        // Intent intent = new Intent(getActivity(), GameCreatedActivity.class);
-        // startActivity(intent);
+
+        mCallback.onGameCreated();
+
     }
 
     @OnClick({R.id.delete1, R.id.delete2})
