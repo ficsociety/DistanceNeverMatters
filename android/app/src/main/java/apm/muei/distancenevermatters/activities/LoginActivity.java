@@ -23,15 +23,6 @@ import butterknife.OnClick;
 
 public class LoginActivity extends AppCompatActivity {
 
-    @BindView(R.id.login_google)
-    SignInButton btnSignInGoogle;
-
-    @BindView(R.id.login)
-    Button btnSignIn;
-
-    @BindView(R.id.register)
-    Button btnRegister;
-
     GoogleApiClient apiClient;
 
     private static final int ERROR_DIALOG_REQUEST = 9001;
@@ -69,17 +60,17 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick(R.id.login_google)
+    @OnClick(R.id.logBtnGoogle)
     public void onPressSignInGoogle(View view) {
         signInGoogle();
     }
 
-    @OnClick(R.id.login)
+    @OnClick(R.id.logBtnIniciarSesion)
     public void onPressSignIn(View view) {
         signIn();
     }
 
-    @OnClick(R.id.register)
+    @OnClick(R.id.logBtnRegistro)
     public void onPressRegister(View view) {
         register();
     }

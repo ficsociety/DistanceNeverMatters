@@ -8,7 +8,7 @@
 
 
     <ImageView
-        android:id="@+id/logo"
+        android:id="@+id/logImgLogo"
         android:layout_width="396dp"
         android:layout_height="146dp"
         android:layout_marginStart="16dp"
@@ -23,14 +23,14 @@
         app:srcCompat="@drawable/logo" />
 
     <EditText
-        android:id="@+id/editTextUser"
-        android:layout_width="wrap_content"
+        android:id="@+id/logEditTextUsername"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="40dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:ems="15"
         android:focusable="true"
         android:hint="Introduce usuario"
@@ -39,27 +39,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo" />
+        app:layout_constraintTop_toBottomOf="@+id/logImgLogo" />
 
     <EditText
-        android:id="@+id/editTextPassword"
-        android:layout_width="wrap_content"
+        android:id="@+id/logEditTextPassword"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:ems="15"
         android:hint="@string/password"
         android:textColorHint="#6E6E6E"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextUser" />
+        app:layout_constraintTop_toBottomOf="@+id/logEditTextUsername" />
 
     <Button
-        android:id="@+id/login"
+        android:id="@+id/logBtnIniciarSesion"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -71,11 +71,11 @@
         android:text="iniciar sesión"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/logEditTextPassword" />
 
 
     <Button
-        android:id="@+id/register"
+        android:id="@+id/logBtnRegistro"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -88,10 +88,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login" />
+        app:layout_constraintTop_toBottomOf="@+id/logBtnIniciarSesion" />
 
     <com.google.android.gms.common.SignInButton
-        android:id="@+id/login_google"
+        android:id="@+id/logBtnGoogle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="120dp"
@@ -104,7 +104,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register"
+        app:layout_constraintTop_toBottomOf="@+id/logBtnRegistro"
         app:layout_constraintVertical_bias="0.177" />
 
 
