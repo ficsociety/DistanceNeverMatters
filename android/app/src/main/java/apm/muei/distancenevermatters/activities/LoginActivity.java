@@ -56,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)
             || takeVideoIntent.resolveActivity(getPackageManager()) == null) {
             NoCameraDialogFragment dialog = new NoCameraDialogFragment();
+            dialog.setCancelable(false);
             dialog.show(getSupportFragmentManager(), "noCamera");
         }
     }
