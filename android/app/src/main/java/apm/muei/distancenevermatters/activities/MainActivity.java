@@ -1,4 +1,4 @@
-package apm.muei.distancenevermatters;
+package apm.muei.distancenevermatters.activities;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -6,11 +6,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.FrameLayout;
 
+import apm.muei.distancenevermatters.adapters.GameRecyclerAdapter;
+import apm.muei.distancenevermatters.fragments.GameDetailsFragment;
+import apm.muei.distancenevermatters.fragments.MainFragment;
+import apm.muei.distancenevermatters.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity
-        implements GameListFragment.OnGameDetailsListener {
+        implements GameRecyclerAdapter.OnGameDetailsListener {
 
     @BindView(R.id.mainToolbar)
     Toolbar toolbar;

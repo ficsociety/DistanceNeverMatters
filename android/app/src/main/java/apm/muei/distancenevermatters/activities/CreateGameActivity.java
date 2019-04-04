@@ -1,9 +1,11 @@
-package apm.muei.distancenevermatters;
+package apm.muei.distancenevermatters.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import apm.muei.distancenevermatters.fragments.CreateGameFragment;
+import apm.muei.distancenevermatters.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

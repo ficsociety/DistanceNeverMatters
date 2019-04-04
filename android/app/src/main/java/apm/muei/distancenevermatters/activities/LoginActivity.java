@@ -1,4 +1,4 @@
-package apm.muei.distancenevermatters;
+package apm.muei.distancenevermatters.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+<<<<<<< HEAD:android/app/src/main/java/apm/muei/distancenevermatters/LoginActivity.java
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -25,6 +26,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import apm.muei.distancenevermatters.GlobalVars.GlobalVars;
+=======
+import apm.muei.distancenevermatters.R;
+>>>>>>> 0c0f2c4f5f55edebe8c1775344cb43e78a547db2:android/app/src/main/java/apm/muei/distancenevermatters/activities/LoginActivity.java
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;

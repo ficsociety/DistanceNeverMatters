@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".CreateGameActivity">
+    tools:context=".activities.CreateGameActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -28,6 +28,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".CreateGameActivity" >
+        tools:context=".activities.CreateGameActivity" >
     </FrameLayout>
 </LinearLayout>

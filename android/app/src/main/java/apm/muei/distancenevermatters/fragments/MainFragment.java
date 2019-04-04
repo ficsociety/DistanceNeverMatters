@@ -1,14 +1,11 @@
-package apm.muei.distancenevermatters;
+package apm.muei.distancenevermatters.fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -20,12 +17,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+<<<<<<< HEAD:android/app/src/main/java/apm/muei/distancenevermatters/MainFragment.java
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import java.util.concurrent.Executor;
 
 import apm.muei.distancenevermatters.GlobalVars.GlobalVars;
+=======
+import apm.muei.distancenevermatters.R;
+import apm.muei.distancenevermatters.activities.CreateGameActivity;
+import apm.muei.distancenevermatters.activities.LoginActivity;
+import apm.muei.distancenevermatters.adapters.GameTabsPagerAdapter;
+
+>>>>>>> 0c0f2c4f5f55edebe8c1775344cb43e78a547db2:android/app/src/main/java/apm/muei/distancenevermatters/fragments/MainFragment.java
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -96,6 +101,7 @@ public class MainFragment extends Fragment {
         }
     }
 
+<<<<<<< HEAD:android/app/src/main/java/apm/muei/distancenevermatters/MainFragment.java
     // PagerAdapter for tabs
     public class GameTabsPagerAdapter extends FragmentPagerAdapter {
 
@@ -146,4 +152,6 @@ public class MainFragment extends Fragment {
                 });
     }
 
+=======
+>>>>>>> 0c0f2c4f5f55edebe8c1775344cb43e78a547db2:android/app/src/main/java/apm/muei/distancenevermatters/fragments/MainFragment.java
 }

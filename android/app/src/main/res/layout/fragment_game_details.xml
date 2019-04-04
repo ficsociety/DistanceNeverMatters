@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GameDetailsFragment">
+    tools:context=".fragments.GameDetailsFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
 
             <fragment
                 android:id="@+id/gdetFragment"
-                android:name="apm.muei.distancenevermatters.GameInfoFragment"
+                android:name="apm.muei.distancenevermatters.fragments.GameInfoFragment"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
