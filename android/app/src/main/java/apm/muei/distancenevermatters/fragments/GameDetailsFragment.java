@@ -10,15 +10,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import apm.muei.distancenevermatters.R;
+import apm.muei.distancenevermatters.dialogfragments.SaveGameDetailsFragment;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class GameDetailsFragment extends Fragment {
 
-    private boolean isChecked = false;
+    @BindView(R.id.ginfETdescription)
+    EditText description;
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -26,15 +30,25 @@ public class GameDetailsFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    private void toggleItemEdit(MenuItem item) {
+        if (item.isChecked()) {
+            SaveGameDetailsFragment dialog = new SaveGameDetailsFragment();
+            dialog.show(getActivity().getSupportFragmentManager(), "saveGameDetails");
+            description.setEnabled(false);
+            item.setIcon(R.drawable.ic_edit_white_24dp);
+        } else {
+            description.setEnabled(true);
+            description.requestFocus();
+            item.setIcon(R.drawable.ic_save_white_24dp);
+        }
+        item.setChecked(!item.isChecked());
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.editGameDetails:
-                isChecked = item.isChecked();
-                item.setChecked(!isChecked);
-                CharSequence text = "Habilitando edición...";
-                Toast toast = Toast.makeText(getActivity().getApplicationContext(), text, Toast.LENGTH_SHORT);
-                toast.show();
+                this.toggleItemEdit(item);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -53,6 +67,7 @@ public class GameDetailsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_game_details, container, false);
         ButterKnife.bind(this, rootView);
         setHasOptionsMenu(true);
+        description.setEnabled(false);
 
         Toolbar toolbar = getActivity().findViewById(R.id.mainToolbar);
         // Debería ser el nombre de la partida ¿?

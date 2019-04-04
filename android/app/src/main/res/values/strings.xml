@@ -41,4 +41,8 @@
     <string name="ok_sadface">Ok :(</string>
     <string name="no_camera">Cámara no disponible</string>
     <string name="camera_and_app_warning">Lo sentimos, DNM necesita una cámara y una app de captura de vídeo para funcionar.</string>
+    <string name="save">Guardar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="save_game_details">Guardar los datos de la partida</string>
+    <string name="save_game_details_exp">Está usted seguro de querer actualizar los datos de la partida?</string>
 </resources>
