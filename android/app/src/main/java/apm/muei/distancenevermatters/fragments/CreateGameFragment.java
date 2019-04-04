@@ -1,6 +1,7 @@
 package apm.muei.distancenevermatters.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
@@ -59,7 +60,7 @@ public class CreateGameFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
+    public void onAttach(Context activity) {
         super.onAttach(activity);
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception.
