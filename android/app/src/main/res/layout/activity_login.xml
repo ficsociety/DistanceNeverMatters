@@ -19,7 +19,7 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/logo"
+                android:id="@+id/logImgLogo"
                 android:layout_width="match_parent"
                 android:layout_height="94dp"
                 android:layout_marginStart="16dp"
@@ -31,12 +31,11 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
                 app:srcCompat="@drawable/logo"
                 tools:srcCompat="@drawable/logo" />
 
             <EditText
-                android:id="@+id/editTextUser"
+                android:id="@+id/logEditTextEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -45,12 +44,12 @@
                 android:layout_marginEnd="16dp"
                 android:ems="15"
                 android:focusable="true"
-                android:hint="Introduce usuario"
+                android:hint="@string/email"
                 android:textColorHighlight="#ff7eff15"
                 android:textColorHint="#6E6E6E" />
 
             <EditText
-                android:id="@+id/editTextPassword"
+                android:id="@+id/logEditTextPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -59,10 +58,11 @@
                 android:layout_marginEnd="16dp"
                 android:ems="15"
                 android:hint="@string/password"
-                android:textColorHint="#6E6E6E" />
+                android:textColorHint="#6E6E6E"
+                android:inputType="textPassword"/>
 
             <Button
-                android:id="@+id/login"
+                android:id="@+id/logBtnSignIn"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="230dp"
                 android:layout_height="53dp"
@@ -73,7 +73,7 @@
 
 
             <Button
-                android:id="@+id/register"
+                android:id="@+id/logBtnRegister"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_width="230dp"
                 android:layout_height="53dp"
@@ -81,7 +81,7 @@
                 android:text="Registrarse" />
 
             <com.google.android.gms.common.SignInButton
-                android:id="@+id/login_google"
+                android:id="@+id/logBtnSignInGoogle"
                 android:layout_width="230dp"
                 android:layout_height="53dp"
                 android:layout_gravity="center_horizontal"

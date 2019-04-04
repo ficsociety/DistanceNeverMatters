@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -16,7 +18,6 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-<<<<<<< HEAD:android/app/src/main/java/apm/muei/distancenevermatters/LoginActivity.java
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -26,9 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import apm.muei.distancenevermatters.GlobalVars.GlobalVars;
-=======
 import apm.muei.distancenevermatters.R;
->>>>>>> 0c0f2c4f5f55edebe8c1775344cb43e78a547db2:android/app/src/main/java/apm/muei/distancenevermatters/activities/LoginActivity.java
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -37,14 +36,12 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
 
-    @BindView(R.id.login_google)
-    SignInButton btnSignInGoogle;
+    @BindView(R.id.logEditTextEmail)
+    EditText regTextEmail;
 
-    @BindView(R.id.login)
-    Button btnSignIn;
+    @BindView(R.id.logEditTextPassword)
+    EditText regTextPass;
 
-    @BindView(R.id.register)
-    Button btnRegister;
 
     private GlobalVars gVars;
     GoogleApiClient apiClient;
@@ -73,24 +70,25 @@ public class LoginActivity extends AppCompatActivity {
         gVars.setmAuth(FirebaseAuth.getInstance());
     }
 
-    @OnClick(R.id.login_google)
+    @OnClick(R.id.logBtnSignInGoogle)
     public void onPressSignInGoogle(View view) {
         signInGoogle();
     }
 
-    @OnClick(R.id.login)
+    @OnClick(R.id.logBtnSignIn)
     public void onPressSignIn(View view) {
         signIn();
     }
 
-    @OnClick(R.id.register)
+    @OnClick(R.id.logBtnRegister)
     public void onPressRegister(View view) {
         register();
     }
 
     private void signIn() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        String email = regTextEmail.getText().toString();
+        String password = regTextPass.getText().toString();
+        firebaseAuth(email, password);
     }
 
     private void register() {
@@ -147,6 +145,28 @@ public class LoginActivity extends AppCompatActivity {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             updateUI(null);
                         } }
+                });
+    }
+
+    private void firebaseAuth(String email, String password) {
+        Log.d(TAG, "firebaseAuth:" + email);
+        gVars.getmAuth().signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success");
+                            FirebaseUser user = gVars.getmAuth().getCurrentUser();
+                            updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            updateUI(null);
+                        }
+                    }
                 });
     }
 
