@@ -3,7 +3,10 @@ package apm.muei.distancenevermatters.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,6 +17,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import apm.muei.distancenevermatters.R;
+import apm.muei.distancenevermatters.adapters.GameDetailsRecyclerAdapter;
 import apm.muei.distancenevermatters.dialogfragments.SaveGameDetailsFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,8 +25,16 @@ import butterknife.OnClick;
 
 public class GameDetailsFragment extends Fragment {
 
+    private GameDetailsRecyclerAdapter adapter;
+
     @BindView(R.id.ginfETdescription)
     EditText description;
+
+    @BindView(R.id.ginfETgameName)
+    EditText gameName;
+
+    @BindView(R.id.ginfRecyclerView)
+    RecyclerView recyclerView;
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -35,10 +47,12 @@ public class GameDetailsFragment extends Fragment {
             SaveGameDetailsFragment dialog = new SaveGameDetailsFragment();
             dialog.show(getActivity().getSupportFragmentManager(), "saveGameDetails");
             description.setEnabled(false);
+            gameName.setEnabled(false);
             item.setIcon(R.drawable.ic_edit_white_24dp);
         } else {
             description.setEnabled(true);
-            description.requestFocus();
+            gameName.setEnabled(true);
+            gameName.requestFocus();
             item.setIcon(R.drawable.ic_save_white_24dp);
         }
         item.setChecked(!item.isChecked());
@@ -68,6 +82,7 @@ public class GameDetailsFragment extends Fragment {
         ButterKnife.bind(this, rootView);
         setHasOptionsMenu(true);
         description.setEnabled(false);
+        gameName.setEnabled(false);
 
         Toolbar toolbar = getActivity().findViewById(R.id.mainToolbar);
         // Debería ser el nombre de la partida ¿?
@@ -81,6 +96,11 @@ public class GameDetailsFragment extends Fragment {
                 getActivity().onBackPressed();
             }
         });
+
+        // TODO Populate RecyclerView with real data
+        adapter = new GameDetailsRecyclerAdapter();
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         return rootView;
     }
