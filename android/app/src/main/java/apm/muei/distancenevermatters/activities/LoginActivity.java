@@ -4,9 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -14,7 +14,6 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 
@@ -88,7 +87,9 @@ public class LoginActivity extends AppCompatActivity {
     private void signIn() {
         String email = regTextEmail.getText().toString();
         String password = regTextPass.getText().toString();
-        firebaseAuth(email, password);
+        if(validateLogIn(email,password)){
+            firebaseAuth(email, password);
+        }
     }
 
     private void register() {
@@ -99,6 +100,14 @@ public class LoginActivity extends AppCompatActivity {
     private void signInGoogle() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(apiClient);
         startActivityForResult(signInIntent, ERROR_DIALOG_REQUEST);
+    }
+
+    private boolean validateLogIn(String email,String password){
+        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
+            Toast.makeText(this, "Introduce un email o contraseña validos", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
     @Override
