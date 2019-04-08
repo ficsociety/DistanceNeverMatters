@@ -17,7 +17,7 @@
             android:layout_height="wrap_content">
 
             <com.google.android.gms.common.SignInButton
-                android:id="@+id/logBtnGoogle"
+                android:id="@+id/logBtnSignInGoogle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
@@ -32,7 +32,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.48"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/logBtnRegistro" />
+                app:layout_constraintTop_toBottomOf="@+id/logBtnRegister" />
 
             <ImageView
                 android:id="@+id/logImgLogo"
@@ -50,7 +50,7 @@
                 app:srcCompat="@drawable/logo" />
 
             <Button
-                android:id="@+id/logBtnRegistro"
+                android:id="@+id/logBtnRegister"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -63,10 +63,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/logBtnIniciarSesion" />
+                app:layout_constraintTop_toBottomOf="@+id/logBtnSignIn" />
 
             <Button
-                android:id="@+id/logBtnIniciarSesion"
+                android:id="@+id/logBtnSignIn"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -96,10 +96,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.506"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/logEditTextUsername" />
+                app:layout_constraintTop_toBottomOf="@+id/logEditTextEmail" />
 
             <EditText
-                android:id="@+id/logEditTextUsername"
+                android:id="@+id/logEditTextEmail"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -109,7 +109,7 @@
                 android:layout_marginRight="16dp"
                 android:ems="15"
                 android:focusable="true"
-                android:hint="Introduce usuario"
+                android:hint="Email"
                 android:textColorHighlight="#ff7eff15"
                 android:textColorHint="#6E6E6E"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -1,10 +1,14 @@
 package apm.muei.distancenevermatters.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +21,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+
+import java.util.concurrent.Executor;
+
+import apm.muei.distancenevermatters.GlobalVars.GlobalVars;
 import apm.muei.distancenevermatters.R;
 import apm.muei.distancenevermatters.activities.CreateGameActivity;
 import apm.muei.distancenevermatters.activities.LoginActivity;
@@ -32,7 +42,7 @@ public class MainFragment extends Fragment {
     FloatingActionButton fab;
 
     @OnClick(R.id.gListAddFab)
-    public void addGame(){
+    public void addGame() {
         startActivity(new Intent(getActivity(), CreateGameActivity.class));
     }
 
@@ -41,6 +51,8 @@ public class MainFragment extends Fragment {
 
     @BindView(R.id.gListTabLayout)
     TabLayout tabLayout;
+
+    private GlobalVars gVars;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,6 +66,8 @@ public class MainFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, rootView);
+        gVars = new GlobalVars().getInstance();
+
         setHasOptionsMenu(true);
 
         // Set the tabs
@@ -85,11 +99,60 @@ public class MainFragment extends Fragment {
                 CharSequence text = "Regresando a login";
                 Toast toast = Toast.makeText(getActivity().getApplicationContext(), text, Toast.LENGTH_SHORT);
                 toast.show();
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
+                singOut();
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+
+    public class GameTabsPagerAdapter extends FragmentPagerAdapter {
+
+        private Context mContext;
+
+        public GameTabsPagerAdapter(Context context, FragmentManager fm) {
+            super(fm);
+            mContext = context;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return new GameListFragment();
+        }
+
+        @Override
+        public int getCount() {
+            return 3;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return mContext.getString(R.string.all);
+                case 1:
+                    return mContext.getString(R.string.master);
+                case 2:
+                    return mContext.getString(R.string.player);
+                default:
+                    return null;
+            }
+        }
+    }
+
+    private void singOut() {
+        // Firebase sign out
+        gVars.getmAuth().signOut();
+
+        // Google sign out
+        gVars.getSignInClient().signOut().addOnCompleteListener(this.getActivity(),
+                new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Intent intent = new Intent(getActivity(), LoginActivity.class);
+                        startActivity(intent);
+                    }
+                });
     }
 
 }
