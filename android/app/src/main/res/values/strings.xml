@@ -24,7 +24,9 @@
     <string name="invite">Invitar</string>
     <string name="delete">Eliminar partida</string>
     <string name="description">Descripción</string>
+    <string name="game_name">Nombre de la partida</string>
     <string name="creationdate">Fecha de creación</string>
+    <string name="player_list">Lista de Jugadores</string>
     <string name="participants">Participantes</string>
     <string name="descriptionshort">Breve descripción de la Partida en unas cuantas líneas.</string>
     <string name="date">01/01/2019</string>
