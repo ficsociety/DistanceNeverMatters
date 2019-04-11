@@ -9,7 +9,9 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -44,6 +46,8 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.logEditTextPassword)
     EditText regTextPass;
 
+    @BindView(R.id.logProgressBarSign)
+    ProgressBar progressBarSign;
 
     private GlobalVars gVars;
 
@@ -110,8 +114,12 @@ public class LoginActivity extends AppCompatActivity {
         String email = regTextEmail.getText().toString();
         String password = regTextPass.getText().toString();
         if(validateLogIn(email,password)){
+            progressBarSign.setVisibility(View.VISIBLE);
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             firebaseAuth(email, password);
         }
+
     }
 
     private void register() {
@@ -120,6 +128,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void signInGoogle() {
+        progressBarSign.setVisibility(View.VISIBLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(apiClient);
         startActivityForResult(signInIntent, ERROR_DIALOG_REQUEST);
     }
@@ -214,5 +225,7 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
+        progressBarSign.setVisibility(View.INVISIBLE);
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 }
