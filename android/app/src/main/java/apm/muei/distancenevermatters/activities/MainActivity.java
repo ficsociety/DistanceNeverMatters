@@ -59,7 +59,11 @@ public class MainActivity extends AppCompatActivity
         transaction.commit();
     }
 
+    /*
+    TODO Comportamiento back en main fragment vs details fragment
+
     @Override
     public void onBackPressed() {
     }
+    */
 }
