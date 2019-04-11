@@ -1,21 +1,29 @@
 package apm.muei.distancenevermatters.fragments;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
+import android.os.StrictMode;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
-
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.NetworkImageView;
+import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.util.Arrays;
+import java.util.List;
+import apm.muei.distancenevermatters.entities.Map;
 import apm.muei.distancenevermatters.R;
-import butterknife.BindView;
+import apm.muei.distancenevermatters.volley.VolleySingleton;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -27,6 +35,10 @@ public class CreateGameFragment extends Fragment {
         public void onGameCreated();
     }
 
+    private String mapsUrl = "https://distance-never-matters-backend.appspot.com/maps";
+    private RequestQueue queue;
+    private Gson gson;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,12 +48,51 @@ public class CreateGameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         View rootView = inflater.inflate(R.layout.fragment_create_game, container, false);
 
         ButterKnife.bind(this, rootView);
 
+
+        queue = VolleySingleton.getInstance(getActivity().getApplicationContext()).getRequestQueue();
+
+        gson = new GsonBuilder().create();
+        fetchMaps();
         return rootView;
     }
+
+    private void fetchMaps(){
+        Log.i("Peticion", "haciendo peticion");
+
+        StringRequest request = new StringRequest(Request.Method.GET, mapsUrl, onMapsLoaded, onMapsError);
+        queue.add(request);
+    }
+
+    private Response.Listener<String> onMapsLoaded = new Response.Listener<String>(){
+        @Override
+        public void onResponse(String response) {
+
+            List<Map> maps = Arrays.asList(gson.fromJson(response, Map[].class));
+            LinearLayout linearLayout = getActivity().findViewById(R.id.maps);
+            for (Map map : maps){
+                NetworkImageView image = new NetworkImageView(getActivity());
+                image.setImageUrl(map.getUrl().toString(), VolleySingleton.getInstance(getActivity().getApplicationContext()).getImageLoader());
+                linearLayout.addView(image);
+
+            }
+        }
+    };
+
+    private final Response.ErrorListener onMapsError = new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            Log.i("Error fetch maps",  error.toString());
+
+        }
+    };
+
 
     @Override
     public void onResume() {
@@ -83,8 +134,9 @@ public class CreateGameFragment extends Fragment {
         Toast.makeText(getActivity().getApplicationContext(),
                 "Crear Partida", Toast.LENGTH_LONG).show();
 
-        mCallback.onGameCreated();
-
+        // Intent intent = new Intent(getActivity(), GameCreatedActivity.class);
+        // startActivity(intent);
+        fetchMaps();
     }
 
     @OnClick({R.id.delete1, R.id.delete2})
