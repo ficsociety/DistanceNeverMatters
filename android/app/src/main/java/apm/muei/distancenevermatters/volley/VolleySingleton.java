@@ -7,6 +7,7 @@ import android.util.LruCache;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 public class VolleySingleton {
@@ -39,6 +40,9 @@ public class VolleySingleton {
 
     public RequestQueue getRequestQueue() {
         return this.requestQueue;
+    }
+    public void addRequestQueue(StringRequest request) {
+        this.requestQueue.add(request);
     }
     public ImageLoader getImageLoader(){return this.imageLoader; }
 
