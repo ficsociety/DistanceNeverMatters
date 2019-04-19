@@ -94,6 +94,7 @@ public class GameDetailsFragment extends Fragment {
                 Toast.makeText(getActivity().getApplicationContext(),
                         "Mostrando lista de partidas", Toast.LENGTH_SHORT).show();
                 getActivity().onBackPressed();
+                //REVISAR ESTO
             }
         });
 
