@@ -1,5 +1,6 @@
 package apm.muei.distancenevermatters.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.os.StrictMode;
@@ -25,6 +26,12 @@ import butterknife.OnClick;
 public class CreateGameFragment extends Fragment {
 
     private Gson gson;
+
+    OnGameCreatedListener mCallback;
+    public interface OnGameCreatedListener {
+        /** Called by CreateGameFragment when a game is created */
+        public void onGameCreated();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,6 +84,19 @@ public class CreateGameFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onAttach(Context activity) {
+        super.onAttach(activity);
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception.
+        try {
+            mCallback = (OnGameCreatedListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnGameCreatedListener");
+        }
+    }
+
     @OnClick(R.id.btn_add_marker_model)
     public void addMarkerModel(View view){
         Toast.makeText(getActivity().getApplicationContext(),
@@ -88,8 +108,7 @@ public class CreateGameFragment extends Fragment {
         Toast.makeText(getActivity().getApplicationContext(),
                 "Crear Partida", Toast.LENGTH_LONG).show();
 
-        // Intent intent = new Intent(getActivity(), GameCreatedActivity.class);
-        // startActivity(intent);;
+        mCallback.onGameCreated();
     }
 
     @OnClick({R.id.delete1, R.id.delete2})

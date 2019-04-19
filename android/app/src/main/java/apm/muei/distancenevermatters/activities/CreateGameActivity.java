@@ -11,7 +11,7 @@ import apm.muei.distancenevermatters.fragments.GameCreatedFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CreateGameActivity extends AppCompatActivity {
+public class CreateGameActivity extends AppCompatActivity implements CreateGameFragment.OnGameCreatedListener{
 
 
     @BindView(R.id.createGameToolbar)
