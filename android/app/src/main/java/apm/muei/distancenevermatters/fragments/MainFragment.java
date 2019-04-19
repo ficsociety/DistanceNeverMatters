@@ -66,7 +66,7 @@ public class MainFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, rootView);
-        gVars = new GlobalVars().getInstance();
+        //gVars = new GlobalVars().getInstance();
 
         setHasOptionsMenu(true);
 
@@ -83,41 +83,41 @@ public class MainFragment extends Fragment {
         super.onResume();
 
         getActivity().setTitle("Lista de partidas"); // TODO change for string resource
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        //((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.main_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.logout:
-                CharSequence text = "Regresando a login";
-                Toast toast = Toast.makeText(getActivity().getApplicationContext(), text, Toast.LENGTH_SHORT);
-                toast.show();
-                singOut();
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    private void singOut() {
-        // Firebase sign out
-        gVars.getmAuth().signOut();
-
-        // Google sign out
-        gVars.getSignInClient().signOut().addOnCompleteListener(this.getActivity(),
-                new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Intent intent = new Intent(getActivity(), LoginActivity.class);
-                        startActivity(intent);
-                    }
-                });
-    }
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        inflater.inflate(R.menu.main_menu, menu);
+//        super.onCreateOptionsMenu(menu, inflater);
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.logout:
+//                CharSequence text = "Regresando a login";
+//                Toast toast = Toast.makeText(getActivity().getApplicationContext(), text, Toast.LENGTH_SHORT);
+//                toast.show();
+//                singOut();
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
+//
+//    private void singOut() {
+//        // Firebase sign out
+//        gVars.getmAuth().signOut();
+//
+//        // Google sign out
+//        gVars.getSignInClient().signOut().addOnCompleteListener(this.getActivity(),
+//                new OnCompleteListener<Void>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Void> task) {
+//                        Intent intent = new Intent(getActivity(), LoginActivity.class);
+//                        startActivity(intent);
+//                    }
+//                });
+//    }
 
 }

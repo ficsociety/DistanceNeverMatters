@@ -37,8 +37,6 @@
     <string name="game_created">Partida creada</string>
     <string name="game_created_ok">¡Partida creada correctamente!</string>
     <string name="game_created_share">Código para compartir: </string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="ok_sadface">Ok :(</string>
     <string name="no_camera">Cámara no disponible</string>
@@ -47,4 +45,9 @@
     <string name="cancel">Cancelar</string>
     <string name="save_game_details">Guardar los datos de la partida</string>
     <string name="save_game_details_exp">Está usted seguro de querer actualizar los datos de la partida?</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
 </resources>
