@@ -101,17 +101,19 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
+        if (id == R.id.partidas) {
+            Toast.makeText(getApplicationContext(), "Mostrando lista de partidas.", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.perfil) {
+            Toast.makeText(getApplicationContext(), "Mostrando perfil de usuario.", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.about){
+            Toast.makeText(getApplicationContext(), "Mostrando información de la app.", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.ajustes) {
+            Toast.makeText(getApplicationContext(), "Mostrando ajustes.", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.logout) {
             CharSequence text = "Regresando a login";
-              Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
-             toast.show();              singOut();
-
+            Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
+            toast.show();
+            singOut();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
