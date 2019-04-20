@@ -1,5 +1,7 @@
 package apm.muei.distancenevermatters.fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +28,8 @@ import butterknife.OnClick;
 public class GameDetailsFragment extends Fragment {
 
     private GameDetailsRecyclerAdapter adapter;
+    private Activity activity;
+    //private Context context1;
 
     @BindView(R.id.ginfETdescription)
     EditText description;
@@ -72,6 +76,7 @@ public class GameDetailsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        activity = getActivity();
     }
 
     @Override
@@ -91,10 +96,10 @@ public class GameDetailsFragment extends Fragment {
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                Toast.makeText(getActivity().getApplicationContext(),
+                Toast.makeText(activity.getApplicationContext(),
                         "Mostrando lista de partidas", Toast.LENGTH_SHORT).show();
-                getActivity().onBackPressed();
-                //REVISAR ESTO
+
+                activity.onBackPressed();
             }
         });
 
