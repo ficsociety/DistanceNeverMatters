@@ -11,38 +11,43 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
 import apm.muei.distancenevermatters.R;
 import apm.muei.distancenevermatters.entities.Map;
+import apm.muei.distancenevermatters.entities.Model;
 
-public class MapsRecyclerViewAdapter extends RecyclerView.Adapter<MapsRecyclerViewAdapter.ViewHolder>{
+public class ModelsRecyclerViewAdapter extends RecyclerView.Adapter<ModelsRecyclerViewAdapter.ViewHolder>{
 
-    private List<Map> maps;
+    private List<Model> models;
     private Context mContext;
     private int lastClicked = -1;
 
 
-    public MapsRecyclerViewAdapter( Context mContext, List<Map> maps) {
-        this.maps = maps;
+    public ModelsRecyclerViewAdapter(Context mContext, List<Model> models) {
+        this.models = models;
         this.mContext = mContext;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.resource_list_item, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.resource_grid_item, viewGroup, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int position) {
+
+        RequestOptions requestOptions = new RequestOptions().placeholder(R.drawable.ic_launcher_background);
         Glide.with(mContext)
                 .asBitmap()
-                .load(maps.get(position).getUrl().toString())
+                .load(models.get(position).getPreview().toString())
+                .apply(requestOptions)
                 .into(viewHolder.image);
 
-        viewHolder.name.setText(maps.get(position).getName());
+        viewHolder.name.setText(models.get(position).getName());
 
 
         viewHolder.checkBox.setChecked(position == lastClicked);
@@ -60,7 +65,7 @@ public class MapsRecyclerViewAdapter extends RecyclerView.Adapter<MapsRecyclerVi
 
     @Override
     public int getItemCount() {
-        return this.maps.size();
+        return this.models.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -70,9 +75,9 @@ public class MapsRecyclerViewAdapter extends RecyclerView.Adapter<MapsRecyclerVi
 
         public ViewHolder(View itemView){
             super(itemView);
-            image = itemView.findViewById(R.id.imageResourceView);
-            name = itemView.findViewById(R.id.resourceName);
-            checkBox = itemView.findViewById(R.id.checkBoxResource);
+            image = itemView.findViewById(R.id.imageResourceGrid);
+            name = itemView.findViewById(R.id.resourceNameGrid);
+            checkBox = itemView.findViewById(R.id.checkBoxResourceGrid);
 
         }
     }

@@ -57,8 +57,6 @@ public class CreateGameFragment extends Fragment {
                 recyclerView.setLayoutManager(layoutManager);
                 MapsRecyclerViewAdapter adapter = new MapsRecyclerViewAdapter(getActivity().getApplicationContext(), maps);
                 recyclerView.setAdapter(adapter);
-                int position = 3;
-                adapter.notifyItemChanged(position);
             }
         });
         return rootView;
@@ -70,7 +68,7 @@ public class CreateGameFragment extends Fragment {
         super.onResume();
 
         Toolbar toolbar = getActivity().findViewById(R.id.createGameToolbar);
-        toolbar.setTitle("Crear partida"); // TODO change for string resource
+        toolbar.setTitle(R.string.create_game_title);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
@@ -83,8 +81,12 @@ public class CreateGameFragment extends Fragment {
 
     @OnClick(R.id.cGameBtnAddMarkerModel)
     public void addMarkerModel(View view){
-        Toast.makeText(getActivity().getApplicationContext(),
-                "Añadir marcador-modelo.", Toast.LENGTH_LONG).show();
+
+        MarkersModelsFragment markersModelsFragment = new MarkersModelsFragment();
+        this.getFragmentManager().beginTransaction()
+                .replace(R.id.create_game_fragments, markersModelsFragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     @OnClick(R.id.cGameBtnCreateGame)

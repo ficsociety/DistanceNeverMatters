@@ -17,15 +17,15 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/imageMapView"
+                android:id="@+id/imageResourceView"
                 android:layout_width="wrap_content"
                 android:layout_height="90dp"
                 android:layout_centerHorizontal="true"
-                android:contentDescription="@string/maps"
+                android:contentDescription="@string/resources"
                 app:srcCompat="@drawable/ic_launcher_background" />
 
             <CheckBox
-                android:id="@+id/checkBoxMap"
+                android:id="@+id/checkBoxResource"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -37,8 +37,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
-                android:layout_below="@+id/imageMapView"
-                android:id="@+id/mapName"
+                android:layout_below="@+id/imageResourceView"
+                android:id="@+id/resourceName"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
                 android:layout_marginTop="5dp"

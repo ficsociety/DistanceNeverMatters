@@ -27,4 +27,22 @@ public class WebService {
         });
         VolleySingleton.getInstance(context).addRequestQueue(request);
     }
+
+    public static void getModelsPreview(Context context, final VolleyCallback callback) {
+        StringRequest request = new StringRequest(Request.Method.GET, URL + "models", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                callback.onSuccess(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("Error fetch maps",  error.toString());
+
+            }
+        });
+        VolleySingleton.getInstance(context).addRequestQueue(request);
+    }
+
+
 }

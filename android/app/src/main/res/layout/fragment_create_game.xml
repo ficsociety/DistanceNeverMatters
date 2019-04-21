@@ -219,7 +219,9 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cGameDescription" />
 
-            <Button
+
+
+            <ImageButton
                 android:id="@+id/cGameBtnAddMarkerModel"
                 android:layout_width="52dp"
                 android:layout_height="52dp"
@@ -227,12 +229,16 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="24dp"
-                android:background="@drawable/button_bg_round"
-                android:padding="15dp"
-                android:text="+"
+                android:background="@color/colorAccent"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:contentDescription="@string/markers_models"
+                android:src="@android:drawable/ic_input_add"
+                android:tint="@android:color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/tableLayout"/>
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
