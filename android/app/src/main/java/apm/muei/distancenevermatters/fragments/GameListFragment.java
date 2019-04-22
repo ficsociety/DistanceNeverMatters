@@ -10,8 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import apm.muei.distancenevermatters.R;
+import apm.muei.distancenevermatters.activities.MainActivity;
 import apm.muei.distancenevermatters.adapters.GameRecyclerAdapter;
+import apm.muei.distancenevermatters.entities.dto.GameDetailsDto;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -19,8 +24,31 @@ public class GameListFragment extends Fragment implements GameRecyclerAdapter.On
 
     private GameRecyclerAdapter.OnGameDetailsListener mListener;
 
+    private final String user = "player1";
+
+    private List<GameDetailsDto> filterGameList(String filter) {
+
+        List<GameDetailsDto> gameDtoList = ((MainActivity) getActivity()).getGameDtoList();
+        List<GameDetailsDto> filtered = new ArrayList<>();
+        if (filter == "all") {
+            return gameDtoList;
+        } else {
+            for(GameDetailsDto game : gameDtoList) {
+                // TODO Obtener el usuario actual y quitar el hardcodeado
+                if ((filter.equals("master")) && (game.getMaster().getUid().equals("roi"))) {
+                    filtered.add(game);
+                }
+                if ((filter.equals("player")) && !(game.getMaster().getUid().equals("roi"))) {
+                    filtered.add(game);
+                }
+            }
+            return filtered;
+        }
+    }
+
     @BindView(R.id.gameRecyclerView)
     RecyclerView recyclerView;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,12 +57,21 @@ public class GameListFragment extends Fragment implements GameRecyclerAdapter.On
         View rootView = inflater.inflate(R.layout.fragment_game_list, container, false);
         ButterKnife.bind(this, rootView);
 
-        // TODO Populate RecyclerView with real data
-        GameRecyclerAdapter adapter = new GameRecyclerAdapter(this);
+        List<GameDetailsDto> gameList = filterGameList(getArguments().getString("filter"));
+
+        GameRecyclerAdapter adapter = new GameRecyclerAdapter(this, gameList);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         return rootView;
+    }
+
+    public static GameListFragment newInstance(String filter) {
+        GameListFragment fragment = new GameListFragment();
+        Bundle args = new Bundle();
+        args.putString("filter", filter);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override

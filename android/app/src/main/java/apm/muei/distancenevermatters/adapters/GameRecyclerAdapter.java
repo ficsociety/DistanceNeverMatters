@@ -10,7 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
 import apm.muei.distancenevermatters.R;
+import apm.muei.distancenevermatters.entities.dto.GameDetailsDto;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -18,8 +21,7 @@ import butterknife.OnClick;
 public class GameRecyclerAdapter extends RecyclerView.Adapter<GameRecyclerAdapter.GameViewHolder> {
 
     private Fragment fragment;
-
-    // TODO Declare dataset attribute
+    private List<GameDetailsDto> gameList;
 
     public interface OnGameDetailsListener {
         // TODO: Update arguments
@@ -62,16 +64,14 @@ public class GameRecyclerAdapter extends RecyclerView.Adapter<GameRecyclerAdapte
         }
     }
 
-    // TODO use constructor for receiving and setting actual dataset
-    public GameRecyclerAdapter(Fragment parentFragment) {
+    public GameRecyclerAdapter(Fragment parentFragment, List<GameDetailsDto> gameList) {
         if (parentFragment instanceof OnGameDetailsListener) {
             fragment = parentFragment;
         } else {
             throw new RuntimeException(fragment.toString()
                     + " must implement OnGameDetailsListener");
         }
-
-        // Initialise dataset
+        this.gameList = gameList;
     }
 
     @Override
@@ -85,13 +85,15 @@ public class GameRecyclerAdapter extends RecyclerView.Adapter<GameRecyclerAdapte
 
     @Override
     public void onBindViewHolder(GameRecyclerAdapter.GameViewHolder holder, int position) {
-        /* TODO get element from dataset at this position
-         * and replace the contents of the view holder with that element */
+        GameDetailsDto game = gameList.get(position);
+
+        // TODO Settear los demás campos
+        holder.nameView.setText(game.getName());
+        holder.descriptionView.setText(game.getMaster().getUid());
     }
 
-    // TODO return actual dataset size
     @Override
     public int getItemCount() {
-        return 10;
+        return gameList.size();
     }
 }

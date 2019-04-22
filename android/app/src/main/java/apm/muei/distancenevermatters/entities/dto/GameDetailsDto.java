@@ -31,6 +31,14 @@ public class GameDetailsDto {
         this.players = players;
     }
 
+    public GameDetailsDto(String name, String description, User master, GameState state) {
+        super();
+        this.name = name;
+        this.description = description;
+        this.master = master;
+        this.state = state;
+    }
+
     public String getName() {
         return name;
     }

@@ -19,7 +19,14 @@ public class GameTabsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return new GameListFragment();
+        switch (position) {
+            case 1:
+                return GameListFragment.newInstance("master");
+            case 2:
+                return GameListFragment.newInstance("player");
+            default:
+                return GameListFragment.newInstance("all");
+        }
     }
 
     @Override
