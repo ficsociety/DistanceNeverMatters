@@ -34,8 +34,8 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/markModMarkersRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="413dp"
+                android:layout_height="189dp"
                 android:layout_marginTop="40dp"
                 android:background="@android:color/black"
                 android:orientation="vertical"
