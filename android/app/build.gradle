@@ -47,6 +47,9 @@ dependencies {
     implementation 'com.android.volley:volley:1.1.0'
     implementation 'com.google.code.gson:gson:2.4'
 
+    //Cargar las imagenes, tiene caché
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+
 }
 com.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true
 

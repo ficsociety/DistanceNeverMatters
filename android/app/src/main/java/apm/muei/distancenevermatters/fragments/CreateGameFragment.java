@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.os.StrictMode;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.util.Arrays;
 import java.util.List;
+
+import apm.muei.distancenevermatters.adapters.MapsRecyclerViewAdapter;
 import apm.muei.distancenevermatters.entities.Map;
 import apm.muei.distancenevermatters.R;
 import apm.muei.distancenevermatters.volley.VolleyCallback;
@@ -54,14 +58,12 @@ public class CreateGameFragment extends Fragment {
             @Override
             public void onSuccess(String result) {
                 List<Map> maps = Arrays.asList(gson.fromJson(result, Map[].class));
-                LinearLayout linearLayout = getActivity().findViewById(R.id.maps);
-                for (Map map : maps){
-                    NetworkImageView image = new NetworkImageView(getActivity());
-                    image.setImageUrl(map.getUrl().toString(), VolleySingleton.getInstance(getActivity().getApplicationContext()).getImageLoader());
-                    linearLayout.addView(image);
 
-                }
-
+                LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
+                RecyclerView recyclerView = getActivity().findViewById(R.id.cGameMapsRecyclerView);
+                recyclerView.setLayoutManager(layoutManager);
+                MapsRecyclerViewAdapter adapter = new MapsRecyclerViewAdapter(getActivity().getApplicationContext(), maps);
+                recyclerView.setAdapter(adapter);
             }
         });
         return rootView;
@@ -73,7 +75,7 @@ public class CreateGameFragment extends Fragment {
         super.onResume();
 
         Toolbar toolbar = getActivity().findViewById(R.id.createGameToolbar);
-        toolbar.setTitle("Crear partida"); // TODO change for string resource
+        toolbar.setTitle(R.string.create_game_title);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
@@ -84,26 +86,17 @@ public class CreateGameFragment extends Fragment {
         });
     }
 
-    @Override
-    public void onAttach(Context activity) {
-        super.onAttach(activity);
-        // This makes sure that the container activity has implemented
-        // the callback interface. If not, it throws an exception.
-        try {
-            mCallback = (OnGameCreatedListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnGameCreatedListener");
-        }
-    }
-
-    @OnClick(R.id.btn_add_marker_model)
+    @OnClick(R.id.cGameBtnAddMarkerModel)
     public void addMarkerModel(View view){
-        Toast.makeText(getActivity().getApplicationContext(),
-                "Añadir marcador-modelo.", Toast.LENGTH_LONG).show();
+
+        MarkersModelsFragment markersModelsFragment = new MarkersModelsFragment();
+        this.getFragmentManager().beginTransaction()
+                .replace(R.id.create_game_fragments, markersModelsFragment)
+                .addToBackStack(null)
+                .commit();
     }
 
-    @OnClick(R.id.btn_create_game)
+    @OnClick(R.id.cGameBtnCreateGame)
     public void createGame(View view){
         Toast.makeText(getActivity().getApplicationContext(),
                 "Crear Partida", Toast.LENGTH_LONG).show();
