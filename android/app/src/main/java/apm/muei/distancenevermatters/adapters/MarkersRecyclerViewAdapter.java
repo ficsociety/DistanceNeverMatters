@@ -1,6 +1,7 @@
 package apm.muei.distancenevermatters.adapters;
 
 import android.content.Context;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +20,7 @@ import com.bumptech.glide.request.RequestOptions;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.URL;
@@ -26,8 +28,8 @@ import java.util.List;
 
 import apm.muei.distancenevermatters.R;
 import apm.muei.distancenevermatters.entities.Marker;
-import butterknife.OnClick;
 import butterknife.ButterKnife;
+
 
 public class MarkersRecyclerViewAdapter extends RecyclerView.Adapter<MarkersRecyclerViewAdapter.ViewHolder> {
 
@@ -81,9 +83,24 @@ public class MarkersRecyclerViewAdapter extends RecyclerView.Adapter<MarkersRecy
                 String url = markers.get(positiondownload).getUrl().toString();
                 String name = markers.get(positiondownload).getName();
                 Context cxt = fragment.getActivity().getApplicationContext();
+                String folder = cxt.getFilesDir().getAbsolutePath();
+                Log.i("",folder);
                 descargar(cxt, url, name);
                 Toast.makeText(cxt, "Descargando", Toast.LENGTH_LONG).show();
 
+            }
+
+
+
+            public File getAlbumStorageDir(String albumName) {
+                // Get the directory for the user's public pictures directory.
+                File file = new File(Environment.getExternalStoragePublicDirectory(
+                        Environment.DIRECTORY_PICTURES), albumName);
+                if (!file.exists()) {
+                    file.mkdirs();
+//                    Log.e("","Directory not created");
+                }
+                return file;
             }
 
             public void descargar(Context cxt, String urldownload, String name) {
@@ -99,7 +116,8 @@ public class MarkersRecyclerViewAdapter extends RecyclerView.Adapter<MarkersRecy
                     out.close();
                     in.close();
                     byte[] response = out.toByteArray();
-                    FileOutputStream outputStream = cxt.openFileOutput(name, Context.MODE_PRIVATE);
+                    name = name.concat(".jpg");
+                    FileOutputStream outputStream = new FileOutputStream(new File(getAlbumStorageDir("Marcadores"), name));
                     outputStream.write(response);
                     outputStream.close();
                 } catch (Exception e) {
@@ -138,34 +156,7 @@ public class MarkersRecyclerViewAdapter extends RecyclerView.Adapter<MarkersRecy
             name = itemView.findViewById(R.id.resourceNameGridDownload);
             checkBox = itemView.findViewById(R.id.checkBoxResourceGridDownload);
             button = itemView.findViewById(R.id.buttonResourceGridDownload);
-
-
         }
-
-//        @OnClick(R.id.buttonResourceGridDownload)
-
-
-//        public void descargar(Context cxt){
-//            try {
-//                URL url = new URL("https://i.imgur.com/8aeXtJD.png");
-//                InputStream in = new BufferedInputStream(url.openStream());
-//                ByteArrayOutputStream out = new ByteArrayOutputStream();
-//                byte[] buf = new byte[1024];
-//                int n = 0;
-//                while (-1!=(n=in.read(buf)))
-//                {
-//                    out.write(buf, 0, n);
-//                }
-//                out.close();
-//                in.close();
-//                byte[] response = out.toByteArray();
-//                FileOutputStream outputStream = cxt.openFileOutput("8aeXtJD.png", Context.MODE_PRIVATE);
-//                outputStream.write(response);
-//                outputStream.close();
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
 
     }
 
