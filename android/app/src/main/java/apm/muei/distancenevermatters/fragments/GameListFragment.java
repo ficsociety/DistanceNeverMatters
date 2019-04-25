@@ -4,6 +4,7 @@ package apm.muei.distancenevermatters.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,21 +25,21 @@ public class GameListFragment extends Fragment implements GameRecyclerAdapter.On
 
     private GameRecyclerAdapter.OnGameDetailsListener mListener;
 
-    private final String user = "player1";
+    private Context mContext;
 
     private List<GameDetailsDto> filterGameList(String filter) {
 
         List<GameDetailsDto> gameDtoList = ((MainActivity) getActivity()).getGameDtoList();
         List<GameDetailsDto> filtered = new ArrayList<>();
-        if (filter == "all") {
+        if (filter == mContext.getString(R.string.all)) {
             return gameDtoList;
         } else {
             for(GameDetailsDto game : gameDtoList) {
                 // TODO Obtener el usuario actual y quitar el hardcodeado
-                if ((filter.equals("master")) && (game.getMaster().getUid().equals("roi"))) {
+                if ((filter.equals(mContext.getString(R.string.master))) && (game.getMaster().getUid().equals("roi"))) {
                     filtered.add(game);
                 }
-                if ((filter.equals("player")) && !(game.getMaster().getUid().equals("roi"))) {
+                if ((filter.equals(mContext.getString(R.string.player))) && !(game.getMaster().getUid().equals("roi"))) {
                     filtered.add(game);
                 }
             }
@@ -48,6 +49,9 @@ public class GameListFragment extends Fragment implements GameRecyclerAdapter.On
 
     @BindView(R.id.gameRecyclerView)
     RecyclerView recyclerView;
+
+    @BindView(R.id.swipeRefreshLayout)
+    SwipeRefreshLayout swipeRefresh;
 
 
     @Override
@@ -63,6 +67,15 @@ public class GameListFragment extends Fragment implements GameRecyclerAdapter.On
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Esto se ejecuta cada vez que se realiza el gesto
+                swipeRefresh.setRefreshing(true);
+                fetchGames(swipeRefresh);
+            }
+        });
+
         return rootView;
     }
 
@@ -77,6 +90,7 @@ public class GameListFragment extends Fragment implements GameRecyclerAdapter.On
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        mContext = context;
         if (context instanceof GameRecyclerAdapter.OnGameDetailsListener) {
             mListener = (GameRecyclerAdapter.OnGameDetailsListener) context;
         } else {
@@ -86,8 +100,13 @@ public class GameListFragment extends Fragment implements GameRecyclerAdapter.On
     }
 
     @Override
-    public void onGameSelected() {
-        mListener.onGameSelected();
+    public void onGameSelected(GameDetailsDto gameDetails) {
+        mListener.onGameSelected(gameDetails);
+    }
+
+    @Override
+    public void fetchGames(SwipeRefreshLayout swipeRefresh) {
+        mListener.fetchGames(swipeRefresh);
     }
 
 }

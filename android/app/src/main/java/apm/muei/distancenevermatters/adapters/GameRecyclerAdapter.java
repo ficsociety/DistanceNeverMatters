@@ -1,6 +1,8 @@
 package apm.muei.distancenevermatters.adapters;
 
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import apm.muei.distancenevermatters.R;
+import apm.muei.distancenevermatters.entities.GameState;
 import apm.muei.distancenevermatters.entities.dto.GameDetailsDto;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,7 +28,8 @@ public class GameRecyclerAdapter extends RecyclerView.Adapter<GameRecyclerAdapte
 
     public interface OnGameDetailsListener {
         // TODO: Update arguments
-        void onGameSelected();
+        void onGameSelected(GameDetailsDto gameDetails);
+        void fetchGames(SwipeRefreshLayout swipeRefresh);
     }
 
     // ViewHolder for game list items
@@ -50,17 +54,21 @@ public class GameRecyclerAdapter extends RecyclerView.Adapter<GameRecyclerAdapte
         @BindView(R.id.gListImgStatus)
         ImageView status;
 
-        @OnClick(R.id.gListItem)
-        public void showDetails() {
-            CharSequence text = "Detalles partida";
-            Toast toast = Toast.makeText(fragment.getActivity().getApplicationContext(), text, Toast.LENGTH_SHORT);
-            toast.show();
-            ((OnGameDetailsListener) fragment).onGameSelected();
-        }
-
         public GameViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Redraw the old selection and the new
+                    CharSequence text = "Detalles partida";
+                    int t = getLayoutPosition();
+                    GameDetailsDto dto = gameList.get(t);
+                    Toast toast = Toast.makeText(fragment.getActivity().getApplicationContext(), text + dto.getName(), Toast.LENGTH_SHORT);
+                    toast.show();
+                    ((OnGameDetailsListener) fragment).onGameSelected(dto);
+                }
+            });
         }
     }
 
@@ -88,7 +96,16 @@ public class GameRecyclerAdapter extends RecyclerView.Adapter<GameRecyclerAdapte
         GameDetailsDto game = gameList.get(position);
 
         // TODO Settear los demás campos
+        if (game.getGameState() == GameState.PLAYING) {
+            holder.status.setColorFilter(ContextCompat.getColor(fragment.getContext(), R.color.colorGamePlaying));
+            holder.start.setText(R.string.joinGame);
+        } else if (game.getGameState() == GameState.PAUSED) {
+            holder.status.setColorFilter(ContextCompat.getColor(fragment.getContext(), R.color.colorGamePaused));
+            holder.start.setText(R.string.startGame);
+        }
+
         holder.nameView.setText(game.getName());
+        // TODO Cambiar este campo
         holder.descriptionView.setText(game.getMaster().getUid());
     }
 

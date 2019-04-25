@@ -21,11 +21,11 @@ public class GameTabsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 1:
-                return GameListFragment.newInstance("master");
+                return GameListFragment.newInstance(mContext.getString(R.string.master));
             case 2:
-                return GameListFragment.newInstance("player");
+                return GameListFragment.newInstance(mContext.getString(R.string.player));
             default:
-                return GameListFragment.newInstance("all");
+                return GameListFragment.newInstance(mContext.getString(R.string.all));
         }
     }
 

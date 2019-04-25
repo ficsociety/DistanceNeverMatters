@@ -3,10 +3,14 @@ package apm.muei.distancenevermatters.volley;
 import android.content.Context;
 import android.util.Log;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class WebService {
@@ -39,8 +43,15 @@ public class WebService {
     public static void getGames(Context context, final VolleyCallback callback) {
 
         StringRequest request;
-        // TODO Cambiar path
-        request = new StringRequest(Request.Method.GET, URL.concat("maps"), getOnSuccessCallback(callback), getOnErrorCallback());
+        request = new StringRequest(Request.Method.GET, URL.concat("user/games"), getOnSuccessCallback(callback), getOnErrorCallback()) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String>  params = new HashMap<>();
+                // TODO Obtener user y meterlo en el header
+                params.put("token", "roi");
+                return params;
+            }
+        };
         VolleySingleton.getInstance(context).addRequestQueue(request);
     }
 }

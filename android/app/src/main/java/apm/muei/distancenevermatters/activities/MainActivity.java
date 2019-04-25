@@ -2,6 +2,7 @@ package apm.muei.distancenevermatters.activities;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import apm.muei.distancenevermatters.adapters.GameRecyclerAdapter;
@@ -27,8 +29,9 @@ public class MainActivity extends AppCompatActivity
         implements GameRecyclerAdapter.OnGameDetailsListener {
 
     private List<GameDetailsDto> gameDtoList = new ArrayList<>();
+    private GameDetailsDto gameDetails;
 
-    MainFragment firstFragment = null;
+    MainFragment fragment = null;
 
     @BindView(R.id.mainToolbar)
     Toolbar toolbar;
@@ -48,7 +51,6 @@ public class MainActivity extends AppCompatActivity
 
         // Be sure to ALWAYS set up the support action bar, or else getSupportActionBar could return null
         setSupportActionBar(toolbar);
-        System.out.println("activity first call");
 
         if (fragmentContainer != null) {
             // If we are being restored, return or else we could end up
@@ -56,41 +58,56 @@ public class MainActivity extends AppCompatActivity
                 return;
             }
             // Add the first fragment to the fragment container in the layout
-            firstFragment = new MainFragment();
+            fragment = new MainFragment();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.mainFrameLFragContainer, firstFragment).commit();
+                    .add(R.id.mainFrameLFragContainer, fragment).commit();
         }
 
+        fetchGames(null);
+    }
+
+    @Override
+    public void fetchGames(final SwipeRefreshLayout swipeRefresh) {
         WebService.getGames(getApplicationContext(), new VolleyCallback() {
             @Override
             public void onSuccess(String result) {
                 // TODO Eliminar estos datos mockeados
                 User user1 = new User("roi");
-                User user2 = new User("jordiENP");
-                gameDtoList.add(new GameDetailsDto("Prueba 1", "descripcion", user1, GameState.PLAYING));
-                gameDtoList.add(new GameDetailsDto("Prueba 2", "descripcion", user1, GameState.PLAYING));
-                gameDtoList.add(new GameDetailsDto("Prueba 3", "descripcion", user2, GameState.PLAYING));
-                gameDtoList.add(new GameDetailsDto("Prueba 4", "descripcion", user1, GameState.PAUSED));
-                gameDtoList.add(new GameDetailsDto("Prueba 5", "descripcion", user1, GameState.PAUSED));
-                gameDtoList.add(new GameDetailsDto("Prueba 6", "descripcion", user2, GameState.PAUSED));
-                gameDtoList.add(new GameDetailsDto("Prueba 7", "descripcion", user2, GameState.PAUSED));
-                gameDtoList.add(new GameDetailsDto("Prueba 8", "descripcion", user1, GameState.PAUSED));
+                User user2 = new User("cr7");
+                List<User> users = new ArrayList<>();
+                users.add(new User("user1"));
+                users.add(new User("user2"));
+                users.add(new User("user3"));
+                gameDtoList.add(new GameDetailsDto("Prueba 1", "descripcion 1", user1, new Date(), 1L, GameState.PLAYING, users));
+                gameDtoList.add(new GameDetailsDto("Prueba 2", "descripcion 2", user1, new Date(), 2L, GameState.PLAYING, users));
+                gameDtoList.add(new GameDetailsDto("Prueba 3", "descripcion 3", user2, new Date(), 3L, GameState.PLAYING, users));
+                gameDtoList.add(new GameDetailsDto("Prueba 4", "descripcion 4", user1, new Date(), 4L, GameState.PAUSED, users));
+                gameDtoList.add(new GameDetailsDto("Prueba 5", "descripcion 5", user1, new Date(), 5L, GameState.PAUSED, users));
+                gameDtoList.add(new GameDetailsDto("Prueba 6", "descripcion 6", user2, new Date(), 6L, GameState.PAUSED, users));
+                gameDtoList.add(new GameDetailsDto("Prueba 7", "descripcion 7", user2, new Date(), 7L, GameState.PAUSED, users));
+                gameDtoList.add(new GameDetailsDto("Prueba 8", "descripcion 8", user1, new Date(), 8L, GameState.PAUSED, users));
+
                 if (fragmentContainer != null) {
                     // If we are being restored, return or else we could end up
                     // Add the first fragment to the fragment container in the layout
                     MainFragment nextFragment = new MainFragment();
-                    getSupportFragmentManager().beginTransaction().detach(firstFragment)
+                    getSupportFragmentManager().beginTransaction().detach(fragment)
                             .add(R.id.mainFrameLFragContainer, nextFragment).commit();
-
+                    fragment = nextFragment;
                 }
                 progressBar.setVisibility(View.GONE);
+
+                if (swipeRefresh != null) {
+                    swipeRefresh.setRefreshing(false);
+                }
             }
         });
     }
 
     @Override
-    public void onGameSelected() {
+    public void onGameSelected(GameDetailsDto gameDetails) {
         // Swap fragments
+        this.gameDetails = gameDetails;
         GameDetailsFragment newFragment = new GameDetailsFragment();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -102,6 +119,8 @@ public class MainActivity extends AppCompatActivity
     public List<GameDetailsDto> getGameDtoList() {
         return gameDtoList;
     }
+
+    public GameDetailsDto getGameDetails() { return gameDetails; }
 
     /*
     TODO Comportamiento back en main fragment vs details fragment

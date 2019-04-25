@@ -14,11 +14,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import apm.muei.distancenevermatters.R;
+import apm.muei.distancenevermatters.activities.MainActivity;
 import apm.muei.distancenevermatters.adapters.GameDetailsRecyclerAdapter;
 import apm.muei.distancenevermatters.dialogfragments.SaveGameDetailsFragment;
+import apm.muei.distancenevermatters.entities.dto.GameDetailsDto;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -32,6 +35,9 @@ public class GameDetailsFragment extends Fragment {
 
     @BindView(R.id.ginfETgameName)
     EditText gameName;
+
+    @BindView(R.id.ginfTVdateValue)
+    TextView gameDate;
 
     @BindView(R.id.ginfRecyclerView)
     RecyclerView recyclerView;
@@ -81,8 +87,14 @@ public class GameDetailsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_game_details, container, false);
         ButterKnife.bind(this, rootView);
         setHasOptionsMenu(true);
+        GameDetailsDto gameDetails = ((MainActivity) getActivity()).getGameDetails();
+
         description.setEnabled(false);
         gameName.setEnabled(false);
+
+        gameName.setText(gameDetails.getName());
+        description.setText(gameDetails.getDescription());
+        gameDate.setText(gameDetails.getDate().toString());
 
         Toolbar toolbar = getActivity().findViewById(R.id.mainToolbar);
         // Debería ser el nombre de la partida ¿?
@@ -98,7 +110,7 @@ public class GameDetailsFragment extends Fragment {
         });
 
         // TODO Populate RecyclerView with real data
-        adapter = new GameDetailsRecyclerAdapter();
+        adapter = new GameDetailsRecyclerAdapter(this, gameDetails.getMaster(), gameDetails.getPlayers());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
