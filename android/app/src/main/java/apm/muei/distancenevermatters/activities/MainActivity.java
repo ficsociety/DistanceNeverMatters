@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import apm.muei.distancenevermatters.GlobalVars.GlobalVars;
 import apm.muei.distancenevermatters.adapters.GameRecyclerAdapter;
 import apm.muei.distancenevermatters.entities.GameState;
 import apm.muei.distancenevermatters.entities.User;
@@ -73,11 +74,12 @@ public class MainActivity extends AppCompatActivity
             public void onSuccess(String result) {
                 // TODO Eliminar estos datos mockeados
                 User user1 = new User("roi");
-                User user2 = new User("cr7");
+                User user2 = new User("morenito84");
                 List<User> users = new ArrayList<>();
                 users.add(new User("user1"));
                 users.add(new User("user2"));
                 users.add(new User("user3"));
+                gameDtoList = new ArrayList<>();
                 gameDtoList.add(new GameDetailsDto("Prueba 1", "descripcion 1", user1, new Date(), 1L, GameState.PLAYING, users));
                 gameDtoList.add(new GameDetailsDto("Prueba 2", "descripcion 2", user1, new Date(), 2L, GameState.PLAYING, users));
                 gameDtoList.add(new GameDetailsDto("Prueba 3", "descripcion 3", user2, new Date(), 3L, GameState.PLAYING, users));

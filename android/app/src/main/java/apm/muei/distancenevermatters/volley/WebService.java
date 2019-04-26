@@ -12,6 +12,8 @@ import com.android.volley.toolbox.StringRequest;
 import java.util.HashMap;
 import java.util.Map;
 
+import apm.muei.distancenevermatters.GlobalVars.GlobalVars;
+
 
 public class WebService {
 
@@ -41,7 +43,8 @@ public class WebService {
     }
 
     public static void getGames(Context context, final VolleyCallback callback) {
-
+        GlobalVars gVars = new GlobalVars().getInstance();
+        System.out.println(gVars.getUser().getUid());
         StringRequest request;
         request = new StringRequest(Request.Method.GET, URL.concat("user/games"), getOnSuccessCallback(callback), getOnErrorCallback()) {
             @Override
@@ -56,34 +59,12 @@ public class WebService {
     }
 
     public static void getModelsPreview(Context context, final VolleyCallback callback) {
-        StringRequest request = new StringRequest(Request.Method.GET, URL + "models", new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                callback.onSuccess(response);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.i("Error fetch maps",  error.toString());
-
-            }
-        });
+        StringRequest request = new StringRequest(Request.Method.GET, URL + "models", getOnSuccessCallback(callback), getOnErrorCallback());
         VolleySingleton.getInstance(context).addRequestQueue(request);
     }
 
     public static void getMarkers(Context context, final VolleyCallback callback) {
-        StringRequest request = new StringRequest(Request.Method.GET, URL + "markers", new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                callback.onSuccess(response);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.i("Error fetch markers",  error.toString());
-
-            }
-        });
+        StringRequest request = new StringRequest(Request.Method.GET, URL + "markers", getOnSuccessCallback(callback), getOnErrorCallback());
         VolleySingleton.getInstance(context).addRequestQueue(request);
     }
 
