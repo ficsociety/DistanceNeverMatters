@@ -84,7 +84,6 @@ public class MarkersRecyclerViewAdapter extends RecyclerView.Adapter<MarkersRecy
                 String name = markers.get(positiondownload).getName();
                 Context cxt = fragment.getActivity().getApplicationContext();
                 String folder = cxt.getFilesDir().getAbsolutePath();
-                Log.i("",folder);
                 descargar(cxt, url, name);
                 Toast.makeText(cxt, "Descargando", Toast.LENGTH_LONG).show();
 
