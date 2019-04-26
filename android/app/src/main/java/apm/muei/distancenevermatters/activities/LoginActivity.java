@@ -32,6 +32,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import apm.muei.distancenevermatters.GlobalVars.GlobalVars;
 import apm.muei.distancenevermatters.R;
 import apm.muei.distancenevermatters.dialogfragments.NoCameraDialogFragment;
+import apm.muei.distancenevermatters.entities.User;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -148,6 +149,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         // Comprobamos si el usuario ya esta registrado
         FirebaseUser currentUser = gVars.getmAuth().getCurrentUser();
+        if (currentUser != null) gVars.setUser(new User(currentUser.getEmail()));
         updateUI(currentUser);
     }
 
@@ -180,6 +182,7 @@ public class LoginActivity extends AppCompatActivity {
                             //  Exito al iniciar sesion con Firebase, guardamos las credenciales.
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = gVars.getmAuth().getCurrentUser();
+                            gVars.setUser(new User(user.getEmail()));
                             updateUI(user);
                             saveCredentials(user.getUid());
                         } else {
@@ -200,6 +203,7 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = gVars.getmAuth().getCurrentUser();
+                            gVars.setUser(new User(user.getEmail()));
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
