@@ -22,7 +22,7 @@ public class SaveGameDetailsFragment extends DialogFragment {
                         Toast.makeText(getActivity().getApplicationContext(),
                                 "Guardando cambios", Toast.LENGTH_SHORT).show();
                     }
-                }).setNegativeButton(R.string.cancel, null);;
+                }).setNegativeButton(R.string.cancel, null);
 
         return builder.create();
     }
