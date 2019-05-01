@@ -4,28 +4,20 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.widget.LinearLayout;
 
-import com.android.volley.toolbox.NetworkImageView;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import apm.muei.distancenevermatters.entities.Map;
+import java.util.HashMap;
+import java.util.Map;
+import apm.muei.distancenevermatters.entities.Marker;
+import apm.muei.distancenevermatters.entities.Model;
 import apm.muei.distancenevermatters.fragments.CreateGameFragment;
 import apm.muei.distancenevermatters.R;
 import apm.muei.distancenevermatters.fragments.GameCreatedFragment;
-import apm.muei.distancenevermatters.volley.VolleyCallback;
-import apm.muei.distancenevermatters.volley.VolleySingleton;
-import apm.muei.distancenevermatters.volley.WebService;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CreateGameActivity extends AppCompatActivity {
 
+    private Map<Marker, Model> markerModel = new HashMap<>();
 
     @BindView(R.id.createGameToolbar)
     Toolbar toolbar;
@@ -49,6 +41,17 @@ public class CreateGameActivity extends AppCompatActivity {
         }
     }
 
+    public Map<Marker, Model> getMarkerModel() {
+        return markerModel;
+    }
+
+    public void putMarkerModel(Marker marker, Model model){
+        this.markerModel.put(marker, model);
+    }
+
+    public void removeMarkerModel(Marker marker){
+        this.markerModel.keySet().remove(marker);
+    }
 
     public void onGameCreated() {
         //Swap Fragments

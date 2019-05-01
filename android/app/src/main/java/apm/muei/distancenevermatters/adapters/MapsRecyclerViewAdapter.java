@@ -42,20 +42,7 @@ public class MapsRecyclerViewAdapter extends RecyclerView.Adapter<MapsRecyclerVi
                 .load(maps.get(position).getUrl().toString())
                 .into(viewHolder.image);
 
-        viewHolder.name.setText(maps.get(position).getName());
-
-
-        viewHolder.checkBox.setChecked(position == lastClicked);
-
-
-        viewHolder.image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                lastClicked = viewHolder.getAdapterPosition();
-                notifyDataSetChanged();
-            }
-        });
-
+        viewHolder.bind(maps.get(position));
     }
 
     @Override
@@ -74,6 +61,31 @@ public class MapsRecyclerViewAdapter extends RecyclerView.Adapter<MapsRecyclerVi
             name = itemView.findViewById(R.id.resourceName);
             checkBox = itemView.findViewById(R.id.checkBoxResource);
 
+        }
+
+        void bind(final Map map){
+            if (lastClicked == -1){
+                checkBox.setChecked(false);
+            } else {
+                if (lastClicked == getAdapterPosition()) {
+                    checkBox.setChecked(true);
+                } else {
+                    checkBox.setChecked(false);
+                }
+
+                name.setText(map.getName());
+            }
+
+            image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    checkBox.setChecked(true);
+                    if (lastClicked != getAdapterPosition()) {
+                        notifyItemChanged(lastClicked);
+                        lastClicked = getAdapterPosition();
+                    }
+                }
+            });
         }
     }
 }

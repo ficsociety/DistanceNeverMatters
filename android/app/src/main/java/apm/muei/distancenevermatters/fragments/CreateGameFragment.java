@@ -14,9 +14,12 @@ import android.widget.Toast;
 import com.android.volley.toolbox.NetworkImageView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import apm.muei.distancenevermatters.activities.CreateGameActivity;
 import apm.muei.distancenevermatters.adapters.MapsRecyclerViewAdapter;
 import apm.muei.distancenevermatters.entities.Map;
 import apm.muei.distancenevermatters.R;
@@ -28,7 +31,8 @@ import butterknife.OnClick;
 
 public class CreateGameFragment extends Fragment {
 
-    private Gson gson;
+    List<Map> maps = new ArrayList<>();
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,29 +43,36 @@ public class CreateGameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-
         View rootView = inflater.inflate(R.layout.fragment_create_game, container, false);
 
         ButterKnife.bind(this, rootView);
-        gson = new GsonBuilder().create();
+        if (maps.isEmpty()) {
+            WebService.getMaps(getActivity().getApplicationContext(), new VolleyCallback() {
+                Gson gson = new GsonBuilder().create();
 
-        WebService.getMaps(getActivity().getApplicationContext(), new VolleyCallback() {
-            @Override
-            public void onSuccess(String result) {
-                List<Map> maps = Arrays.asList(gson.fromJson(result, Map[].class));
+                @Override
+                public void onSuccess(String result) {
+                    maps = Arrays.asList(gson.fromJson(result, Map[].class));
 
-                LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
-                RecyclerView recyclerView = getActivity().findViewById(R.id.cGameMapsRecyclerView);
-                recyclerView.setLayoutManager(layoutManager);
-                MapsRecyclerViewAdapter adapter = new MapsRecyclerViewAdapter(getActivity().getApplicationContext(), maps);
-                recyclerView.setAdapter(adapter);
-            }
-        });
+                    printMaps();
+                }
+            });
+        }
+        else {
+            printMaps();
+        }
+
+
         return rootView;
     }
 
+    public void printMaps(){
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView recyclerView = getActivity().findViewById(R.id.cGameMapsRecyclerView);
+        recyclerView.setLayoutManager(layoutManager);
+        MapsRecyclerViewAdapter adapter = new MapsRecyclerViewAdapter(getActivity().getApplicationContext(), maps);
+        recyclerView.setAdapter(adapter);
+    }
 
     @Override
     public void onResume() {
