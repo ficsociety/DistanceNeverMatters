@@ -30,4 +30,25 @@ public class Model {
         return preview;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Model)) return false;
+
+        Model model = (Model) o;
+
+        if (id != model.id) return false;
+        if (name != null ? !name.equals(model.name) : model.name != null) return false;
+        if (url != null ? !url.equals(model.url) : model.url != null) return false;
+        return preview != null ? preview.equals(model.preview) : model.preview == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (url != null ? url.hashCode() : 0);
+        result = 31 * result + (preview != null ? preview.hashCode() : 0);
+        return result;
+    }
 }

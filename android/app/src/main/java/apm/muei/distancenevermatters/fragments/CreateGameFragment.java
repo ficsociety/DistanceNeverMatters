@@ -46,32 +46,28 @@ public class CreateGameFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_create_game, container, false);
 
         ButterKnife.bind(this, rootView);
-        if (maps.isEmpty()) {
-            WebService.getMaps(getActivity().getApplicationContext(), new VolleyCallback() {
-                Gson gson = new GsonBuilder().create();
 
-                @Override
-                public void onSuccess(String result) {
-                    maps = Arrays.asList(gson.fromJson(result, Map[].class));
+        WebService.getMaps(getActivity().getApplicationContext(), new VolleyCallback() {
+            Gson gson = new GsonBuilder().create();
 
-                    printMaps();
-                }
-            });
-        }
-        else {
-            printMaps();
-        }
+            @Override
+            public void onSuccess(String result) {
+                maps = Arrays.asList(gson.fromJson(result, Map[].class));
+
+                LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
+                RecyclerView recyclerView = getActivity().findViewById(R.id.cGameMapsRecyclerView);
+                recyclerView.setLayoutManager(layoutManager);
+                MapsRecyclerViewAdapter adapter = new MapsRecyclerViewAdapter(getActivity().getApplicationContext(), maps);
+                recyclerView.setAdapter(adapter);
+            }
+        });
 
 
         return rootView;
     }
 
     public void printMaps(){
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
-        RecyclerView recyclerView = getActivity().findViewById(R.id.cGameMapsRecyclerView);
-        recyclerView.setLayoutManager(layoutManager);
-        MapsRecyclerViewAdapter adapter = new MapsRecyclerViewAdapter(getActivity().getApplicationContext(), maps);
-        recyclerView.setAdapter(adapter);
+
     }
 
     @Override

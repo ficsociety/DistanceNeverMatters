@@ -136,7 +136,14 @@ public class MarkersModelsFragment extends Fragment implements MarkersRecyclerVi
 
     @OnClick (R.id.markerModelAddBtn)
     public void addMarkerModel(){
-        Toast.makeText(getActivity().getApplicationContext(),
-                "Añadiendo Marcador-Modelo" + model.getName(), Toast.LENGTH_LONG).show();
+        if ((this.model != null) && (this.marker != null)){
+            CreateGameActivity activity = (CreateGameActivity) getActivity();
+            activity.putMarkerModel(this.marker, this.model);
+            getActivity().getSupportFragmentManager().popBackStackImmediate();
+        } else{
+            Toast.makeText(getActivity().getApplicationContext(),
+                    "Debe seleccionar un marcador y un modelo", Toast.LENGTH_LONG).show();
+        }
+
     }
 }
