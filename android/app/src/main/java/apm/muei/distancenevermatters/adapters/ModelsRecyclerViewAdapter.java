@@ -83,9 +83,9 @@ public class ModelsRecyclerViewAdapter extends RecyclerView.Adapter<ModelsRecycl
                 } else {
                     checkBox.setChecked(false);
                 }
-
-                name.setText(model.getName());
             }
+
+            name.setText(model.getName());
 
             image.setOnClickListener(new View.OnClickListener() {
                 @Override

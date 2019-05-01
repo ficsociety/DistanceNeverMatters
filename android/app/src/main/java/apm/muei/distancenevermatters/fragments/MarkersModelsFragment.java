@@ -78,14 +78,16 @@ public class MarkersModelsFragment extends Fragment implements MarkersRecyclerVi
             }
         });
 
+        final MarkersRecyclerViewAdapter adapterMarkers = new MarkersRecyclerViewAdapter(getActivity().getApplicationContext(), this);
+
         final Fragment parentFragment = this;
         WebService.getMarkers(getActivity().getApplicationContext(), new VolleyCallback() {
             @Override
             public void onSuccess(String result) {
                 List<Marker> markers = Arrays.asList(gson.fromJson(result, Marker[].class));
                 List<Marker> filteredMarkers = filterMarkers(markers);
+                adapterMarkers.setMarkers(filteredMarkers);
                 RecyclerView recyclerViewMarkers = getActivity().findViewById(R.id.markModMarkersRecyclerView);
-                MarkersRecyclerViewAdapter adapterMarkers = new MarkersRecyclerViewAdapter(getActivity().getApplicationContext(), filteredMarkers, parentFragment);
                 LinearLayoutManager layoutManagerMarkers = new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
                 recyclerViewMarkers.setLayoutManager(layoutManagerMarkers);
                 recyclerViewMarkers.setAdapter(adapterMarkers);

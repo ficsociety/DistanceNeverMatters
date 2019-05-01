@@ -72,9 +72,8 @@ public class MapsRecyclerViewAdapter extends RecyclerView.Adapter<MapsRecyclerVi
                 } else {
                     checkBox.setChecked(false);
                 }
-
-                name.setText(map.getName());
             }
+            name.setText(map.getName());
 
             image.setOnClickListener(new View.OnClickListener() {
                 @Override
