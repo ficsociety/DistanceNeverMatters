@@ -118,6 +118,7 @@ public class MainFragment extends Fragment {
                     public void onComplete(@NonNull Task<Void> task) {
                         Intent intent = new Intent(getActivity(), LoginActivity.class);
                         startActivity(intent);
+                        getActivity().finish();
                     }
                 });
     }
