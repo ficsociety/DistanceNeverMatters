@@ -8,11 +8,14 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import apm.muei.distancenevermatters.GlobalVars.GlobalVars;
+import apm.muei.distancenevermatters.entities.dto.CreateGameDto;
 
 
 public class WebService {
@@ -65,6 +68,35 @@ public class WebService {
 
     public static void getMarkers(Context context, final VolleyCallback callback) {
         StringRequest request = new StringRequest(Request.Method.GET, URL + "markers", getOnSuccessCallback(callback), getOnErrorCallback());
+        VolleySingleton.getInstance(context).addRequestQueue(request);
+    }
+
+    public static void createGame(Context context, final CreateGameDto createGameDto, final VolleyCallback callback){
+        StringRequest request = new StringRequest(Request.Method.POST, URL + "games", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                callback.onSuccess(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("Error post Game",  error.toString());
+
+            }
+        }){
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                Gson gson = new GsonBuilder().create();
+                return gson.toJson(createGameDto).getBytes();
+            }
+
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                headers.put("token", new GlobalVars().getInstance().getmAuth().getCurrentUser().getEmail());
+                return headers;
+            }
+        };
         VolleySingleton.getInstance(context).addRequestQueue(request);
     }
 

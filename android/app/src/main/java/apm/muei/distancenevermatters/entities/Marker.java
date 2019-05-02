@@ -11,9 +11,14 @@ public class Marker {
     public Marker() {
     }
 
-    public Marker(String name, URL url) {
+    public Marker(long id, String name, URL url) {
+        this.id = id;
         this.name = name;
         this.url = url;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public String getName() {
@@ -22,5 +27,25 @@ public class Marker {
 
     public URL getUrl() {
         return url;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Marker)) return false;
+
+        Marker marker = (Marker) o;
+
+        if (id != marker.id) return false;
+        if (name != null ? !name.equals(marker.name) : marker.name != null) return false;
+        return url != null ? url.equals(marker.url) : marker.url == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (url != null ? url.hashCode() : 0);
+        return result;
     }
 }

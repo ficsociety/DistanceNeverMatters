@@ -28,6 +28,8 @@ import java.util.List;
 
 import apm.muei.distancenevermatters.R;
 import apm.muei.distancenevermatters.entities.Marker;
+import apm.muei.distancenevermatters.entities.Model;
+import apm.muei.distancenevermatters.fragments.MarkersModelsFragment;
 import butterknife.ButterKnife;
 
 
@@ -37,17 +39,21 @@ public class MarkersRecyclerViewAdapter extends RecyclerView.Adapter<MarkersRecy
     private Context mContext;
     private int lastClicked = -1;
 
-    private Fragment fragment;
+    private MarkersModelsFragment fragment;
+
+    public void setMarkers(List<Marker> markers) {
+        this.markers = markers;
+    }
 
     public interface OnItemDownloadSelected {
         void onDownloadSelected();
     }
 
-    public MarkersRecyclerViewAdapter(Context mContext, List<Marker> markers, Fragment parentFragment) {
+    public MarkersRecyclerViewAdapter(Context mContext, MarkersModelsFragment fragment) {
         this.markers = markers;
         this.mContext = mContext;
-        if (parentFragment instanceof OnItemDownloadSelected) {
-            fragment = parentFragment;
+        if (fragment instanceof OnItemDownloadSelected) {
+            this.fragment = fragment;
         } else {
             throw new RuntimeException(fragment.toString()
                     + " must implement OnGameDetailsListener");
@@ -71,9 +77,7 @@ public class MarkersRecyclerViewAdapter extends RecyclerView.Adapter<MarkersRecy
                 .apply(requestOptions)
                 .into(viewHolder.image);
 
-        viewHolder.name.setText(markers.get(position).getName());
-
-        viewHolder.checkBox.setChecked(position == lastClicked);
+        viewHolder.bind(markers.get(position));
 
 
         viewHolder.button.setOnClickListener(new View.OnClickListener() {
@@ -126,13 +130,6 @@ public class MarkersRecyclerViewAdapter extends RecyclerView.Adapter<MarkersRecy
 
         });
 
-        viewHolder.image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                lastClicked = viewHolder.getAdapterPosition();
-                notifyDataSetChanged();
-            }
-        });
     }
 
     @Override
@@ -157,6 +154,34 @@ public class MarkersRecyclerViewAdapter extends RecyclerView.Adapter<MarkersRecy
             button = itemView.findViewById(R.id.buttonResourceGridDownload);
         }
 
+
+        void bind(final Marker marker) {
+            if (lastClicked == -1) {
+                checkBox.setChecked(false);
+            } else {
+                if (lastClicked == getAdapterPosition()) {
+                    checkBox.setChecked(true);
+                } else {
+                    checkBox.setChecked(false);
+                }
+            }
+
+            name.setText(marker.getName());
+
+            image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    checkBox.setChecked(true);
+                    if (lastClicked != getAdapterPosition()) {
+                        fragment.setMarker(markers.get(getAdapterPosition()));
+                        notifyItemChanged(lastClicked);
+                        lastClicked = getAdapterPosition();
+
+                    }
+
+                }
+            });
+        }
     }
 
 }

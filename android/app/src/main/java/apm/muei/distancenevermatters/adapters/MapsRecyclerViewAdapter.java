@@ -2,6 +2,7 @@ package apm.muei.distancenevermatters.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,17 +17,23 @@ import java.util.List;
 
 import apm.muei.distancenevermatters.R;
 import apm.muei.distancenevermatters.entities.Map;
+import apm.muei.distancenevermatters.fragments.CreateGameFragment;
 
 public class MapsRecyclerViewAdapter extends RecyclerView.Adapter<MapsRecyclerViewAdapter.ViewHolder>{
 
     private List<Map> maps;
     private Context mContext;
+    CreateGameFragment fragment;
     private int lastClicked = -1;
 
 
-    public MapsRecyclerViewAdapter( Context mContext, List<Map> maps) {
-        this.maps = maps;
+    public MapsRecyclerViewAdapter(Context mContext, CreateGameFragment fragment) {
         this.mContext = mContext;
+        this.fragment = fragment;
+    }
+
+    public void setMaps(List<Map> maps) {
+        this.maps = maps;
     }
 
     @Override
@@ -42,20 +49,7 @@ public class MapsRecyclerViewAdapter extends RecyclerView.Adapter<MapsRecyclerVi
                 .load(maps.get(position).getUrl().toString())
                 .into(viewHolder.image);
 
-        viewHolder.name.setText(maps.get(position).getName());
-
-
-        viewHolder.checkBox.setChecked(position == lastClicked);
-
-
-        viewHolder.image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                lastClicked = viewHolder.getAdapterPosition();
-                notifyDataSetChanged();
-            }
-        });
-
+        viewHolder.bind(maps.get(position));
     }
 
     @Override
@@ -74,6 +68,31 @@ public class MapsRecyclerViewAdapter extends RecyclerView.Adapter<MapsRecyclerVi
             name = itemView.findViewById(R.id.resourceName);
             checkBox = itemView.findViewById(R.id.checkBoxResource);
 
+        }
+
+        void bind(final Map map){
+            if (lastClicked == -1){
+                checkBox.setChecked(false);
+            } else {
+                if (lastClicked == getAdapterPosition() || fragment.getSelectedMap() == getAdapterPosition()) {
+                    checkBox.setChecked(true);
+                } else {
+                    checkBox.setChecked(false);
+                }
+            }
+            name.setText(map.getName());
+
+            image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    checkBox.setChecked(true);
+                    if (lastClicked != getAdapterPosition()) {
+                        notifyItemChanged(lastClicked);
+                        lastClicked = getAdapterPosition();
+                        fragment.setSelectedMap(getAdapterPosition());
+                    }
+                }
+            });
         }
     }
 }

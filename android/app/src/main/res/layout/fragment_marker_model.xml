@@ -34,11 +34,11 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/markModMarkersRecyclerView"
-                android:layout_width="413dp"
-                android:layout_height="189dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginTop="40dp"
                 android:background="@android:color/black"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.483"
                 app:layout_constraintStart_toStartOf="parent"
@@ -58,18 +58,18 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/markModModelsRecyclerView"
-                android:layout_width="413dp"
-                android:layout_height="189dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginTop="44dp"
                 android:background="@android:color/black"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.516"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/markModModels"></android.support.v7.widget.RecyclerView>
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/markerModelAddBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="36dp"

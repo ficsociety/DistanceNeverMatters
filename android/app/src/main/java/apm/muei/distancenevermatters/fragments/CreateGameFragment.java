@@ -1,42 +1,42 @@
 package apm.muei.distancenevermatters.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.os.StrictMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.Toast;
-import com.android.volley.toolbox.NetworkImageView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import java.util.Arrays;
-import java.util.List;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import apm.muei.distancenevermatters.activities.CreateGameActivity;
 import apm.muei.distancenevermatters.adapters.MapsRecyclerViewAdapter;
-import apm.muei.distancenevermatters.entities.Map;
 import apm.muei.distancenevermatters.R;
+import apm.muei.distancenevermatters.adapters.MarkerModelViewAdapter;
+import apm.muei.distancenevermatters.entities.Marker;
+import apm.muei.distancenevermatters.entities.Model;
+import apm.muei.distancenevermatters.entities.dto.CreateGameDto;
 import apm.muei.distancenevermatters.volley.VolleyCallback;
-import apm.muei.distancenevermatters.volley.VolleySingleton;
 import apm.muei.distancenevermatters.volley.WebService;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class CreateGameFragment extends Fragment {
 
-    private Gson gson;
+    private List<apm.muei.distancenevermatters.entities.Map> maps = new ArrayList<>();
 
-    OnGameCreatedListener mCallback;
-    public interface OnGameCreatedListener {
-        /** Called by CreateGameFragment when a game is created */
-        public void onGameCreated();
-    }
-
+    private int selectedMap = -1;
+    TextInputLayout name;
+    TextInputLayout description;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,29 +46,60 @@ public class CreateGameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-
         View rootView = inflater.inflate(R.layout.fragment_create_game, container, false);
 
         ButterKnife.bind(this, rootView);
-        gson = new GsonBuilder().create();
+        name = rootView.findViewById(R.id.cGameName);
+        description = rootView.findViewById(R.id.cGameDescription);
+
+        drawMarkerModels(rootView);
+
+        final MapsRecyclerViewAdapter adapter = new MapsRecyclerViewAdapter(getActivity().getApplicationContext(), this);
 
         WebService.getMaps(getActivity().getApplicationContext(), new VolleyCallback() {
+            Gson gson = new GsonBuilder().create();
+
             @Override
             public void onSuccess(String result) {
-                List<Map> maps = Arrays.asList(gson.fromJson(result, Map[].class));
-
+                maps = Arrays.asList(gson.fromJson(result, apm.muei.distancenevermatters.entities.Map[].class));
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
                 RecyclerView recyclerView = getActivity().findViewById(R.id.cGameMapsRecyclerView);
                 recyclerView.setLayoutManager(layoutManager);
-                MapsRecyclerViewAdapter adapter = new MapsRecyclerViewAdapter(getActivity().getApplicationContext(), maps);
+                adapter.setMaps(maps);
                 recyclerView.setAdapter(adapter);
             }
         });
+
+
         return rootView;
     }
 
+    public void setSelectedMap(int selectedMap){
+        this.selectedMap = selectedMap;
+    }
+
+    public int getSelectedMap(){
+        return this.selectedMap;
+    }
+
+    public void removeMarkerModel(Marker marker){
+        CreateGameActivity activity = (CreateGameActivity) getActivity();
+        activity.removeMarkerModel(marker);
+    }
+
+    private void drawMarkerModels(View view){
+        CreateGameActivity activity = (CreateGameActivity) getActivity();
+        Map<Marker, Model> markerModel = activity.getMarkerModel();
+
+        if (!markerModel.isEmpty()){
+            LinearLayoutManager layoutManager = new LinearLayoutManager(activity.getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+            RecyclerView recyclerView = view.findViewById(R.id.cGameMarkersModelsView);
+            recyclerView.setLayoutManager(layoutManager);
+            MarkerModelViewAdapter adapter = new MarkerModelViewAdapter(getActivity().getApplicationContext(), this, markerModel);
+            recyclerView.setAdapter(adapter);
+        }
+
+    }
 
     @Override
     public void onResume() {
@@ -98,16 +129,55 @@ public class CreateGameFragment extends Fragment {
 
     @OnClick(R.id.cGameBtnCreateGame)
     public void createGame(View view){
-        Toast.makeText(getActivity().getApplicationContext(),
-                "Crear Partida", Toast.LENGTH_LONG).show();
 
-        mCallback.onGameCreated();
+        if (name.getEditText().getText().toString().equals("")){
+            name.setError("Campo obligatorio");
+        } else if (selectedMap == -1){
+            Toast.makeText(getActivity().getApplicationContext(),
+                    "Debe seleccionar un mapa", Toast.LENGTH_LONG).show();
+
+        } else {
+
+            final CreateGameDto createGameDto = getCreateGameDto();
+            final CreateGameFragment createGameFragment = this;
+
+
+            WebService.createGame(getActivity().getApplicationContext(), createGameDto, new VolleyCallback() {
+                Gson gson = new GsonBuilder().create();
+                @Override
+                public void onSuccess(String result) {
+                    long code = gson.fromJson(result, Long.class);
+
+                    GameCreatedFragment gameCreatedFragment = new GameCreatedFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putLong("code", code);
+                    gameCreatedFragment.setArguments(bundle);
+
+                    createGameFragment.getFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.create_game_fragments, gameCreatedFragment)
+                            .addToBackStack(null)
+                            .commit();
+                }
+
+            });
+
+        }
     }
 
-    @OnClick({R.id.delete1, R.id.delete2})
-    public void removeMarkerModel(View view) {
-        Toast.makeText(getActivity().getApplicationContext(),
-                "Eliminar marcador-modelo.", Toast.LENGTH_LONG).show();
+    private CreateGameDto getCreateGameDto (){
+        long mapId = maps.get(selectedMap).getId();
+        Map<String, Long> markerModel = new HashMap<>();
+        String name = this.name.getEditText().getText().toString();
+        String description = this.description.getEditText().getText().toString();
+
+        CreateGameActivity activity = (CreateGameActivity) getActivity();
+
+        for(Map.Entry<Marker, Model> entry : activity.getMarkerModel().entrySet()){
+            markerModel.put(String.valueOf(entry.getKey().getId()), entry.getValue().getId());
+        }
+
+        return new CreateGameDto(name, description, mapId, markerModel);
     }
 
 }
