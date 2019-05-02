@@ -220,16 +220,15 @@ public class LoginActivity extends AppCompatActivity {
         //LLamar al backend para guardar las credenciales
     }
 
-    @Override
-    public void onBackPressed() {
-    }
-
     private void updateUI(FirebaseUser user) {
+        progressBarSign.setVisibility(View.INVISIBLE);
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
         if (user != null) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+            this.finish();
         }
-        progressBarSign.setVisibility(View.INVISIBLE);
-        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
     }
 }
