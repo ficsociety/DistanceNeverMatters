@@ -11,9 +11,14 @@ public class Marker {
     public Marker() {
     }
 
-    public Marker(String name, URL url) {
+    public Marker(long id, String name, URL url) {
+        this.id = id;
         this.name = name;
         this.url = url;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public String getName() {

@@ -12,10 +12,15 @@ public class Model {
     public Model() {
     }
 
-    public Model(String name, URL url, URL preview) {
+    public Model(long id, String name, URL url, URL preview) {
+        this.id = id;
         this.name = name;
         this.url = url;
         this.preview = preview;
+    }
+
+    public long getId(){
+        return this.id;
     }
 
     public String getName() {

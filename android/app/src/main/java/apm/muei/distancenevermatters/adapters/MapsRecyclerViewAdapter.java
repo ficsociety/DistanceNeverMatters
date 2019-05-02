@@ -2,6 +2,7 @@ package apm.muei.distancenevermatters.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,17 +17,23 @@ import java.util.List;
 
 import apm.muei.distancenevermatters.R;
 import apm.muei.distancenevermatters.entities.Map;
+import apm.muei.distancenevermatters.fragments.CreateGameFragment;
 
 public class MapsRecyclerViewAdapter extends RecyclerView.Adapter<MapsRecyclerViewAdapter.ViewHolder>{
 
     private List<Map> maps;
     private Context mContext;
+    CreateGameFragment fragment;
     private int lastClicked = -1;
 
 
-    public MapsRecyclerViewAdapter( Context mContext, List<Map> maps) {
-        this.maps = maps;
+    public MapsRecyclerViewAdapter(Context mContext, CreateGameFragment fragment) {
         this.mContext = mContext;
+        this.fragment = fragment;
+    }
+
+    public void setMaps(List<Map> maps) {
+        this.maps = maps;
     }
 
     @Override
@@ -67,7 +74,7 @@ public class MapsRecyclerViewAdapter extends RecyclerView.Adapter<MapsRecyclerVi
             if (lastClicked == -1){
                 checkBox.setChecked(false);
             } else {
-                if (lastClicked == getAdapterPosition()) {
+                if (lastClicked == getAdapterPosition() || fragment.getSelectedMap() == getAdapterPosition()) {
                     checkBox.setChecked(true);
                 } else {
                     checkBox.setChecked(false);
@@ -82,6 +89,7 @@ public class MapsRecyclerViewAdapter extends RecyclerView.Adapter<MapsRecyclerVi
                     if (lastClicked != getAdapterPosition()) {
                         notifyItemChanged(lastClicked);
                         lastClicked = getAdapterPosition();
+                        fragment.setSelectedMap(getAdapterPosition());
                     }
                 }
             });
