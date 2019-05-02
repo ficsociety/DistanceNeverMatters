@@ -1,20 +1,16 @@
 package apm.muei.distancenevermatters.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.os.StrictMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
-import com.android.volley.toolbox.NetworkImageView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -23,7 +19,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import apm.muei.distancenevermatters.activities.CreateGameActivity;
 import apm.muei.distancenevermatters.adapters.MapsRecyclerViewAdapter;
 import apm.muei.distancenevermatters.R;
@@ -32,7 +27,6 @@ import apm.muei.distancenevermatters.entities.Marker;
 import apm.muei.distancenevermatters.entities.Model;
 import apm.muei.distancenevermatters.entities.dto.CreateGameDto;
 import apm.muei.distancenevermatters.volley.VolleyCallback;
-import apm.muei.distancenevermatters.volley.VolleySingleton;
 import apm.muei.distancenevermatters.volley.WebService;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -145,13 +139,32 @@ public class CreateGameFragment extends Fragment {
                     "Debe seleccionar un mapa", Toast.LENGTH_LONG).show();
 
         } else {
-            Toast.makeText(getActivity().getApplicationContext(),
-                    "Crear Partida" + getCreateGameDto().toString(), Toast.LENGTH_LONG).show();
+
+            final CreateGameDto createGameDto = getCreateGameDto();
+            final CreateGameFragment createGameFragment = this;
+
+
+            WebService.createGame(getActivity().getApplicationContext(), createGameDto, new VolleyCallback() {
+                Gson gson = new GsonBuilder().create();
+                @Override
+                public void onSuccess(String result) {
+                    long code = gson.fromJson(result, Long.class);
+
+                    GameCreatedFragment gameCreatedFragment = new GameCreatedFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putLong("code", code);
+                    gameCreatedFragment.setArguments(bundle);
+
+                    createGameFragment.getFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.create_game_fragments, gameCreatedFragment)
+                            .addToBackStack(null)
+                            .commit();
+                }
+
+            });
+
         }
-
-
-        // Intent intent = new Intent(getActivity(), GameCreatedActivity.class);
-        // startActivity(intent);;
     }
 
     private CreateGameDto getCreateGameDto (){
@@ -167,7 +180,6 @@ public class CreateGameFragment extends Fragment {
         }
 
         return new CreateGameDto(name, description, mapId, markerModel);
-
     }
 
 }
