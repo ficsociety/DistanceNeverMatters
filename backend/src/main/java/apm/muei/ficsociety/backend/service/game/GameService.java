@@ -19,4 +19,6 @@ public interface GameService {
 	GameDetailsDto getGameByCode(long code) throws NotFoundException;
 
 	void updateState(UpdateStateDto updateStateDto) throws NotFoundException;
+
+	void deleteGame(long code) throws NotFoundException;
 }

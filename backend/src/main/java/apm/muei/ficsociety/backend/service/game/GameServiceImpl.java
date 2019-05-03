@@ -137,4 +137,16 @@ public class GameServiceImpl implements GameService {
 			gameRepository.save(game);
 		}
 	}
+
+	@Override
+	public void deleteGame(long code) throws NotFoundException {
+		Game game = this.gameRepository.findByCode(code);
+
+		if (game == null) {
+			throw new NotFoundException("Invalid code");
+		} else {
+			this.gameRepository.delete(game);
+		}
+
+	}
 }
