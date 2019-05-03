@@ -1,6 +1,7 @@
 package apm.muei.distancenevermatters.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import butterknife.OnClick;
 public class GameCreatedFragment extends Fragment {
 
     TextView codeText;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -37,7 +39,16 @@ public class GameCreatedFragment extends Fragment {
 
     @OnClick(R.id.gcreaFABshare)
     public void shareGame(View view) {
-        Toast.makeText(getActivity().getApplicationContext(),
-                "Compartir código.", Toast.LENGTH_LONG).show();
+//        Toast.makeText(getActivity().getApplicationContext(),
+//                "Compartir código.", Toast.LENGTH_LONG).show();
+        try {
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("text/plain");
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, R.string.app_name);
+            shareIntent.putExtra(Intent.EXTRA_TEXT, codeText.getText());
+            startActivity(Intent.createChooser(shareIntent, view.getContext().getResources().getString(R.string.share_code)));
+        } catch(Exception e) {
+            //e.toString();
+        }
     }
 }

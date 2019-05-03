@@ -39,6 +39,7 @@
     <string name="game_created">Partida creada</string>
     <string name="game_created_ok">¡Partida creada correctamente!</string>
     <string name="game_created_share">Código para compartir: </string>
+    <string name="share_code">COMPARTIR</string>
     <string name="markers">Marcadores </string>
     <string name="models">Modelos</string>
     <string name="resources">Recursos</string>
