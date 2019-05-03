@@ -102,6 +102,10 @@ public class MainFragment extends Fragment {
                 Toast toast = Toast.makeText(getActivity().getApplicationContext(), text, Toast.LENGTH_SHORT);
                 toast.show();
                 singOut();
+            case R.id.help:
+                Toast.makeText(getActivity().getApplicationContext(), R.string.help, Toast.LENGTH_SHORT).show();
+            case R.id.perfil:
+                Toast.makeText(getActivity().getApplicationContext(), R.string.perfil, Toast.LENGTH_SHORT).show();
             default:
                 return super.onOptionsItemSelected(item);
         }
