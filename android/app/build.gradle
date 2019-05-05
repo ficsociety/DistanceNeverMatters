@@ -5,7 +5,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "apm.muei.distancenevermatters"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -50,5 +50,8 @@ dependencies {
     //Cargar las imagenes, tiene caché
     implementation 'com.github.bumptech.glide:glide:4.9.0'
 
+    // Unity
+    implementation project(":MapSync-debug")
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
 com.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true
