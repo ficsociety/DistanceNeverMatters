@@ -1,16 +1,15 @@
 package apm.muei.distancenevermatters.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -23,24 +22,22 @@ import java.util.Map;
 
 import apm.muei.distancenevermatters.R;
 import apm.muei.distancenevermatters.activities.CreateGameActivity;
-import apm.muei.distancenevermatters.adapters.MapsRecyclerViewAdapter;
+import apm.muei.distancenevermatters.activities.MainActivity;
 import apm.muei.distancenevermatters.adapters.MarkersRecyclerViewAdapter;
 import apm.muei.distancenevermatters.adapters.ModelsRecyclerViewAdapter;
 import apm.muei.distancenevermatters.entities.Marker;
 import apm.muei.distancenevermatters.entities.Model;
+import apm.muei.distancenevermatters.entities.dto.JoinGameDto;
 import apm.muei.distancenevermatters.volley.VolleyCallback;
 import apm.muei.distancenevermatters.volley.WebService;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Optional;
 
-public class MarkersModelsFragment extends Fragment implements MarkersRecyclerViewAdapter.OnItemDownloadSelected, MarkerModelInterface {
+public class SelectPlayerFragment extends Fragment implements MarkersRecyclerViewAdapter.OnItemDownloadSelected, MarkerModelInterface {
     private Gson gson;
-    List<Marker> markers = new ArrayList<>();
-    List<Model> models = new ArrayList<>();
     Marker marker;
     Model model;
-    private static final int NUM_COLUMNS = 3;
+    long code;
 
     private MarkersRecyclerViewAdapter.OnItemDownloadSelected dSelected;
 
@@ -58,6 +55,7 @@ public class MarkersModelsFragment extends Fragment implements MarkersRecyclerVi
 
         View rootView = inflater.inflate(R.layout.fragment_marker_model, container, false);
 
+        long code = getArguments().getLong("code");
         ButterKnife.bind(this, rootView);
         gson = new GsonBuilder().create();
 
@@ -68,8 +66,7 @@ public class MarkersModelsFragment extends Fragment implements MarkersRecyclerVi
             @Override
             public void onSuccess(String result) {
                 List<Model> models = Arrays.asList(gson.fromJson(result, Model[].class));
-                List<Model> filteredModels = filterModels(models);
-                adapter.setModels(filteredModels);
+                adapter.setModels(models);
                 RecyclerView recyclerView = getActivity().findViewById(R.id.markModModelsRecyclerView);
                 LinearLayoutManager layoutManagerModels = new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
                 recyclerView.setLayoutManager(layoutManagerModels);
@@ -78,6 +75,9 @@ public class MarkersModelsFragment extends Fragment implements MarkersRecyclerVi
             }
         });
 
+        Button button = rootView.findViewById(R.id.markerModelAddBtn);
+        button.setText(R.string.entrar);
+
         final MarkersRecyclerViewAdapter adapterMarkers = new MarkersRecyclerViewAdapter(getActivity().getApplicationContext(), this);
 
         final Fragment parentFragment = this;
@@ -85,8 +85,7 @@ public class MarkersModelsFragment extends Fragment implements MarkersRecyclerVi
             @Override
             public void onSuccess(String result) {
                 List<Marker> markers = Arrays.asList(gson.fromJson(result, Marker[].class));
-                List<Marker> filteredMarkers = filterMarkers(markers);
-                adapterMarkers.setMarkers(filteredMarkers);
+                adapterMarkers.setMarkers(markers);
                 RecyclerView recyclerViewMarkers = getActivity().findViewById(R.id.markModMarkersRecyclerView);
                 LinearLayoutManager layoutManagerMarkers = new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
                 recyclerViewMarkers.setLayoutManager(layoutManagerMarkers);
@@ -104,32 +103,6 @@ public class MarkersModelsFragment extends Fragment implements MarkersRecyclerVi
         this.model = model;
     }
 
-    private List<Marker> filterMarkers(List<Marker> markers) {
-        List<Marker> result = new ArrayList<>();
-        CreateGameActivity activity = (CreateGameActivity) getActivity();
-        Map<Marker, Model> selectedMarkerModels = activity.getMarkerModel();
-        for(Marker marker : markers){
-            if (!selectedMarkerModels.containsKey(marker)){
-                result.add(marker);
-            }
-        }
-        return result;
-    }
-
-    private List<Model> filterModels(List<Model> models){
-        List<Model> result = new ArrayList<>();
-        CreateGameActivity activity = (CreateGameActivity) getActivity();
-        Map<Marker, Model> selectedMarkerModels = activity.getMarkerModel();
-
-        for(Model model : models){
-            if (!selectedMarkerModels.containsValue(model)){
-                result.add(model);
-            }
-        }
-
-        return result;
-    }
-
 
     @Override
     public void onDownloadSelected() { dSelected.onDownloadSelected();}
@@ -137,9 +110,15 @@ public class MarkersModelsFragment extends Fragment implements MarkersRecyclerVi
     @OnClick (R.id.markerModelAddBtn)
     public void addMarkerModel(){
         if ((this.model != null) && (this.marker != null)){
-            CreateGameActivity activity = (CreateGameActivity) getActivity();
-            activity.putMarkerModel(this.marker, this.model);
-            getActivity().getSupportFragmentManager().popBackStackImmediate();
+            JoinGameDto joinGameDto = new JoinGameDto(this.marker.getId(), this.model.getId(), this.code);
+            WebService.joinGame(getActivity().getApplicationContext(), joinGameDto, new VolleyCallback() {
+                @Override
+                public void onSuccess(String result) {
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    startActivity(intent);
+                }
+            });
+
         } else{
             Toast.makeText(getActivity().getApplicationContext(),
                     "Debe seleccionar un marcador y un modelo", Toast.LENGTH_LONG).show();

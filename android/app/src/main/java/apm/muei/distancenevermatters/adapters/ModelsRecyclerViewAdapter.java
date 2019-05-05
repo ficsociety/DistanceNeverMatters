@@ -18,6 +18,7 @@ import java.util.List;
 
 import apm.muei.distancenevermatters.R;
 import apm.muei.distancenevermatters.entities.Model;
+import apm.muei.distancenevermatters.fragments.MarkerModelInterface;
 import apm.muei.distancenevermatters.fragments.MarkersModelsFragment;
 
 public class ModelsRecyclerViewAdapter extends RecyclerView.Adapter<ModelsRecyclerViewAdapter.ViewHolder>{
@@ -25,10 +26,10 @@ public class ModelsRecyclerViewAdapter extends RecyclerView.Adapter<ModelsRecycl
     private List<Model> models;
     private Context mContext;
     private int lastClicked = -1;
-    private MarkersModelsFragment fragment;
+    private MarkerModelInterface fragment;
 
 
-    public ModelsRecyclerViewAdapter(Context mContext, MarkersModelsFragment fragment) {
+    public ModelsRecyclerViewAdapter(Context mContext, MarkerModelInterface fragment) {
         this.mContext = mContext;
         this.fragment = fragment;
     }
