@@ -29,6 +29,7 @@ import java.util.List;
 import apm.muei.distancenevermatters.R;
 import apm.muei.distancenevermatters.entities.Marker;
 import apm.muei.distancenevermatters.entities.Model;
+import apm.muei.distancenevermatters.fragments.MarkerModelInterface;
 import apm.muei.distancenevermatters.fragments.MarkersModelsFragment;
 import butterknife.ButterKnife;
 
@@ -39,7 +40,7 @@ public class MarkersRecyclerViewAdapter extends RecyclerView.Adapter<MarkersRecy
     private Context mContext;
     private int lastClicked = -1;
 
-    private MarkersModelsFragment fragment;
+    private MarkerModelInterface fragment;
 
     public void setMarkers(List<Marker> markers) {
         this.markers = markers;
@@ -49,7 +50,7 @@ public class MarkersRecyclerViewAdapter extends RecyclerView.Adapter<MarkersRecy
         void onDownloadSelected();
     }
 
-    public MarkersRecyclerViewAdapter(Context mContext, MarkersModelsFragment fragment) {
+    public MarkersRecyclerViewAdapter(Context mContext, MarkerModelInterface fragment) {
         this.markers = markers;
         this.mContext = mContext;
         if (fragment instanceof OnItemDownloadSelected) {

@@ -27,4 +27,13 @@ public class JoinGameDto {
     public long getCode() {
         return code;
     }
+
+    @Override
+    public String toString() {
+        return "JoinGameDto{" +
+                "markerId=" + markerId +
+                ", modelId=" + modelId +
+                ", code=" + code +
+                '}';
+    }
 }

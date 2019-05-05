@@ -32,6 +32,7 @@ import java.util.concurrent.Executor;
 import apm.muei.distancenevermatters.GlobalVars.GlobalVars;
 import apm.muei.distancenevermatters.R;
 import apm.muei.distancenevermatters.activities.CreateGameActivity;
+import apm.muei.distancenevermatters.activities.FindGameActivity;
 import apm.muei.distancenevermatters.activities.LoginActivity;
 import apm.muei.distancenevermatters.adapters.GameTabsPagerAdapter;
 
@@ -102,6 +103,9 @@ public class MainFragment extends Fragment {
                 Toast toast = Toast.makeText(getActivity().getApplicationContext(), text, Toast.LENGTH_SHORT);
                 toast.show();
                 singOut();
+            case R.id.buscarPartida:
+                Intent intent = new Intent(getActivity(), FindGameActivity.class);
+                startActivity(intent);
             case R.id.help:
                 Toast.makeText(getActivity().getApplicationContext(), R.string.help, Toast.LENGTH_SHORT).show();
             case R.id.perfil:

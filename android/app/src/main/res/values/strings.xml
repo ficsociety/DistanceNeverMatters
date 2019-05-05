@@ -46,6 +46,10 @@
     <string name="add">Añadir</string>
     <string name="help">Ayuda</string>
     <string name="perfil">Perfil</string>
+    <string name="buscarPartida">Buscar Partida</string>
+    <string name="buscar">Buscar</string>
+    <string name="codigo">Código</string>
+    <string name="entrar">Entrar</string>
 
     <string name="eulaTitle">License Agreement</string>
     <string name="acceptEula">Aceptar</string>
