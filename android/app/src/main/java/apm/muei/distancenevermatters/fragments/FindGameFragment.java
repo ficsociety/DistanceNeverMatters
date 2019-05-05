@@ -67,7 +67,7 @@ public class FindGameFragment extends Fragment {
 
                         SelectPlayerFragment selectPlayerFragment = new SelectPlayerFragment();
                         Bundle bundle = new Bundle();
-                        bundle.putLong("code", Long.valueOf(gameDetailsDto.getCode()));
+                        bundle.putLong("code", gameDetailsDto.getCode());
                         selectPlayerFragment.setArguments(bundle);
 
                         findGameFragment.getFragmentManager()

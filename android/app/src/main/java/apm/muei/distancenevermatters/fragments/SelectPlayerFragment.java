@@ -55,7 +55,7 @@ public class SelectPlayerFragment extends Fragment implements MarkersRecyclerVie
 
         View rootView = inflater.inflate(R.layout.fragment_marker_model, container, false);
 
-        long code = getArguments().getLong("code");
+        code = getArguments().getLong("code");
         ButterKnife.bind(this, rootView);
         gson = new GsonBuilder().create();
 
