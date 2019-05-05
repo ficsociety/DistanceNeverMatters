@@ -53,4 +53,6 @@
     <string name="cancel">Cancelar</string>
     <string name="save_game_details">Guardar los datos de la partida</string>
     <string name="save_game_details_exp">Está usted seguro de querer actualizar los datos de la partida?</string>
+    <string name="title_activity_game">GameActivity</string>
+    <string name="action_settings">Settings</string>
 </resources>

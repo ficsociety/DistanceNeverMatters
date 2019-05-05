@@ -52,4 +52,3 @@ dependencies {
 
 }
 com.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true
-
