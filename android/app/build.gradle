@@ -50,8 +50,9 @@ dependencies {
     //Cargar las imagenes, tiene caché
     implementation 'com.github.bumptech.glide:glide:4.9.0'
 
-    // Unity
+    // Unity + Vuforia
     implementation project(":MapSync-debug")
+    implementation project(":VuforiaWrapper")
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
 com.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true
