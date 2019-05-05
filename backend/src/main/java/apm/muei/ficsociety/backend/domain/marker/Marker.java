@@ -35,4 +35,8 @@ public class Marker {
 		return url;
 	}
 
+	public long getId() {
+		return id;
+	}
+
 }
