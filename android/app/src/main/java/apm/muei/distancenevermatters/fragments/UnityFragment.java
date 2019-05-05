@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ public class UnityFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_unity, container, false);
 
+        Log.d("weird", "create unity fragment");
         ViewGroup frameLayout = rootView.findViewById(R.id.unityFrameLayout);
         if (frameLayout.getChildAt(0) == null) {
             FrameLayout.LayoutParams lp =
@@ -66,6 +68,7 @@ public class UnityFragment extends Fragment {
         super.onResume();
         mUnityPlayer.resume();
 
+        Log.d("Weird", "resuming");
         // If Unity view is not set, set it
         // This can happen when blocking and unblocking mobile while in this screen
         FrameLayout frameLayout = getView().findViewById(R.id.unityFrameLayout);
@@ -77,10 +80,15 @@ public class UnityFragment extends Fragment {
         }
     }
 
-    // TODO onDetach
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
 
     @Override
     public void onDestroy() {
+        Log.d("weird", "quitting UnityPlayer");
         mUnityPlayer.quit();
         super.onDestroy();
     }
@@ -88,6 +96,7 @@ public class UnityFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+        Log.d("weird", "pausing");
         mUnityPlayer.pause();
     }
 
@@ -95,11 +104,13 @@ public class UnityFragment extends Fragment {
     public void onStart() {
         super.onStart();
         mUnityPlayer.start();
+        Log.d("weird", "start unity");
     }
 
     @Override
     public void onStop() {
         super.onStop();
+        Log.d("weird", "stopping");
         mUnityPlayer.stop();
         // We need to remove the view from the FrameLayout, or else app will crash next time we open this screen
         // Not putting the Unity view in the FrameLayout after the first creation DOES NOT WORK,

@@ -21,4 +21,15 @@
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_dialog_email" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/quitFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:layout_margin="@dimen/fab_margin"
+        android:clickable="true"
+        app:layout_anchor="@+id/gameFragmentContainer"
+        app:layout_anchorGravity="left|bottom"
+        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+
 </android.support.design.widget.CoordinatorLayout>

@@ -1,9 +1,13 @@
 package apm.muei.distancenevermatters.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
@@ -19,6 +23,7 @@ public class GameActivity extends AppCompatActivity
         implements UnityFragment.OnUnityFragmentInteractionListener {
 
     private UnityPlayer unityPlayer;
+    private boolean unityScreen = true;
 
     @BindView(R.id.gameFragmentContainer)
     FrameLayout frameLayout;
@@ -29,6 +34,7 @@ public class GameActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         // Create the UnityPlayer
+        Log.d("Weird", "Creating UnityPlayer");
         unityPlayer = new UnityPlayer(this);
         int glesMode = unityPlayer.getSettings().getInt("gles_mode", 1);
         boolean trueColor888 = false;
@@ -47,15 +53,27 @@ public class GameActivity extends AppCompatActivity
             }
         });
 
+        FloatingActionButton quitFab = findViewById(R.id.quitFab);
+        quitFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GameActivity.this, MainActivity.class);
+                //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                //finish();
+            }
+        });
+
         if (frameLayout != null) {
 
             if (savedInstanceState != null) {
-                return;
+                    return;
             }
 
             UnityFragment unityFragment = UnityFragment.getInstance();
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.gameFragmentContainer, unityFragment).commit();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction()
+                    .add(R.id.gameFragmentContainer, unityFragment);
+            transaction.commit();
         }
     }
 
