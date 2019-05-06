@@ -132,4 +132,6 @@
                         \n
                         You agree that FicSociety may collect and use information gathered in any manner as part of the product support services provided to you, if any, related to DistanceNeverMatters 1.0.0.FicSociety may also use this information to provide notices to you which may be of use or interest to you.)
                 </string>
+    <string name="title_activity_game">GameActivity</string>
+    <string name="action_settings">Settings</string>
 </resources>
