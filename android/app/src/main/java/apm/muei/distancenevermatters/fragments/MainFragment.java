@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.Task;
 import apm.muei.distancenevermatters.GlobalVars.GlobalVars;
 import apm.muei.distancenevermatters.R;
 import apm.muei.distancenevermatters.activities.CreateGameActivity;
+import apm.muei.distancenevermatters.activities.FindGameActivity;
 import apm.muei.distancenevermatters.activities.LoginActivity;
 import apm.muei.distancenevermatters.activities.ProfileActivity;
 import apm.muei.distancenevermatters.adapters.GameTabsPagerAdapter;
@@ -94,13 +95,16 @@ public class MainFragment extends Fragment {
             toast.show();
             singOut();
         }
+        else if(id == R.id.buscarPartida){
+            Intent intent = new Intent(getActivity(), FindGameActivity.class);
+            startActivity(intent);
+        }
         else if (id == R.id.help) {
             Toast.makeText(getActivity().getApplicationContext(), R.string.help, Toast.LENGTH_SHORT).show();
         }
         else if (id == R.id.perfil) {
             showProfile();
         }
-
         return true;
     }
 
@@ -119,7 +123,7 @@ public class MainFragment extends Fragment {
                     }
                 });
     }
-
+    
     private void showProfile() {
         Intent intent = new Intent(getActivity(), ProfileActivity.class);
         startActivity(intent);
