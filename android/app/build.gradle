@@ -49,5 +49,7 @@ dependencies {
     implementation project(":MapSync-debug")
     implementation project(":VuforiaWrapper")
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }
 com.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true

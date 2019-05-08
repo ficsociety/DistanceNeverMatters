@@ -1,20 +1,13 @@
 package apm.muei.distancenevermatters.fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,13 +19,11 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-import java.util.List;
-import java.util.concurrent.Executor;
-
 import apm.muei.distancenevermatters.GlobalVars.GlobalVars;
 import apm.muei.distancenevermatters.R;
 import apm.muei.distancenevermatters.activities.CreateGameActivity;
 import apm.muei.distancenevermatters.activities.LoginActivity;
+import apm.muei.distancenevermatters.activities.ProfileActivity;
 import apm.muei.distancenevermatters.adapters.GameTabsPagerAdapter;
 
 import butterknife.BindView;
@@ -96,19 +87,21 @@ public class MainFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.logout:
-                CharSequence text = "Regresando a login";
-                Toast toast = Toast.makeText(getActivity().getApplicationContext(), text, Toast.LENGTH_SHORT);
-                toast.show();
-                singOut();
-            case R.id.help:
-                Toast.makeText(getActivity().getApplicationContext(), R.string.help, Toast.LENGTH_SHORT).show();
-            case R.id.perfil:
-                Toast.makeText(getActivity().getApplicationContext(), R.string.perfil, Toast.LENGTH_SHORT).show();
-            default:
-                return super.onOptionsItemSelected(item);
+        int id = item.getItemId();
+        if (id == R.id.logout) {
+            CharSequence text = "Regresando a login";
+            Toast toast = Toast.makeText(getActivity().getApplicationContext(), text, Toast.LENGTH_SHORT);
+            toast.show();
+            singOut();
         }
+        else if (id == R.id.help) {
+            Toast.makeText(getActivity().getApplicationContext(), R.string.help, Toast.LENGTH_SHORT).show();
+        }
+        else if (id == R.id.perfil) {
+            showProfile();
+        }
+
+        return true;
     }
 
     private void singOut() {
@@ -127,4 +120,9 @@ public class MainFragment extends Fragment {
                 });
     }
 
+    private void showProfile() {
+        Intent intent = new Intent(getActivity(), ProfileActivity.class);
+        startActivity(intent);
+        getActivity().finish();
+    }
 }

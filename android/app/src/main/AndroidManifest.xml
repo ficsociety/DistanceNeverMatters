@@ -42,7 +42,10 @@
             android:label="@string/create_game_title"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.RegisterActivity"
+        android:name=".activities.RegisterActivity"
+        android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.ProfileActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.LoginActivity"
