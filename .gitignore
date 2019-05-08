@@ -117,3 +117,5 @@ lint/tmp/
 
 # Keystores
 *.keystore
+android/MapSync-debug/MapSync-debug.aar
+android/VuforiaWrapper/VuforiaWrapper.aar

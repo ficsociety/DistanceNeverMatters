@@ -48,15 +48,13 @@ public class WebService {
     }
 
     public static void getGames(Context context, final VolleyCallback callback) {
-        GlobalVars gVars = new GlobalVars().getInstance();
-        System.out.println(gVars.getUser().getUid());
-        StringRequest request;
-        request = new StringRequest(Request.Method.GET, URL.concat("user/games"), getOnSuccessCallback(callback), getOnErrorCallback()) {
+        final GlobalVars gVars = new GlobalVars().getInstance();
+        StringRequest request = new StringRequest(Request.Method.GET, URL.concat("games"), getOnSuccessCallback(callback), getOnErrorCallback())
+        {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String>  params = new HashMap<>();
-                // TODO Obtener user y meterlo en el header
-                params.put("token", "roi");
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("token", gVars.getmAuth().getCurrentUser().getEmail());
                 return params;
             }
         };
