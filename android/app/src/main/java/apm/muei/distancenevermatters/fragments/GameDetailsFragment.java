@@ -94,7 +94,7 @@ public class GameDetailsFragment extends Fragment {
 
         gameName.setText(gameDetails.getName());
         description.setText(gameDetails.getDescription());
-        gameDate.setText(gameDetails.getDate().toString());
+        //gameDate.setText(gameDetails.getDate().toString());
 
         Toolbar toolbar = getActivity().findViewById(R.id.mainToolbar);
         // Debería ser el nombre de la partida ¿?

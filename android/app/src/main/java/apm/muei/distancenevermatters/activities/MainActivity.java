@@ -1,6 +1,7 @@
 package apm.muei.distancenevermatters.activities;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -13,7 +14,11 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +30,7 @@ import apm.muei.distancenevermatters.entities.dto.GameDetailsDto;
 import apm.muei.distancenevermatters.fragments.GameDetailsFragment;
 import apm.muei.distancenevermatters.fragments.MainFragment;
 import apm.muei.distancenevermatters.R;
+import apm.muei.distancenevermatters.services.GameStateService;
 import apm.muei.distancenevermatters.volley.VolleyCallback;
 import apm.muei.distancenevermatters.volley.WebService;
 import butterknife.BindView;
@@ -35,6 +41,7 @@ public class MainActivity extends AppCompatActivity
 
     private List<GameDetailsDto> gameDtoList = new ArrayList<>();
     private GameDetailsDto gameDetails;
+    private Gson gson;
 
     MainFragment fragment = null;
 
@@ -56,6 +63,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        gson = new GsonBuilder().create();
 
 
         // Be sure to ALWAYS set up the support action bar, or else getSupportActionBar could return null
@@ -103,7 +111,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    @Override
+    /*@Override
     public void fetchGames(final SwipeRefreshLayout swipeRefresh) {
         WebService.getGames(getApplicationContext(), new VolleyCallback() {
             @Override
@@ -140,6 +148,29 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
+    }*/
+
+    @Override
+    public void fetchGames(final SwipeRefreshLayout swipeRefresh) {
+        WebService.getGames(getApplicationContext(), new VolleyCallback() {
+            @Override
+            public void onSuccess(String result) {
+                gameDtoList = Arrays.asList(gson.fromJson(result, GameDetailsDto[].class));
+                if (fragmentContainer != null) {
+                    // If we are being restored, return or else we could end up
+                    // Add the first fragment to the fragment container in the layout
+                    MainFragment nextFragment = new MainFragment();
+                    getSupportFragmentManager().beginTransaction().detach(fragment)
+                            .add(R.id.mainFrameLFragContainer, nextFragment).commit();
+                    fragment = nextFragment;
+                }
+                progressBar.setVisibility(View.GONE);
+
+                if (swipeRefresh != null) {
+                    swipeRefresh.setRefreshing(false);
+                }
+            }
+        });
     }
 
     @Override
@@ -158,7 +189,25 @@ public class MainActivity extends AppCompatActivity
         return gameDtoList;
     }
 
+    public void setGameDtoList(List<GameDetailsDto> gameDtoList) {
+        this.gameDtoList = gameDtoList;
+    }
+
     public GameDetailsDto getGameDetails() { return gameDetails; }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Intent i = new Intent(this, GameStateService.class);
+        startService(i);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Intent i = new Intent(this, GameStateService.class);
+        stopService(i);
+    }
 
     /*
     TODO Comportamiento back en main fragment vs details fragment
