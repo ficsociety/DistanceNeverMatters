@@ -14,9 +14,9 @@ public class GameDetailsDto {
     private String name;
     @Expose
     private String description;
-    private Date date;
+    //private Date date;
     @Expose
-    private GameState state;
+    private GameState gameState;
     @Expose
     private long code;
     @Expose
