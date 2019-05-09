@@ -1,10 +1,13 @@
 package apm.muei.distancenevermatters.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -30,8 +33,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.util.StringTokenizer;
+
 import apm.muei.distancenevermatters.GlobalVars.GlobalVars;
+import apm.muei.distancenevermatters.LocaleManager.LocaleHelper;
 import apm.muei.distancenevermatters.R;
+import apm.muei.distancenevermatters.SharedPreference.PreferenceManager;
 import apm.muei.distancenevermatters.dialogfragments.EulaDialogFragment;
 import apm.muei.distancenevermatters.dialogfragments.NoCameraDialogFragment;
 import apm.muei.distancenevermatters.entities.User;
@@ -61,6 +68,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        new PreferenceManager().initPreference(getApplicationContext());
 
         // Check if a camera is available before anything else
         checkCamera();
@@ -229,9 +237,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void saveCredentials(FirebaseUser user){
-        //LLamar al backend para guardar las credenciales
+        String username;
+        username = new StringTokenizer(user.getEmail(), "@").nextToken();
 
-       updateUI(user);
+        if (user.getEmail().endsWith(".es")) {
+            username = username.concat("$");
+        }
+
+        PreferenceManager.getInstance().setUserName(username);
+        updateUI(user);
     }
 
     private void updateUI(FirebaseUser user) {
@@ -245,5 +259,12 @@ public class LoginActivity extends AppCompatActivity {
             this.finish();
         }
 
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    @Override
+    protected void attachBaseContext(Context base) {
+        new PreferenceManager().initPreference(base);
+        super.attachBaseContext(LocaleHelper.onAttach(base, "es"));
     }
 }

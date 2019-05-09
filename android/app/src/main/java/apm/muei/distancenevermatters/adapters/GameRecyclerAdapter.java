@@ -1,5 +1,6 @@
 package apm.muei.distancenevermatters.adapters;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import apm.muei.distancenevermatters.R;
+import apm.muei.distancenevermatters.activities.GameActivity;
 import apm.muei.distancenevermatters.entities.GameState;
 import apm.muei.distancenevermatters.entities.dto.GameDetailsDto;
 import butterknife.BindView;
@@ -49,6 +51,10 @@ public class GameRecyclerAdapter extends RecyclerView.Adapter<GameRecyclerAdapte
             CharSequence text = "Empezando partida";
             Toast toast = Toast.makeText(fragment.getActivity().getApplicationContext(), text, Toast.LENGTH_SHORT);
             toast.show();
+
+            // Launch GameActivity
+            Intent intent = new Intent(fragment.getActivity(), GameActivity.class);
+            fragment.startActivity(intent);
         }
 
         @BindView(R.id.gListImgStatus)
