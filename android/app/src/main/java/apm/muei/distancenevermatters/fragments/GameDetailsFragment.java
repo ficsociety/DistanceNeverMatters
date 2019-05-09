@@ -110,7 +110,8 @@ public class GameDetailsFragment extends Fragment {
                         "Mostrando lista de partidas", Toast.LENGTH_SHORT).show();
                 navigationView.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                 //((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-                getActivity().onBackPressed();
+                //getActivity().onBackPressed();
+                ((MainActivity) getActivity()).onBack();
             }
         });
 

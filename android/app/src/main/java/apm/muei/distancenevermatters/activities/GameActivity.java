@@ -63,10 +63,11 @@ public class GameActivity extends AppCompatActivity
         quitFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(GameActivity.this, MainActivity.class);
-                //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                //finish();
+//                Intent intent = new Intent(GameActivity.this, MainActivity.class);
+//                //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                startActivity(intent);
+//                finish();
+                onBack();
             }
         });
 
@@ -120,5 +121,14 @@ public class GameActivity extends AppCompatActivity
     public void onDestroy(){
         super.onDestroy();
         this.socketUtils.disconnect();
+    }
+
+    @Override
+    public void onBackPressed() {
+
+    }
+
+    public void onBack() {
+        super.onBackPressed();
     }
 }

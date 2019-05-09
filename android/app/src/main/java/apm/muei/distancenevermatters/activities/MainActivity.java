@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.mainFrameLFragContainer, newFragment);
+        transaction.replace(R.id.mainFrameLFragContainer, newFragment, "GAME_DETAIL");
         transaction.addToBackStack(null);
         transaction.commit();
     }
@@ -261,16 +261,16 @@ public class MainActivity extends AppCompatActivity
         super.attachBaseContext(LocaleHelper.onAttach(base));
     }
 
-    /*
-    TODO Comportamiento back en main fragment vs details fragment
-
     @Override
     public void onBackPressed() {
+        final GameDetailsFragment fragment = (GameDetailsFragment) getSupportFragmentManager().findFragmentByTag("GAME_DETAIL");
+
+        if (fragment == null) {
+            super.onBackPressed();
+        }
     }
-    */
 
-    @Override
-    public void onBackPressed() {
+    public void onBack() {
         setupMenu();
         super.onBackPressed();
     }

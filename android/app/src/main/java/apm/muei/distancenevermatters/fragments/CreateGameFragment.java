@@ -98,7 +98,6 @@ public class CreateGameFragment extends Fragment {
             MarkerModelViewAdapter adapter = new MarkerModelViewAdapter(getActivity().getApplicationContext(), this, markerModel);
             recyclerView.setAdapter(adapter);
         }
-
     }
 
     @Override
@@ -112,7 +111,7 @@ public class CreateGameFragment extends Fragment {
             @Override public void onClick(View v) {
                 Toast.makeText(getActivity().getApplicationContext(),
                         "Mostrando lista de partidas", Toast.LENGTH_SHORT).show();
-                getActivity().onBackPressed();
+                ((CreateGameActivity) getActivity()).onBack();
             }
         });
     }
