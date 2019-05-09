@@ -59,7 +59,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Games"
+                        android:text="@string/all"
                         android:textSize="20sp" />
                     <TextView
                         android:id="@+id/profileTextAllGames"
@@ -81,7 +81,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Master"
+                        android:text="@string/master"
                         android:textSize="20sp"
                         />
                     <TextView
@@ -104,7 +104,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Player"
+                        android:text="@string/player"
                         android:textSize="20sp" />
                     <TextView
                         android:id="@+id/profileTextPlayerGames"
@@ -136,7 +136,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="Configuracion" />
+            android:text="@string/edit" />
         <Button
             android:id="@+id/profileButtonSingOut"
             android:textColor="#fff"

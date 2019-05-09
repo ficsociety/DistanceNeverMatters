@@ -1,12 +1,18 @@
 package apm.muei.distancenevermatters.fragments;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,10 +26,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import apm.muei.distancenevermatters.GlobalVars.GlobalVars;
+import apm.muei.distancenevermatters.LocaleManager.LocaleHelper;
 import apm.muei.distancenevermatters.R;
 import apm.muei.distancenevermatters.activities.CreateGameActivity;
 import apm.muei.distancenevermatters.activities.FindGameActivity;
 import apm.muei.distancenevermatters.activities.LoginActivity;
+import apm.muei.distancenevermatters.activities.MainActivity;
 import apm.muei.distancenevermatters.activities.ProfileActivity;
 import apm.muei.distancenevermatters.adapters.GameTabsPagerAdapter;
 
@@ -77,7 +85,7 @@ public class MainFragment extends Fragment {
         super.onResume();
 
         getActivity().setTitle("Lista de partidas"); // TODO change for string resource
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        //((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
     @Override
@@ -105,6 +113,9 @@ public class MainFragment extends Fragment {
         else if (id == R.id.perfil) {
             showProfile();
         }
+        else if (id == R.id.language) {
+            changeLanguage();
+        }
         return true;
     }
 
@@ -128,5 +139,21 @@ public class MainFragment extends Fragment {
         Intent intent = new Intent(getActivity(), ProfileActivity.class);
         startActivity(intent);
         getActivity().finish();
+    }
+
+    private void changeLanguage(){
+        final String languages[] = new String[] {"es", "en"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle(R.string.Seleccionar_idioma);
+        builder.setItems(languages, new DialogInterface.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                LocaleHelper.setLocale(getActivity(), languages[which]);
+                getActivity().finish();
+                startActivity(getActivity().getIntent());
+            }
+        });
+        builder.show();
     }
 }

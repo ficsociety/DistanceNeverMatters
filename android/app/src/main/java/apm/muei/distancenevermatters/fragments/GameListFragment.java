@@ -24,6 +24,7 @@ import java.util.StringTokenizer;
 
 import apm.muei.distancenevermatters.GlobalVars.GlobalVars;
 import apm.muei.distancenevermatters.R;
+import apm.muei.distancenevermatters.SharedPreference.PreferenceManager;
 import apm.muei.distancenevermatters.activities.MainActivity;
 import apm.muei.distancenevermatters.adapters.GameRecyclerAdapter;
 import apm.muei.distancenevermatters.entities.dto.GameDetailsDto;
@@ -53,17 +54,18 @@ public class GameListFragment extends Fragment implements GameRecyclerAdapter.On
         int masterGames = 0;
         int playerGames = 0;
         gVars = new GlobalVars().getInstance();
+        String userName = PreferenceManager.getInstance().getUserName();
         if (filter == mContext.getString(R.string.all)) {
             gVars.setTotal_games(gameDtoList.size());
             return gameDtoList;
         } else {
             for(GameDetailsDto game : gameDtoList) {
                 // TODO Obtener el usuario actual y quitar el hardcodeado
-                if ((filter.equals(mContext.getString(R.string.master))) && (game.getMaster().getUid().equals(getUser(gVars.getmAuth().getCurrentUser().getEmail())))) {
+                if ((filter.equals(mContext.getString(R.string.master))) && (game.getMaster().getUid().equals(userName))) {
                     filtered.add(game);
                     masterGames += 1;
                 }
-                if ((filter.equals(mContext.getString(R.string.player))) && !(game.getMaster().getUid().equals(getUser(gVars.getmAuth().getCurrentUser().getEmail())))) {
+                if ((filter.equals(mContext.getString(R.string.player))) && !(game.getMaster().getUid().equals(userName))) {
                     filtered.add(game);
                     playerGames += 1;
                 }
@@ -91,6 +93,7 @@ public class GameListFragment extends Fragment implements GameRecyclerAdapter.On
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_game_list, container, false);
         ButterKnife.bind(this, rootView);
+        new PreferenceManager().initPreference(getActivity().getApplicationContext());
 
         gson = new GsonBuilder().create();
         intentFilter = new IntentFilter();
@@ -181,17 +184,6 @@ public class GameListFragment extends Fragment implements GameRecyclerAdapter.On
 
     String getFilter(){
         return this.filter;
-    }
-
-    public String getUser(String email) {
-        String username;
-        username = new StringTokenizer(email, "@").nextToken();
-
-        if (email.endsWith(".es")) {
-            username = username.concat("$");
-        }
-
-        return username;
     }
 
 }
