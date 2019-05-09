@@ -15,15 +15,21 @@ import android.widget.FrameLayout;
 import com.unity3d.player.UnityPlayer;
 
 import apm.muei.distancenevermatters.R;
+import apm.muei.distancenevermatters.Server.Movement;
+import apm.muei.distancenevermatters.Server.ServerActions;
+import apm.muei.distancenevermatters.Server.SocketUtils;
 import apm.muei.distancenevermatters.fragments.UnityFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.socket.emitter.Emitter;
 
 public class GameActivity extends AppCompatActivity
         implements UnityFragment.OnUnityFragmentInteractionListener {
 
     private UnityPlayer unityPlayer;
     private boolean unityScreen = true;
+    private SocketUtils socketUtils;
+
 
     @BindView(R.id.gameFragmentContainer)
     FrameLayout frameLayout;
@@ -64,6 +70,13 @@ public class GameActivity extends AppCompatActivity
             }
         });
 
+        //se crea el socket e inicializamos el listener para recibir los movimientos
+        socketUtils = SocketUtils.getInstance();
+        socketUtils.connect();
+        socketUtils.getSocket().on(ServerActions.RECEIVEMOVEMENT, onNewMovement);
+        //TODO pasarle el usuario y el código de partida
+        //socketUtils.join(user, código partida);
+
         if (frameLayout != null) {
 
             if (savedInstanceState != null) {
@@ -77,6 +90,19 @@ public class GameActivity extends AppCompatActivity
         }
     }
 
+
+    private Emitter.Listener onNewMovement = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    //TODO Aqui recibes args[0], que viene siendo el movimiento como string (json)
+                }
+            });
+        }
+    };
+
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
@@ -88,5 +114,11 @@ public class GameActivity extends AppCompatActivity
     @Override
     public UnityPlayer getUnityPlayer() {
         return unityPlayer;
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        this.socketUtils.disconnect();
     }
 }

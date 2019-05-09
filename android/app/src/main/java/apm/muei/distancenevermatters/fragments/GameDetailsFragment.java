@@ -1,7 +1,9 @@
 package apm.muei.distancenevermatters.fragments;
 
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -98,16 +100,21 @@ public class GameDetailsFragment extends Fragment {
 
         Toolbar toolbar = getActivity().findViewById(R.id.mainToolbar);
         // Debería ser el nombre de la partida ¿?
-        getActivity().setTitle("Detalles partida");
+        getActivity().setTitle(R.string.game_details);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        final DrawerLayout navigationView = getActivity().findViewById(R.id.drawer_layout);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 Toast.makeText(getActivity().getApplicationContext(),
                         "Mostrando lista de partidas", Toast.LENGTH_SHORT).show();
+                navigationView.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                //((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                 getActivity().onBackPressed();
             }
         });
+
+        navigationView.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
         // TODO Populate RecyclerView with real data
         adapter = new GameDetailsRecyclerAdapter(this, gameDetails.getMaster(), gameDetails.getPlayers());
