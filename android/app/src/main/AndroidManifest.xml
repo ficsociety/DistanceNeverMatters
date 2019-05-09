@@ -52,9 +52,15 @@
         <activity
             android:name=".activities.CreateGameActivity"
             android:label="@string/create_game_title"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".activities.FindGameActivity"
+            android:label="@string/buscarPartida"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".activities.RegisterActivity"
+        android:name=".activities.RegisterActivity"
+        android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.ProfileActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.LoginActivity"

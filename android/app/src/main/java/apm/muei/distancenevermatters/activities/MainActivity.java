@@ -111,45 +111,6 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    /*@Override
-    public void fetchGames(final SwipeRefreshLayout swipeRefresh) {
-        WebService.getGames(getApplicationContext(), new VolleyCallback() {
-            @Override
-            public void onSuccess(String result) {
-                // TODO Eliminar estos datos mockeados
-                User user1 = new User("roi");
-                User user2 = new User("morenito84");
-                List<User> users = new ArrayList<>();
-                users.add(new User("user1"));
-                users.add(new User("user2"));
-                users.add(new User("user3"));
-                gameDtoList = new ArrayList<>();
-                gameDtoList.add(new GameDetailsDto("Prueba 1", "descripcion 1", user1, new Date(), 1L, GameState.PLAYING, users));
-                gameDtoList.add(new GameDetailsDto("Prueba 2", "descripcion 2", user1, new Date(), 2L, GameState.PLAYING, users));
-                gameDtoList.add(new GameDetailsDto("Prueba 3", "descripcion 3", user2, new Date(), 3L, GameState.PLAYING, users));
-                gameDtoList.add(new GameDetailsDto("Prueba 4", "descripcion 4", user1, new Date(), 4L, GameState.PAUSED, users));
-                gameDtoList.add(new GameDetailsDto("Prueba 5", "descripcion 5", user1, new Date(), 5L, GameState.PAUSED, users));
-                gameDtoList.add(new GameDetailsDto("Prueba 6", "descripcion 6", user2, new Date(), 6L, GameState.PAUSED, users));
-                gameDtoList.add(new GameDetailsDto("Prueba 7", "descripcion 7", user2, new Date(), 7L, GameState.PAUSED, users));
-                gameDtoList.add(new GameDetailsDto("Prueba 8", "descripcion 8", user1, new Date(), 8L, GameState.PAUSED, users));
-
-                if (fragmentContainer != null) {
-                    // If we are being restored, return or else we could end up
-                    // Add the first fragment to the fragment container in the layout
-                    MainFragment nextFragment = new MainFragment();
-                    getSupportFragmentManager().beginTransaction().detach(fragment)
-                            .add(R.id.mainFrameLFragContainer, nextFragment).commit();
-                    fragment = nextFragment;
-                }
-                progressBar.setVisibility(View.GONE);
-
-                if (swipeRefresh != null) {
-                    swipeRefresh.setRefreshing(false);
-                }
-            }
-        });
-    }*/
-
     @Override
     public void fetchGames(final SwipeRefreshLayout swipeRefresh) {
         WebService.getGames(getApplicationContext(), new VolleyCallback() {

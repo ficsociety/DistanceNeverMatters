@@ -1,5 +1,7 @@
 package apm.muei.distancenevermatters.entities.dto;
 
+import com.google.gson.annotations.Expose;
+
 import java.util.Date;
 import java.util.List;
 
@@ -8,12 +10,18 @@ import apm.muei.distancenevermatters.entities.User;
 
 public class GameDetailsDto {
 
+    @Expose
     private String name;
+    @Expose
     private String description;
     //private Date date;
+    @Expose
     private GameState gameState;
+    @Expose
     private long code;
+    @Expose
     private User master;
+    @Expose
     private List<User> players;
 
     public GameDetailsDto() {

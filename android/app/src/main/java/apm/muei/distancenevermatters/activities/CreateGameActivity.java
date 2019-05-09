@@ -53,17 +53,4 @@ public class CreateGameActivity extends AppCompatActivity{
         this.markerModel.keySet().remove(marker);
     }
 
-    public void onGameCreated() {
-        //Swap Fragments
-        GameCreatedFragment newFragment = new GameCreatedFragment();
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.create_game_fragments, newFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-
-    }
-
-
-
 }

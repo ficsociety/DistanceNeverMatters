@@ -11,7 +11,9 @@ public class GlobalVars {
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
     private User user;
-
+    private String total_games;
+    private String player_games;
+    private String master_games;
 
     public GlobalVars() {
     }
@@ -45,5 +47,29 @@ public class GlobalVars {
 
     public void setSignInClient(GoogleSignInClient mGoogleSignInClient) {
         this.mGoogleSignInClient = mGoogleSignInClient;
+    }
+
+    public String  getTotal_games() {
+        return total_games;
+    }
+
+    public void setTotal_games(int total_games) {
+        this.total_games = Integer.toString(total_games);
+    }
+
+    public String getPlayer_games() {
+        return player_games;
+    }
+
+    public void setPlayer_games(int player_games) {
+        this.player_games = Integer.toString(player_games);
+    }
+
+    public String getMaster_games() {
+        return master_games;
+    }
+
+    public void setMaster_games(int master_games) {
+        this.master_games = Integer.toString(master_games);
     }
 }

@@ -20,7 +20,9 @@ import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.StringTokenizer;
 
+import apm.muei.distancenevermatters.GlobalVars.GlobalVars;
 import apm.muei.distancenevermatters.R;
 import apm.muei.distancenevermatters.activities.MainActivity;
 import apm.muei.distancenevermatters.adapters.GameRecyclerAdapter;
@@ -39,6 +41,8 @@ public class GameListFragment extends Fragment implements GameRecyclerAdapter.On
     private Gson gson;
     private IntentFilter intentFilter;
     private String filter;
+    private GlobalVars gVars;
+
 
     public static final String BROADCAST_ACTION = "apm.muei.distancenevermatters.broadcastreceiverdemo";
 
@@ -46,17 +50,29 @@ public class GameListFragment extends Fragment implements GameRecyclerAdapter.On
         setFilter(filter);
         List<GameDetailsDto> gameDtoList = ((MainActivity) getActivity()).getGameDtoList();
         List<GameDetailsDto> filtered = new ArrayList<>();
+        int masterGames = 0;
+        int playerGames = 0;
+        gVars = new GlobalVars().getInstance();
         if (filter == mContext.getString(R.string.all)) {
+            gVars.setTotal_games(gameDtoList.size());
             return gameDtoList;
         } else {
             for(GameDetailsDto game : gameDtoList) {
                 // TODO Obtener el usuario actual y quitar el hardcodeado
-                if ((filter.equals(mContext.getString(R.string.master))) && (game.getMaster().getUid().equals("aniebla$"))) {
+                if ((filter.equals(mContext.getString(R.string.master))) && (game.getMaster().getUid().equals(getUser(gVars.getmAuth().getCurrentUser().getEmail())))) {
                     filtered.add(game);
+                    masterGames += 1;
                 }
-                if ((filter.equals(mContext.getString(R.string.player))) && !(game.getMaster().getUid().equals("aniebla$"))) {
+                if ((filter.equals(mContext.getString(R.string.player))) && !(game.getMaster().getUid().equals(getUser(gVars.getmAuth().getCurrentUser().getEmail())))) {
                     filtered.add(game);
+                    playerGames += 1;
                 }
+            }
+            if ((filter.equals(mContext.getString(R.string.master)))) {
+                gVars.setMaster_games(masterGames);
+            }
+            if ((filter.equals(mContext.getString(R.string.player)))) {
+                gVars.setPlayer_games(playerGames);
             }
             return filtered;
         }
@@ -165,6 +181,17 @@ public class GameListFragment extends Fragment implements GameRecyclerAdapter.On
 
     String getFilter(){
         return this.filter;
+    }
+
+    public String getUser(String email) {
+        String username;
+        username = new StringTokenizer(email, "@").nextToken();
+
+        if (email.endsWith(".es")) {
+            username = username.concat("$");
+        }
+
+        return username;
     }
 
 }
