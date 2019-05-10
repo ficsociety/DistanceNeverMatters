@@ -45,26 +45,26 @@ public class MapInitializer : MonoBehaviour {
         }
 
         // Crear referencia a la clase contenedora
-        AndroidJavaClass fragmentClass = new AndroidJavaClass("apm.muei.distancenevermatters.fragments.UnityFragment");
-        // Obtener instancia del fragmento contenedor
-        AndroidJavaObject fragment = fragmentClass.GetStatic<AndroidJavaObject>("instance");
+        //AndroidJavaClass fragmentClass = new AndroidJavaClass("apm.muei.distancenevermatters.fragments.UnityFragment");
+        //// Obtener instancia del fragmento contenedor
+        //AndroidJavaObject fragment = fragmentClass.GetStatic<AndroidJavaObject>("instance");
 
-        // Pedir datos de la partida a la actividad
-        fragment.Call("getGameInfo");
+        //// Pedir datos de la partida a la actividad
+        //fragment.Call("getGameInfo");
 
         // JSON de prueba con datos del juego
-        //string json =
-        //    "{" +
-        //    "\"Map\": \"map\"," +
-        //    "\"User\": \"user\"," +
-        //    "\"Tracked\": [" +
-        //        "{ \"Target\": \"Umbreon\", \"Model\": \"RPGHeroHP\" }" +
-        //    "]," +
-        //    "\"External\": [" +
-        //       "{ \"Model\": \"PurpleDragon\", \"User\": \"user2\" }" +
-        //    "]" +
-        //    "}";
-        //SetGameInfo(json);
+        string json =
+            "{" +
+            "\"Map\": \"map\"," +
+            "\"User\": \"user\"," +
+            "\"Tracked\": [" +
+                "{ \"Target\": \"Umbreon\", \"Model\": \"RPGHeroHP\" }" +
+            "]," +
+            "\"External\": [" +
+               "{ \"Model\": \"PurpleDragon\", \"User\": \"user2\", \"Target\": \"Chandelure\" }" +
+            "]" +
+            "}";
+        SetGameInfo(json);
     }
 	
 	// Update is called once per frame
@@ -91,6 +91,7 @@ public class MapInitializer : MonoBehaviour {
 
         // Objetos trackeados
         JArray tracked = (JArray) info["Tracked"];
+        string currentUser = info["User"].Value<string>();
 
         foreach (JObject target in tracked)
         {
@@ -115,7 +116,7 @@ public class MapInitializer : MonoBehaviour {
                 Destroy(child.gameObject);
 
                 // Cambiar nombre del target. Necesario para la sincronización más tarde
-                newTarget.name = targetName;
+                newTarget.name = targetName + currentUser;
 
                 // Tag. Necesario para el Synchronizer
                 newTarget.tag = "target";
@@ -128,6 +129,7 @@ public class MapInitializer : MonoBehaviour {
         {
             string modelName = external["Model"].Value<string>();
             string user = external["User"].Value<string>();
+            string targetName = external["Target"].Value<string>();
 
             Debug.Log("Model: " + modelName + ", user: " + user);
             debug.text += "Model: " + modelName + ", user: " + user + "\n";
@@ -140,8 +142,7 @@ public class MapInitializer : MonoBehaviour {
                 GameObject newModel = Instantiate(modelsMap[modelName]);
 
                 // Cambiar nombre del modelo. Necesario para la sincronización más tarde
-                // TODO el nombre debería ser user + target
-                newModel.name = modelName + user;
+                newModel.name = targetName + user;
 
                 // Tag. Necesario para el Synchronizer
                 newModel.tag = "external";
