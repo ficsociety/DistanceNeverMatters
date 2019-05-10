@@ -5,4 +5,5 @@
     <color name="colorAccent">#E040FB</color>
     <color name="colorGamePlaying">#33cc33</color>
     <color name="colorGamePaused">#ff9933</color>
+    <color name="colorWhite">#ffffff</color>
 </resources>

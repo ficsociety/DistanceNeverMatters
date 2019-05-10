@@ -1,25 +1,31 @@
 package apm.muei.distancenevermatters.adapters;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
 
 import apm.muei.distancenevermatters.R;
 import apm.muei.distancenevermatters.entities.Dice;
-import apm.muei.distancenevermatters.entities.Map;
+import apm.muei.distancenevermatters.fragments.DiceFragment;
 
 
 public class DiceGridViewAdapter extends BaseAdapter {
     private Context context;
     private List<Dice> diceList;
+    private DiceFragment fragment;
+    CheckBox checkBox;
 
-    public DiceGridViewAdapter(Context context, List<Dice> diceList) {
+    public DiceGridViewAdapter(Context context, DiceFragment fragment, List<Dice> diceList) {
         this.context = context;
+        this.fragment = fragment;
         this.diceList = diceList;
     }
 
@@ -39,7 +45,7 @@ public class DiceGridViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View view, ViewGroup viewGroup) {
+    public View getView(final int position, View view, ViewGroup viewGroup) {
 
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context
@@ -48,10 +54,40 @@ public class DiceGridViewAdapter extends BaseAdapter {
         }
 
         TextView name = (TextView) view.findViewById(R.id.resourceName);
+        ImageView image = (ImageView) view.findViewById(R.id.imageResourceView);
+        checkBox = view.findViewById(R.id.checkBoxResource);
 
         Dice dice = getItem(position);
         name.setText(dice.getName());
+        image.setImageResource(dice.getImg());
+        image.setBackgroundColor(context.getResources().getColor(R.color.colorWhite));
 
+        fragment.getBtnLess().setEnabled(false);
+        fragment.getBtnMore().setEnabled(false);
+        fragment.getInputNumber().setEnabled(false);
+        checkBox.setChecked(false);
+        if (fragment.getItemSelected() == position) {
+            checkBox.setChecked(true);
+        }
+
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (fragment.getItemSelected() == position) {
+                    fragment.setItemSelected(-1);
+                    fragment.getBtnLess().setEnabled(false);
+                    fragment.getBtnMore().setEnabled(false);
+                    fragment.getInputNumber().setText("");
+                    fragment.getInputNumber().setEnabled(false);
+                } else {
+                     fragment.setItemSelected(position);
+                     fragment.getBtnLess().setEnabled(true);
+                     fragment.getBtnMore().setEnabled(true);
+                     fragment.getInputNumber().setEnabled(true);
+                }
+                notifyDataSetChanged();
+            }
+        });
 
         return view;
     }

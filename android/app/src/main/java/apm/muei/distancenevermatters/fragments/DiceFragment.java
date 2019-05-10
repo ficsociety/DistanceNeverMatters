@@ -8,6 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 
 import java.util.List;
@@ -22,8 +25,19 @@ import butterknife.ButterKnife;
 public class DiceFragment extends Fragment {
 
 
+    private int itemSelected = -1;
+
     @BindView(R.id.diceGridView)
     GridView gridView;
+
+    @BindView(R.id.diceInputNumber)
+    EditText inputNumber;
+
+    @BindView(R.id.diceBtnMore)
+    Button btnMore;
+
+    @BindView(R.id.diceBtnLess)
+    Button btnLess;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,10 +54,28 @@ public class DiceFragment extends Fragment {
         FloatingActionButton diceFab = getActivity().findViewById(R.id.gameFabBtnDice);
         diceFab.hide();
         quitFab.hide();
-        final DiceGridViewAdapter adapter = new DiceGridViewAdapter(getActivity().getApplicationContext(), diceList);
+        final DiceGridViewAdapter adapter = new DiceGridViewAdapter(getActivity().getApplicationContext(), this, diceList);
         gridView.setAdapter(adapter);
-
-
         return rootView;
+    }
+
+    public int getItemSelected() {
+        return itemSelected;
+    }
+
+    public void setItemSelected(int itemSelected) {
+        this.itemSelected = itemSelected;
+    }
+
+    public EditText getInputNumber() {
+        return inputNumber;
+    }
+
+    public Button getBtnMore() {
+        return btnMore;
+    }
+
+    public Button getBtnLess() {
+        return btnLess;
     }
 }

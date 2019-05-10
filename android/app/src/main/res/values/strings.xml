@@ -7,6 +7,8 @@
     <string name="start">Inicio</string>
     <string name="joinGame">Unirse</string>
     <string name="startGame">Empezar</string>
+    <string name="result">Resultado</string>
+    <string name="dicesSelected">Dados Seleccionados</string>
     <string name="game_name_placeholder">Nombre de la partida</string>
     <string name="game_description_placeholder">Descripción de la partida</string>
     <string name="name">Nombre</string>
