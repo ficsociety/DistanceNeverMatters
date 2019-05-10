@@ -85,7 +85,7 @@ public class MainFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        getActivity().setTitle("Lista de partidas"); // TODO change for string resource
+        getActivity().setTitle(R.string.game_list); // TODO change for string resource
         //((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
@@ -114,7 +114,7 @@ public class MainFragment extends Fragment {
         else if (id == R.id.perfil) {
             showProfile();
         }
-        else if (id == R.id.language) {
+        else if (id == R.id.lang) {
             changeLanguage();
         }
         return true;

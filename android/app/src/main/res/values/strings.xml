@@ -17,7 +17,8 @@
     <string name="password">Contraseña</string>
     <string name="games">Partidas</string>
     <string name="register">Registro</string>
-    <string name="registrarse">Registrarse</string>
+    <string name="regis">Registrarse</string>
+    <string name="login">Iniciar Sesión</string>
     <string name="logoDescription">Logo de la aplicación DNM</string>
     <string name="username">Nombre de usuario</string>
     <string name="email">Correo electrónico</string>
@@ -29,6 +30,7 @@
     <string name="game_name">Nombre de la partida</string>
     <string name="creationdate">Fecha de creación</string>
     <string name="player_list">Lista de Jugadores</string>
+    <string name="game_list">Lista de Partidas</string>
     <string name="participants">Participantes</string>
     <string name="descriptionshort">Breve descripción de la Partida en unas cuantas líneas.</string>
     <string name="date">01/01/2019</string>

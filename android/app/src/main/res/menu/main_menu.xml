@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/language"
+        android:id="@+id/lang"
         android:icon="@drawable/ic_person_white_24dp"
         android:orderInCategory="100"
         android:title="@string/action_idiom"

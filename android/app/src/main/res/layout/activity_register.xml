@@ -147,7 +147,7 @@
                 android:layout_marginRight="100dp"
                 android:layout_marginBottom="32dp"
                 android:onClick="onPressRegister"
-                android:text="@string/registrarse"
+                android:text="@string/regis"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"

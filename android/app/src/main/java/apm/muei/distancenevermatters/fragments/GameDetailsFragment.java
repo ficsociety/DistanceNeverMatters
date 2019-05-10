@@ -2,20 +2,19 @@ package apm.muei.distancenevermatters.fragments;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,10 +32,10 @@ public class GameDetailsFragment extends Fragment {
     private GameDetailsRecyclerAdapter adapter;
 
     @BindView(R.id.ginfETdescription)
-    EditText description;
+    TextInputLayout description;
 
     @BindView(R.id.ginfETgameName)
-    EditText gameName;
+    TextInputLayout gameName;
 
     @BindView(R.id.ginfTVdateValue)
     TextView gameDate;
@@ -54,13 +53,12 @@ public class GameDetailsFragment extends Fragment {
         if (item.isChecked()) {
             SaveGameDetailsFragment dialog = new SaveGameDetailsFragment();
             dialog.show(getActivity().getSupportFragmentManager(), "saveGameDetails");
-            description.setEnabled(false);
-            gameName.setEnabled(false);
+            description.getEditText().setEnabled(false);
+            gameName.getEditText().setEnabled(false);
             item.setIcon(R.drawable.ic_edit_white_24dp);
         } else {
             description.setEnabled(true);
             gameName.setEnabled(true);
-            gameName.requestFocus();
             item.setIcon(R.drawable.ic_save_white_24dp);
         }
         item.setChecked(!item.isChecked());
@@ -94,8 +92,8 @@ public class GameDetailsFragment extends Fragment {
         description.setEnabled(false);
         gameName.setEnabled(false);
 
-        gameName.setText(gameDetails.getName());
-        description.setText(gameDetails.getDescription());
+        gameName.getEditText().setText(gameDetails.getName());
+        description.getEditText().setText(gameDetails.getDescription());
         //gameDate.setText(gameDetails.getDate().toString());
 
         Toolbar toolbar = getActivity().findViewById(R.id.mainToolbar);
