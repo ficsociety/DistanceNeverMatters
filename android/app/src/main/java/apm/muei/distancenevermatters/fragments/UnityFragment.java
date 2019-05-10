@@ -2,6 +2,7 @@ package apm.muei.distancenevermatters.fragments;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,6 +36,10 @@ public class UnityFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_unity, container, false);
 
+        FloatingActionButton quitFab = getActivity().findViewById(R.id.quitFab);
+        FloatingActionButton diceFab = getActivity().findViewById(R.id.gameFabBtnDice);
+        diceFab.show();
+        quitFab.show();
         Log.d("weird", "create unity fragment");
         ViewGroup frameLayout = rootView.findViewById(R.id.unityFrameLayout);
         if (frameLayout.getChildAt(0) == null) {

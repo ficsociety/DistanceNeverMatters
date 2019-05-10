@@ -15,9 +15,12 @@ import android.widget.FrameLayout;
 import com.unity3d.player.UnityPlayer;
 
 import apm.muei.distancenevermatters.R;
+import apm.muei.distancenevermatters.fragments.DiceFragment;
+import apm.muei.distancenevermatters.fragments.GameDetailsFragment;
 import apm.muei.distancenevermatters.fragments.UnityFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class GameActivity extends AppCompatActivity
         implements UnityFragment.OnUnityFragmentInteractionListener {
@@ -27,6 +30,12 @@ public class GameActivity extends AppCompatActivity
 
     @BindView(R.id.gameFragmentContainer)
     FrameLayout frameLayout;
+
+    @BindView(R.id.quitFab)
+    FloatingActionButton quitFab;
+
+    @BindView(R.id.gameFabBtnDice)
+    FloatingActionButton diceFab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +53,6 @@ public class GameActivity extends AppCompatActivity
         ButterKnife.bind(this);
 
         // TODO change
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         FloatingActionButton quitFab = findViewById(R.id.quitFab);
         quitFab.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +85,17 @@ public class GameActivity extends AppCompatActivity
             unityPlayer.windowFocusChanged(hasFocus);
         }
     }
+
+    @OnClick(R.id.gameFabBtnDice)
+    public void goToDice() {
+        DiceFragment newFragment = new DiceFragment();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.gameFragmentContainer, newFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
 
     @Override
     public UnityPlayer getUnityPlayer() {
