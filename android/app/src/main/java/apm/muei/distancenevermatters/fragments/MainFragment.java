@@ -47,7 +47,7 @@ public class MainFragment extends Fragment {
     @OnClick(R.id.gListAddFab)
     public void addGame() {
         startActivity(new Intent(getActivity(), CreateGameActivity.class));
-        getActivity().finish();
+        //getActivity().finish();
     }
 
     @BindView(R.id.gListViewPager)

@@ -139,6 +139,11 @@ public class WebService {
         VolleySingleton.getInstance(context).addRequestQueue(request);
     }
 
+    public static void deleteGame(Context context, String code, final VolleyCallback callback) {
+        StringRequest request = new StringRequest(Request.Method.DELETE, URL.concat("/game/").concat(code), getOnSuccessCallback(callback), getOnErrorCallback());
+        VolleySingleton.getInstance(context).addRequestQueue(request);
+    }
+
 
     private static Response.ErrorListener getOnErrorCode(final Context context) {
         return new Response.ErrorListener() {
