@@ -128,4 +128,23 @@ public class UnityFragment extends Fragment {
     public interface OnUnityFragmentInteractionListener {
         UnityPlayer getUnityPlayer();
     }
+
+    // Method for Unity
+    public void getGameInfo() {
+        String gameobjectName = "MapTarget";
+        String method = "SetGameInfo";
+        // Example JSON
+        String arg =
+                    "{" +
+                    "\"Map\": \"map\"," +
+                    "\"User\": \"user\"," +
+                    "\"Tracked\": [" +
+                        "{ \"Target\": \"Umbreon\", \"Model\": \"RPGHeroHP\" }" +
+                    "]," +
+                    "\"External\": [" +
+                       "{ \"Model\": \"PurpleDragon\", \"User\": \"user2\" }" +
+                    "]" +
+                    "}";
+        UnityPlayer.UnitySendMessage(gameobjectName, method, arg);
+    }
 }
