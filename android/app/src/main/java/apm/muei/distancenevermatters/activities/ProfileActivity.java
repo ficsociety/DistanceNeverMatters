@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -43,6 +44,9 @@ public class ProfileActivity extends AppCompatActivity {
     @BindView(R.id.profileTextPlayerGames)
     TextView profilePlayerGames;
 
+    @BindView(R.id.profileToolbar)
+    Toolbar toolbar;
+
     private GlobalVars gVars;
 
     @Override
@@ -51,6 +55,9 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
         gVars = new GlobalVars().getInstance();
+        setSupportActionBar(toolbar);
+        setTitle(R.string.perfil);
+
     }
 
     @Override
@@ -64,6 +71,11 @@ public class ProfileActivity extends AppCompatActivity {
         if(gVars.getmAuth().getCurrentUser().getPhotoUrl() != null){
             Picasso.get().load(gVars.getmAuth().getCurrentUser().getPhotoUrl()).into(profileImage);
         }
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                onBack();
+            }
+        });
     }
 
     @OnClick(R.id.profileButtonConf)
@@ -74,13 +86,6 @@ public class ProfileActivity extends AppCompatActivity {
     @OnClick(R.id.profileButtonSingOut)
     public void onPressSignOut(View view) {
         signOut();
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
     }
 
     private void signOut() {
@@ -98,6 +103,16 @@ public class ProfileActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    @Override
+    public void onBackPressed() {
+
+    }
+
+    public void onBack(){
+        super.onBackPressed();
+    }
+
 
 
 }

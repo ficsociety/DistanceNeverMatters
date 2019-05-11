@@ -16,9 +16,13 @@ import android.widget.Toast;
 import java.util.List;
 
 import apm.muei.distancenevermatters.R;
+import apm.muei.distancenevermatters.SharedPreference.PreferenceManager;
 import apm.muei.distancenevermatters.activities.GameActivity;
 import apm.muei.distancenevermatters.entities.GameState;
 import apm.muei.distancenevermatters.entities.dto.GameDetailsDto;
+import apm.muei.distancenevermatters.entities.dto.UpdateStateDto;
+import apm.muei.distancenevermatters.volley.VolleyCallback;
+import apm.muei.distancenevermatters.volley.WebService;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -51,6 +55,18 @@ public class GameRecyclerAdapter extends RecyclerView.Adapter<GameRecyclerAdapte
             CharSequence text = "Empezando partida";
             Toast toast = Toast.makeText(fragment.getActivity().getApplicationContext(), text, Toast.LENGTH_SHORT);
             toast.show();
+            //Change State
+            String userName = PreferenceManager.getInstance().getUserName();
+            int t = getLayoutPosition();
+            GameDetailsDto game = gameList.get(t);
+            if ((game.getMaster().getUid().equals(userName))) {
+                UpdateStateDto stateDto = new UpdateStateDto(GameState.PLAYING, game.getCode());
+                WebService.changeGameState(fragment.getActivity().getApplicationContext(), stateDto, new VolleyCallback() {
+                    @Override
+                    public void onSuccess(String result) {
+                    }
+                });
+            }
 
             // Launch GameActivity
             Intent intent = new Intent(fragment.getActivity(), GameActivity.class);
