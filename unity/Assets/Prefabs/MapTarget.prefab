@@ -131,12 +131,12 @@ MonoBehaviour:
   maps:
   - {fileID: 21300000, guid: ddfbbc58e3eefaf4a96bbf0539a63803, type: 3}
   targets:
-  - {fileID: 1459951631022554, guid: 5520d299a569ce2448f822cef6015858, type: 2}
-  - {fileID: 1827649039406898, guid: c490e4cda13cfa74d819e9f8641a38b8, type: 2}
-  - {fileID: 1418980261440808, guid: 0f6cf79c852d1274e96f09e2fcac5262, type: 2}
-  - {fileID: 1281887783121998, guid: afe2f1bc2231bfe4d85aae6a0cba16be, type: 2}
-  - {fileID: 1495628313550466, guid: 0bfb7c719c5bb7c418e8bd56ea634a94, type: 2}
-  - {fileID: 1003078563418640, guid: 598912ea18ba6ee479a952afdaed2050, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   models:
   - {fileID: 1365409623442104, guid: 5c5d3463e535265418c5947b0ecaf9ca, type: 2}
   - {fileID: 1937975549225578, guid: 489feae51f69d6045a6a9878576a84f3, type: 2}

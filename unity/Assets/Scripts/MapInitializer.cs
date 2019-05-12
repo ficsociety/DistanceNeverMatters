@@ -16,14 +16,10 @@ public class MapInitializer : MonoBehaviour {
     [SerializeField] private List<GameObject> models;
     private Dictionary<string, GameObject> modelsMap = new Dictionary<string, GameObject>();
 
-    // TODO quitar
-    private Text debug;
-
     private SpriteRenderer map;
+    private AndroidJavaObject fragment;
 
     void Start () {
-        // TODO quitar
-        debug = FindObjectOfType<Text>();
 
         // Obtener referencia al GameObject del mapa
         map = transform.GetChild(0).GetComponent<SpriteRenderer>();
@@ -32,7 +28,6 @@ public class MapInitializer : MonoBehaviour {
         foreach (GameObject target in targets)
         {
             Debug.Log("Target name: " + target.name);
-            debug.text += "Target name: " + target.name + "\n";
             targetsMap.Add(target.name, target);
         }
 
@@ -40,31 +35,30 @@ public class MapInitializer : MonoBehaviour {
         foreach (GameObject model in models)
         {
             Debug.Log("Model name: " + model.name);
-            debug.text += "Model name: " + model.name + "\n";
             modelsMap.Add(model.name, model);
         }
 
         // Crear referencia a la clase contenedora
-        //AndroidJavaClass fragmentClass = new AndroidJavaClass("apm.muei.distancenevermatters.fragments.UnityFragment");
-        //// Obtener instancia del fragmento contenedor
-        //AndroidJavaObject fragment = fragmentClass.GetStatic<AndroidJavaObject>("instance");
+        AndroidJavaClass fragmentClass = new AndroidJavaClass("apm.muei.distancenevermatters.fragments.UnityFragment");
+        // Obtener instancia del fragmento contenedor
+        fragment = fragmentClass.GetStatic<AndroidJavaObject>("instance");
 
-        //// Pedir datos de la partida a la actividad
-        //fragment.Call("getGameInfo");
+        // Pedir datos de la partida a la actividad
+        fragment.Call("getGameInfo");
 
         // JSON de prueba con datos del juego
-        string json =
-            "{" +
-            "\"Map\": \"map\"," +
-            "\"User\": \"user\"," +
-            "\"Tracked\": [" +
-                "{ \"Target\": \"Umbreon\", \"Model\": \"RPGHeroHP\" }" +
-            "]," +
-            "\"External\": [" +
-               "{ \"Model\": \"PurpleDragon\", \"User\": \"user2\", \"Target\": \"Chandelure\" }" +
-            "]" +
-            "}";
-        SetGameInfo(json);
+        //string json =
+        //    "{" +
+        //    "\"Map\": \"map\"," +
+        //    "\"User\": \"user\"," +
+        //    "\"Tracked\": [" +
+        //        "{ \"Target\": \"Umbreon\", \"Model\": \"RPGHeroHP\" }" +
+        //    "]," +
+        //    "\"External\": [" +
+        //       "{ \"Model\": \"PurpleDragon\", \"User\": \"user2\", \"Target\": \"Chandelure\" }" +
+        //    "]" +
+        //    "}";
+        //SetGameInfo(json);
     }
 	
 	// Update is called once per frame
@@ -98,12 +92,10 @@ public class MapInitializer : MonoBehaviour {
             string targetName = target["Target"].Value<string>();
             string modelName = target["Model"].Value<string>();
             Debug.Log("Target: " + targetName + ", model: " + modelName);
-            debug.text += "Target: " + targetName + ", model: " + modelName + "\n";
 
             if (targetsMap.ContainsKey(targetName) && modelsMap.ContainsKey(modelName)) {
                 Debug.Log("Target and model found");
-                debug.text += "Target and model found" + "\n";
-                GameObject newTarget = Instantiate(targetsMap[targetName]);
+                GameObject newTarget = targetsMap[targetName];
                 GameObject newModel = Instantiate(modelsMap[modelName]);
 
                 // Añadir modelo como hijo del target
@@ -120,32 +112,42 @@ public class MapInitializer : MonoBehaviour {
 
                 // Tag. Necesario para el Synchronizer
                 newTarget.tag = "target";
+
+                // Sacar del mapa, ya que no se va a volver a usar
+                targetsMap.Remove(targetName);
             }
+        }
+
+        // Destruir targets no utilizados (los que aún están en el mapa)
+        foreach (GameObject unusedTarget in targetsMap.Values)
+        {
+            unusedTarget.SetActive(false);
         }
 
         // Objetos externos
         JArray externalModels = (JArray)info["External"];
-        foreach (JObject external in externalModels)
+        if (externalModels != null)
         {
-            string modelName = external["Model"].Value<string>();
-            string user = external["User"].Value<string>();
-            string targetName = external["Target"].Value<string>();
-
-            Debug.Log("Model: " + modelName + ", user: " + user);
-            debug.text += "Model: " + modelName + ", user: " + user + "\n";
-
-            if (modelsMap.ContainsKey(modelName))
+            foreach (JObject external in externalModels)
             {
-                Debug.Log("External model found");
-                debug.text += "External model found" + "\n";
+                string modelName = external["Model"].Value<string>();
+                string user = external["User"].Value<string>();
+                string targetName = external["Target"].Value<string>();
 
-                GameObject newModel = Instantiate(modelsMap[modelName]);
+                Debug.Log("Model: " + modelName + ", user: " + user);
 
-                // Cambiar nombre del modelo. Necesario para la sincronización más tarde
-                newModel.name = targetName + user;
+                if (modelsMap.ContainsKey(modelName))
+                {
+                    Debug.Log("External model found");
 
-                // Tag. Necesario para el Synchronizer
-                newModel.tag = "external";
+                    GameObject newModel = Instantiate(modelsMap[modelName]);
+
+                    // Cambiar nombre del modelo. Necesario para la sincronización más tarde
+                    newModel.name = targetName + user;
+
+                    // Tag. Necesario para el Synchronizer
+                    newModel.tag = "external";
+                }
             }
         }
 

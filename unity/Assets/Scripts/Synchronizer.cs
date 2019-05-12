@@ -9,7 +9,7 @@ public class Synchronizer : MonoBehaviour {
 
     [SerializeField] private List<GameObject> trackedTargets = new List<GameObject>();
     private AndroidJavaObject fragment;
-    [SerializeField] private Dictionary<string, GameObject> externalModels = new Dictionary<string, GameObject>(); // GameObjects whose location is sent to us by another object
+    private Dictionary<string, GameObject> externalModels = new Dictionary<string, GameObject>(); // GameObjects whose location is sent to us by another object
     public float transmissionInterval = 0.5f; // En segundos
     
     private TrackableBehaviour trackableBehaviour;
@@ -114,7 +114,19 @@ public class Synchronizer : MonoBehaviour {
             // Enviar información
             Debug.Log(updateInfo);
             // Actualización mock
-            MockUpdate();
+            MockUpdate(); // Unity
+            // Android
+            // Poner a la izquierda del marcador umbreon, con la misma rotación
+            //Vector3 distanceMock = trackedTargets[0].transform.GetChild(0).position + new Vector3(2, 0, 0) - map.transform.position;
+            //Quaternion rotation = trackedTargets[0].transform.GetChild(0).rotation;
+            //string json =
+            //    "[" +
+            //        "{ \"Model\": \"Chandelureuser2\"," +
+            //            "\"Distance\": { \"x\":" + distanceMock.x + ", \"y\": " + distanceMock.y + ",\"z\": " + distanceMock.z + "}," +
+            //            "\"Rotation\": { \"x\":" + rotation.x + ", \"y\": " + rotation.y + ",\"z\": " + rotation.z + ",\"w\": " + rotation.w + "}" +
+            //        "}" +
+            //    "]";
+            //fragment.Call("mockUpdate", json); // Android
         }
     }
 
@@ -166,28 +178,5 @@ public class Synchronizer : MonoBehaviour {
             }
         }
     }
-    //public void SetDistance(string gameObjectName, Vector3 distance, Quaternion rotation)
-    //{
-    //    foreach (GameObject externalTarget in external)
-    //    {
-    //        if (externalTarget.name == gameObjectName)
-    //        {
-    //            Debug.Log("Setting " + gameObjectName);
-    //            externalTarget.SetActive(true);
-    //            externalTarget.transform.position = map.transform.position + distance;
-    //            externalTarget.transform.rotation = rotation;
-    //        }
-    //    }
-    //}
 
-    //public void Deactivate(string gameObjectName)
-    //{
-    //    foreach (GameObject externalTarget in external)
-    //    {
-    //        if (externalTarget.name == gameObjectName)
-    //        {
-    //            externalTarget.SetActive(false);
-    //        }
-    //    }
-    //}
 }

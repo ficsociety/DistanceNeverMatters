@@ -135,16 +135,27 @@ public class UnityFragment extends Fragment {
         String method = "SetGameInfo";
         // Example JSON
         String arg =
-                    "{" +
-                    "\"Map\": \"map\"," +
-                    "\"User\": \"user\"," +
-                    "\"Tracked\": [" +
-                        "{ \"Target\": \"Umbreon\", \"Model\": \"RPGHeroHP\" }" +
-                    "]," +
-                    "\"External\": [" +
-                       "{ \"Model\": \"PurpleDragon\", \"User\": \"user2\" }" +
-                    "]" +
-                    "}";
+                "{" +
+                            "\"Map\": \"map\"," +
+                            "\"User\": \"user\"," +
+                            "\"Tracked\": [" +
+                                "{ \"Target\": \"Umbreon\", \"Model\": \"RPGHeroHP\" }" +
+                            "]," +
+                            "\"External\": [" +
+                               "{ \"Model\": \"PurpleDragon\", \"User\": \"user2\", \"Target\": \"Chandelure\" }" +
+                            "]" +
+                            "}";
         UnityPlayer.UnitySendMessage(gameobjectName, method, arg);
+    }
+
+    public void mockUpdate(String json) {
+        String gameObject = "MapTarget";
+        String method = "UpdateLocations";
+
+        UnityPlayer.UnitySendMessage(gameObject, method, json);
+    }
+
+    public void log(String message) {
+        Log.d("Unity", message);
     }
 }

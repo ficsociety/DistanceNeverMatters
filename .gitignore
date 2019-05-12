@@ -119,3 +119,15 @@ lint/tmp/
 *.keystore
 android/MapSync-debug/MapSync-debug.aar
 android/VuforiaWrapper/VuforiaWrapper.aar
+unity/Assets/RPGHero/Textures/PBR_Albedo.png
+unity/Assets/RPGHero/Textures/HandPaintedTexture.png
+unity/Assets/FreeDragons/Texture/DragonBoar/Red/Normal.png
+unity/Assets/FreeDragons/Texture/DragonBoar/Gold/Normal.png
+unity/Assets/FreeDragons/Texture/DragonBoar/Gold/Albedo.png
+unity/Assets/FreeDragons/Texture/DragonBoar/Blue/Normal.png
+unity/Assets/RPGHero/Textures/PBR_NM.png
+unity/Assets/FreeDragons/Texture/DragonBoar/Blue/Albedo.png
+unityExported/MapSync/src/main/jniLibs/x86/libunity.so
+unityExported/MapSync/src/main/jniLibs/armeabi-v7a/libunity.so
+unityExported/MapSync/src/main/java/apm/muei/distancenevermatters/unity/UnityPlayerActivity.java
+unityExported/MapSync/libs/VuforiaWrapper.aar
