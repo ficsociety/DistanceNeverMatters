@@ -21,4 +21,7 @@ public interface GameService {
 	void updateState(UpdateStateDto updateStateDto) throws NotFoundException;
 
 	void deleteGame(long code) throws NotFoundException;
+
+	void updateGame(GameDetailsDto gameDetailsDto);
+
 }

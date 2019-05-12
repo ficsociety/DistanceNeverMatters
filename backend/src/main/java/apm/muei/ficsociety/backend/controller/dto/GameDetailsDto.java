@@ -14,13 +14,13 @@ public class GameDetailsDto {
 	private GameState state;
 	private long code;
 	private User master;
-	private List<User> players;
+	private List<PlayerDto> players;
 
 	public GameDetailsDto() {
 	}
 
 	public GameDetailsDto(String name, String description, User master, Date date, long code, GameState state,
-			List<User> players) {
+			List<PlayerDto> players) {
 		super();
 		this.name = name;
 		this.description = description;
@@ -47,11 +47,11 @@ public class GameDetailsDto {
 		return date;
 	}
 
-	public List<User> getPlayers() {
+	public List<PlayerDto> getPlayers() {
 		return players;
 	}
 
-	public GameState getGameState() {
+	public GameState getState() {
 		return state;
 	}
 

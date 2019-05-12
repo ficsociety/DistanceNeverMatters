@@ -57,4 +57,9 @@ public class GameController {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game does not exist");
 		}
 	}
+
+	@PostMapping("/game")
+	public void updateGame(@RequestBody GameDetailsDto gameDetails) {
+		gameService.updateGame(gameDetails);
+	}
 }
