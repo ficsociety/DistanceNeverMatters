@@ -1,23 +1,43 @@
 package apm.muei.distancenevermatters.activities;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 import apm.muei.distancenevermatters.GlobalVars.GlobalVars;
+import apm.muei.distancenevermatters.LocaleManager.LocaleHelper;
 import apm.muei.distancenevermatters.adapters.GameRecyclerAdapter;
 import apm.muei.distancenevermatters.entities.GameState;
 import apm.muei.distancenevermatters.entities.User;
@@ -25,16 +45,18 @@ import apm.muei.distancenevermatters.entities.dto.GameDetailsDto;
 import apm.muei.distancenevermatters.fragments.GameDetailsFragment;
 import apm.muei.distancenevermatters.fragments.MainFragment;
 import apm.muei.distancenevermatters.R;
+import apm.muei.distancenevermatters.services.GameStateService;
 import apm.muei.distancenevermatters.volley.VolleyCallback;
 import apm.muei.distancenevermatters.volley.WebService;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity
-        implements GameRecyclerAdapter.OnGameDetailsListener {
+        implements GameRecyclerAdapter.OnGameDetailsListener, NavigationView.OnNavigationItemSelectedListener {
 
     private List<GameDetailsDto> gameDtoList = new ArrayList<>();
     private GameDetailsDto gameDetails;
+    private Gson gson;
 
     MainFragment fragment = null;
 
@@ -50,16 +72,34 @@ public class MainActivity extends AppCompatActivity
 
     private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
 
+    private DrawerLayout mainLayout;
+    private LinearLayout contentLayout;
+    private GlobalVars gVars;
+
+    ActionBarDrawerToggle toggle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
+        setContentView(R.layout.navigation_view);
+        mainLayout = findViewById(R.id.drawer_layout);
+        contentLayout = (LinearLayout) View.inflate(this, R.layout.activity_main, null);
+        mainLayout.addView(contentLayout);
         ButterKnife.bind(this);
+        gson = new GsonBuilder().create();
+        gVars = new GlobalVars().getInstance();
 
 
         // Be sure to ALWAYS set up the support action bar, or else getSupportActionBar could return null
         setSupportActionBar(toolbar);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setupMenu();
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.bringToFront();
 
         if (fragmentContainer != null) {
             // If we are being restored, return or else we could end up
@@ -103,28 +143,21 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    private void setupMenu(){
+        toggle = new ActionBarDrawerToggle(
+                this, mainLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mainLayout.addDrawerListener(toggle);
+        toggle.setDrawerIndicatorEnabled(true);
+        toggle.syncState();
+
+    }
+
     @Override
     public void fetchGames(final SwipeRefreshLayout swipeRefresh) {
         WebService.getGames(getApplicationContext(), new VolleyCallback() {
             @Override
             public void onSuccess(String result) {
-                // TODO Eliminar estos datos mockeados
-                User user1 = new User("roi");
-                User user2 = new User("morenito84");
-                List<User> users = new ArrayList<>();
-                users.add(new User("user1"));
-                users.add(new User("user2"));
-                users.add(new User("user3"));
-                gameDtoList = new ArrayList<>();
-                gameDtoList.add(new GameDetailsDto("Prueba 1", "descripcion 1", user1, new Date(), 1L, GameState.PLAYING, users));
-                gameDtoList.add(new GameDetailsDto("Prueba 2", "descripcion 2", user1, new Date(), 2L, GameState.PLAYING, users));
-                gameDtoList.add(new GameDetailsDto("Prueba 3", "descripcion 3", user2, new Date(), 3L, GameState.PLAYING, users));
-                gameDtoList.add(new GameDetailsDto("Prueba 4", "descripcion 4", user1, new Date(), 4L, GameState.PAUSED, users));
-                gameDtoList.add(new GameDetailsDto("Prueba 5", "descripcion 5", user1, new Date(), 5L, GameState.PAUSED, users));
-                gameDtoList.add(new GameDetailsDto("Prueba 6", "descripcion 6", user2, new Date(), 6L, GameState.PAUSED, users));
-                gameDtoList.add(new GameDetailsDto("Prueba 7", "descripcion 7", user2, new Date(), 7L, GameState.PAUSED, users));
-                gameDtoList.add(new GameDetailsDto("Prueba 8", "descripcion 8", user1, new Date(), 8L, GameState.PAUSED, users));
-
+                gameDtoList = Arrays.asList(gson.fromJson(result, GameDetailsDto[].class));
                 if (fragmentContainer != null) {
                     // If we are being restored, return or else we could end up
                     // Add the first fragment to the fragment container in the layout
@@ -147,9 +180,10 @@ public class MainActivity extends AppCompatActivity
         // Swap fragments
         this.gameDetails = gameDetails;
         GameDetailsFragment newFragment = new GameDetailsFragment();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.mainFrameLFragContainer, newFragment);
+        transaction.replace(R.id.mainFrameLFragContainer, newFragment, "GAME_DETAIL");
         transaction.addToBackStack(null);
         transaction.commit();
     }
@@ -158,13 +192,109 @@ public class MainActivity extends AppCompatActivity
         return gameDtoList;
     }
 
+    public void setGameDtoList(List<GameDetailsDto> gameDtoList) {
+        this.gameDtoList = gameDtoList;
+    }
+
     public GameDetailsDto getGameDetails() { return gameDetails; }
 
-    /*
-    TODO Comportamiento back en main fragment vs details fragment
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Intent i = new Intent(this, GameStateService.class);
+        startService(i);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Intent i = new Intent(this, GameStateService.class);
+        stopService(i);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.nav_sign_out:
+                CharSequence text = "Regresando a login";
+                Toast toast = Toast.makeText(this.getApplicationContext(), text, Toast.LENGTH_SHORT);
+                toast.show();
+                singOut();
+                return true;
+            case R.id.nav_find:
+                Intent intent = new Intent(this, FindGameActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.nav_help:
+                Toast.makeText(this.getApplicationContext(), R.string.help, Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.nav_profile:
+                showProfile();
+                return true;
+            case R.id.nav_languaje:
+                changeLanguage();
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private void singOut() {
+        // Firebase sign out
+        gVars.getmAuth().signOut();
+
+        // Google sign out
+        gVars.getSignInClient().signOut().addOnCompleteListener(this,
+                new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+    }
+
+    private void showProfile() {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        startActivity(intent);
+    }
+
+    private void changeLanguage(){
+        final String languages[] = new String[] {"es", "en"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.Seleccionar_idioma);
+        builder.setItems(languages, new DialogInterface.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                LocaleHelper.setLocale(MainActivity.this, languages[which]);
+                finish();
+                startActivity(getIntent());
+            }
+        });
+        builder.show();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.onAttach(base));
+    }
 
     @Override
     public void onBackPressed() {
+        final GameDetailsFragment fragment = (GameDetailsFragment) getSupportFragmentManager().findFragmentByTag("GAME_DETAIL");
+
+        if (fragment == null) {
+            super.onBackPressed();
+        }
     }
-    */
+
+    public void onBack() {
+        setupMenu();
+        super.onBackPressed();
+    }
+
 }

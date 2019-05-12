@@ -2,6 +2,7 @@ package apm.muei.distancenevermatters.volley;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -16,6 +17,8 @@ import java.util.Map;
 
 import apm.muei.distancenevermatters.GlobalVars.GlobalVars;
 import apm.muei.distancenevermatters.entities.dto.CreateGameDto;
+import apm.muei.distancenevermatters.entities.dto.JoinGameDto;
+import apm.muei.distancenevermatters.entities.dto.UpdateStateDto;
 
 
 public class WebService {
@@ -46,15 +49,13 @@ public class WebService {
     }
 
     public static void getGames(Context context, final VolleyCallback callback) {
-        GlobalVars gVars = new GlobalVars().getInstance();
-        System.out.println(gVars.getUser().getUid());
-        StringRequest request;
-        request = new StringRequest(Request.Method.GET, URL.concat("user/games"), getOnSuccessCallback(callback), getOnErrorCallback()) {
+        final GlobalVars gVars = new GlobalVars().getInstance();
+        StringRequest request = new StringRequest(Request.Method.GET, URL.concat("games"), getOnSuccessCallback(callback), getOnErrorCallback())
+        {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String>  params = new HashMap<>();
-                // TODO Obtener user y meterlo en el header
-                params.put("token", "roi");
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("token", gVars.getmAuth().getCurrentUser().getEmail());
                 return params;
             }
         };
@@ -99,5 +100,90 @@ public class WebService {
         };
         VolleySingleton.getInstance(context).addRequestQueue(request);
     }
+
+
+    public static void joinGame(Context context, final JoinGameDto joinGameDto, final VolleyCallback callback){
+        StringRequest request = new StringRequest(Request.Method.POST, URL + "game/join", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                callback.onSuccess(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("Error join Game",  error.toString());
+
+            }
+        }){
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                Gson gson = new GsonBuilder().create();
+                return gson.toJson(joinGameDto).getBytes();
+            }
+
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                headers.put("token", new GlobalVars().getInstance().getmAuth().getCurrentUser().getEmail());
+                return headers;
+            }
+        };
+        VolleySingleton.getInstance(context).addRequestQueue(request);
+    }
+
+    public static void findGameByCode (Context context, String code, final VolleyCallback callback) {
+
+        StringRequest request;
+        request = new StringRequest(Request.Method.GET, URL.concat("/game/").concat(code), getOnSuccessCallback(callback), getOnErrorCode(context)) {
+
+        };
+        VolleySingleton.getInstance(context).addRequestQueue(request);
+    }
+
+    public static void deleteGame(Context context, String code, final VolleyCallback callback) {
+        StringRequest request = new StringRequest(Request.Method.DELETE, URL.concat("/game/").concat(code), getOnSuccessCallback(callback), getOnErrorCallback());
+        VolleySingleton.getInstance(context).addRequestQueue(request);
+    }
+
+
+    private static Response.ErrorListener getOnErrorCode(final Context context) {
+        return new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context,
+                        "Partida no encontrada", Toast.LENGTH_SHORT).show();
+            }
+        };
+    }
+
+    public static void changeGameState(Context context, final UpdateStateDto stateDto, final VolleyCallback callback){
+        StringRequest request = new StringRequest(Request.Method.POST, URL + "game/state", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                callback.onSuccess(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("Error change game state",  error.toString());
+
+            }
+        }){
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                Gson gson = new GsonBuilder().create();
+                return gson.toJson(stateDto).getBytes();
+            }
+
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
+        VolleySingleton.getInstance(context).addRequestQueue(request);
+    }
+
+
 
 }

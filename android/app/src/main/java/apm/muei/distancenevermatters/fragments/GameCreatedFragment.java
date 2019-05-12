@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import apm.muei.distancenevermatters.R;
+import apm.muei.distancenevermatters.activities.GameActivity;
+import apm.muei.distancenevermatters.activities.MainActivity;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -27,7 +30,7 @@ public class GameCreatedFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_game_created, container, false);
         ButterKnife.bind(this, rootView);
         getActivity().setTitle("Partida creada");
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         codeText = rootView.findViewById(R.id.gcreaTVnumber);
         long code = getArguments().getLong("code");
@@ -50,5 +53,23 @@ public class GameCreatedFragment extends Fragment {
         } catch(Exception e) {
             //e.toString();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Toolbar toolbar = getActivity().findViewById(R.id.createGameToolbar);
+        toolbar.setTitle(R.string.create_game_title);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                Toast.makeText(getActivity().getApplicationContext(),
+                        "Mostrando lista de partidas", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
     }
 }

@@ -7,7 +7,7 @@ android {
         applicationId "apm.muei.distancenevermatters"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 3
+        versionCode 10
         versionName "0.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -49,5 +49,11 @@ dependencies {
     implementation project(':MapSync-debug')
     implementation project(':VuforiaWrapper')
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    //Comunicación servidor tiempo real
+    implementation ('io.socket:socket.io-client:1.0.0') {
+        exclude group: 'org.json', module: 'json'
+    }
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }
 com.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true
