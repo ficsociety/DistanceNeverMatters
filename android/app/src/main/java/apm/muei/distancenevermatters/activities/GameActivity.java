@@ -12,12 +12,14 @@ import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
 
+import com.google.gson.Gson;
 import com.unity3d.player.UnityPlayer;
 
 import apm.muei.distancenevermatters.R;
 import apm.muei.distancenevermatters.Server.Movement;
 import apm.muei.distancenevermatters.Server.ServerActions;
 import apm.muei.distancenevermatters.Server.SocketUtils;
+import apm.muei.distancenevermatters.entities.dto.GameDetailsDto;
 import apm.muei.distancenevermatters.fragments.UnityFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,6 +40,12 @@ public class GameActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+
+        //TODO te dejo tanto el String como el objeto ;)
+        String gameDetails = intent.getStringExtra("gameDetails");
+        GameDetailsDto gameDetailsDto = new Gson().fromJson(gameDetails, GameDetailsDto.class);
 
         // Create the UnityPlayer
         Log.d("Weird", "Creating UnityPlayer");

@@ -13,6 +13,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+
 import java.util.List;
 
 import apm.muei.distancenevermatters.R;
@@ -70,6 +74,8 @@ public class GameRecyclerAdapter extends RecyclerView.Adapter<GameRecyclerAdapte
 
             // Launch GameActivity
             Intent intent = new Intent(fragment.getActivity(), GameActivity.class);
+            String jsonGame = new Gson().toJson(gameList.get(t));
+            intent.putExtra("gameDetails", jsonGame);
             fragment.startActivity(intent);
         }
 
@@ -118,10 +124,10 @@ public class GameRecyclerAdapter extends RecyclerView.Adapter<GameRecyclerAdapte
         GameDetailsDto game = gameList.get(position);
 
         // TODO Settear los demás campos
-        if (game.getGameState() == GameState.PLAYING) {
+        if (game.getState() == GameState.PLAYING) {
             holder.status.setColorFilter(ContextCompat.getColor(fragment.getContext(), R.color.colorGamePlaying));
             holder.start.setText(R.string.joinGame);
-        } else if (game.getGameState() == GameState.PAUSED) {
+        } else if (game.getState() == GameState.PAUSED) {
             holder.status.setColorFilter(ContextCompat.getColor(fragment.getContext(), R.color.colorGamePaused));
             holder.start.setText(R.string.startGame);
         }

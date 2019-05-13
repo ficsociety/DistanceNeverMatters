@@ -61,4 +61,15 @@ public class GameDetailsDto {
         return code;
     }
 
+    @Override
+    public String toString() {
+        return "GameDetailsDto{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", state=" + state +
+                ", code=" + code +
+                ", master=" + master +
+                ", players=" + players +
+                '}';
+    }
 }
