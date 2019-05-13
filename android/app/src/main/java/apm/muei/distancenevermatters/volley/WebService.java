@@ -18,6 +18,7 @@ import java.util.Map;
 import apm.muei.distancenevermatters.GlobalVars.GlobalVars;
 import apm.muei.distancenevermatters.entities.dto.CreateGameDto;
 import apm.muei.distancenevermatters.entities.dto.JoinGameDto;
+import apm.muei.distancenevermatters.entities.dto.UpdateStateDto;
 
 
 public class WebService {
@@ -139,6 +140,11 @@ public class WebService {
         VolleySingleton.getInstance(context).addRequestQueue(request);
     }
 
+    public static void deleteGame(Context context, String code, final VolleyCallback callback) {
+        StringRequest request = new StringRequest(Request.Method.DELETE, URL.concat("/game/").concat(code), getOnSuccessCallback(callback), getOnErrorCallback());
+        VolleySingleton.getInstance(context).addRequestQueue(request);
+    }
+
 
     private static Response.ErrorListener getOnErrorCode(final Context context) {
         return new Response.ErrorListener() {
@@ -148,6 +154,34 @@ public class WebService {
                         "Partida no encontrada", Toast.LENGTH_SHORT).show();
             }
         };
+    }
+
+    public static void changeGameState(Context context, final UpdateStateDto stateDto, final VolleyCallback callback){
+        StringRequest request = new StringRequest(Request.Method.POST, URL + "game/state", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                callback.onSuccess(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("Error change game state",  error.toString());
+
+            }
+        }){
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                Gson gson = new GsonBuilder().create();
+                return gson.toJson(stateDto).getBytes();
+            }
+
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
+        VolleySingleton.getInstance(context).addRequestQueue(request);
     }
 
 

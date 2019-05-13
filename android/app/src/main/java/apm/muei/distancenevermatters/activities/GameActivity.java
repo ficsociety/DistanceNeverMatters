@@ -12,12 +12,14 @@ import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
 
+import com.google.gson.Gson;
 import com.unity3d.player.UnityPlayer;
 
 import apm.muei.distancenevermatters.R;
 import apm.muei.distancenevermatters.Server.Movement;
 import apm.muei.distancenevermatters.Server.ServerActions;
 import apm.muei.distancenevermatters.Server.SocketUtils;
+import apm.muei.distancenevermatters.entities.dto.GameDetailsDto;
 import apm.muei.distancenevermatters.fragments.UnityFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,6 +40,12 @@ public class GameActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+
+        //TODO te dejo tanto el String como el objeto ;)
+        String gameDetails = intent.getStringExtra("gameDetails");
+        GameDetailsDto gameDetailsDto = new Gson().fromJson(gameDetails, GameDetailsDto.class);
 
         // Create the UnityPlayer
         Log.d("Weird", "Creating UnityPlayer");
@@ -63,10 +71,11 @@ public class GameActivity extends AppCompatActivity
         quitFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(GameActivity.this, MainActivity.class);
-                //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                //finish();
+//                Intent intent = new Intent(GameActivity.this, MainActivity.class);
+//                //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                startActivity(intent);
+//                finish();
+                onBack();
             }
         });
 
@@ -120,5 +129,14 @@ public class GameActivity extends AppCompatActivity
     public void onDestroy(){
         super.onDestroy();
         this.socketUtils.disconnect();
+    }
+
+    @Override
+    public void onBackPressed() {
+
+    }
+
+    public void onBack() {
+        super.onBackPressed();
     }
 }

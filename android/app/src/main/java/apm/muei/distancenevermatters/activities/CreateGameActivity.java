@@ -53,4 +53,13 @@ public class CreateGameActivity extends AppCompatActivity{
         this.markerModel.keySet().remove(marker);
     }
 
+    @Override
+    public void onBackPressed() {
+
+    }
+
+    public void onBack() {
+        super.onBackPressed();
+    }
+
 }

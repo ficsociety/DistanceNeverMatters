@@ -21,6 +21,9 @@ public class SaveGameDetailsFragment extends DialogFragment {
                         // Ok then, nothing to do here
                         Toast.makeText(getActivity().getApplicationContext(),
                                 "Guardando cambios", Toast.LENGTH_SHORT).show();
+                        Bundle b = getArguments();
+                        String description = b.getString("description");
+                        String gameName = b.getString("gameName");
                     }
                 }).setNegativeButton(R.string.cancel, null);
 
