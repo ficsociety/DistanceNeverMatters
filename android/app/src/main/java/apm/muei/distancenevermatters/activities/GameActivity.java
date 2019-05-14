@@ -46,7 +46,6 @@ public class GameActivity extends AppCompatActivity
         //TODO te dejo tanto el String como el objeto ;)
         String gameDetails = intent.getStringExtra("gameDetails");
         GameDetailsDto gameDetailsDto = new Gson().fromJson(gameDetails, GameDetailsDto.class);
-
         // Create the UnityPlayer
         Log.d("Weird", "Creating UnityPlayer");
         unityPlayer = new UnityPlayer(this);
