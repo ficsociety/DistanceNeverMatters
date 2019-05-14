@@ -68,6 +68,18 @@ public class GameDetailsDto {
         return map;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setPlayers(List<PlayerDto> players) {
+        this.players = players;
+    }
+
     @Override
     public String toString() {
         return "GameDetailsDto{" +

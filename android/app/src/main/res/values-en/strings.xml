@@ -13,9 +13,9 @@
     <string name="create_game_title">Create game</string>
     <string name="password">Password</string>
     <string name="games">Games</string>
-    <string name="registrarse">Register</string>
-    <string name="username">Name user</string>
-    <string name="email">email</string>
+    <string name="regis">Register</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
     <string name="repeatPassword">Repeat password</string>
     <string name="details">Details</string>
     <string name="invite">Invite</string>
@@ -24,9 +24,11 @@
     <string name="game_name">game\'s name</string>
     <string name="creationdate">Creation date</string>
     <string name="player_list">List of players</string>
+    <string name="game_list">List of Games</string>
     <string name="participants">Participants</string>
     <string name="descriptionshort">Brief description of the game in a few lines.</string>
     <string name="logout">Sign out</string>
+    <string name="login">Log in</string>
     <string name="edit">Edit</string>
     <string name="game_created">Game created</string>
     <string name="game_created_ok">Game created correctly!</string>
@@ -59,5 +61,5 @@
     <string name="game_name_placeholder">Game name</string>
     <string name="game_description_placeholder">Description game</string>
     <string name="markers_models">Markers - Models</string>
-    <string name="register">Registry</string>
+    <string name="register">Sign Up</string>
 </resources>

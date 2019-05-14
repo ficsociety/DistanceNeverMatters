@@ -17,6 +17,7 @@ import java.util.Map;
 
 import apm.muei.distancenevermatters.GlobalVars.GlobalVars;
 import apm.muei.distancenevermatters.entities.dto.CreateGameDto;
+import apm.muei.distancenevermatters.entities.dto.GameDetailsDto;
 import apm.muei.distancenevermatters.entities.dto.JoinGameDto;
 import apm.muei.distancenevermatters.entities.dto.UpdateStateDto;
 
@@ -180,6 +181,37 @@ public class WebService {
                 return gson.toJson(stateDto).getBytes();
             }
 
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
+        VolleySingleton.getInstance(context).addRequestQueue(request);
+    }
+
+    public static void updateGame(Context context, final String gameDetailsDto, final VolleyCallback callback){
+
+        final GlobalVars gVars = new GlobalVars().getInstance();
+        StringRequest request = new StringRequest(Request.Method.POST, URL + "game", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                callback.onSuccess(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("Error post Game",  error.toString());
+
+            }
+        }){
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                //Gson gson = new GsonBuilder().create();
+                return gameDetailsDto.getBytes();
+            }
+
+            @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<String, String>();
                 headers.put("Content-Type", "application/json");
