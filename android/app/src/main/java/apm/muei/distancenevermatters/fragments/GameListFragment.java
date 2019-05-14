@@ -53,7 +53,7 @@ public class GameListFragment extends Fragment implements GameRecyclerAdapter.On
         List<GameDetailsDto> filtered = new ArrayList<>();
         int masterGames = 0;
         int playerGames = 0;
-        gVars = new GlobalVars().getInstance();
+        gVars = GlobalVars.getInstance();
         String userName = PreferenceManager.getInstance().getUserName();
         if (filter == mContext.getString(R.string.all)) {
             gVars.setTotal_games(gameDtoList.size());

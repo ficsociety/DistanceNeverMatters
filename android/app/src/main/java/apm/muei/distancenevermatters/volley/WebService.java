@@ -50,7 +50,7 @@ public class WebService {
     }
 
     public static void getGames(Context context, final VolleyCallback callback) {
-        final GlobalVars gVars = new GlobalVars().getInstance();
+        final GlobalVars gVars = GlobalVars.getInstance();
         StringRequest request = new StringRequest(Request.Method.GET, URL.concat("games"), getOnSuccessCallback(callback), getOnErrorCallback())
         {
             @Override
@@ -75,7 +75,7 @@ public class WebService {
 
     public static void createGame(Context context, final CreateGameDto createGameDto, final VolleyCallback callback){
 
-        final GlobalVars gVars = new GlobalVars().getInstance();
+        final GlobalVars gVars = GlobalVars.getInstance();
         StringRequest request = new StringRequest(Request.Method.POST, URL + "games", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -107,7 +107,7 @@ public class WebService {
 
 
     public static void joinGame(Context context, final JoinGameDto joinGameDto, final VolleyCallback callback){
-        final GlobalVars gVars = new GlobalVars().getInstance();
+        final GlobalVars gVars = GlobalVars.getInstance();
         StringRequest request = new StringRequest(Request.Method.POST, URL + "game/join", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -192,7 +192,7 @@ public class WebService {
 
     public static void updateGame(Context context, final String gameDetailsDto, final VolleyCallback callback){
 
-        final GlobalVars gVars = new GlobalVars().getInstance();
+        final GlobalVars gVars = GlobalVars.getInstance();
         StringRequest request = new StringRequest(Request.Method.POST, URL + "game", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

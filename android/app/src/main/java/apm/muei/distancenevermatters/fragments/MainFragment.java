@@ -70,7 +70,7 @@ public class MainFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, rootView);
-        gVars = new GlobalVars().getInstance();
+        gVars =  GlobalVars.getInstance();
 
         setHasOptionsMenu(true);
 
