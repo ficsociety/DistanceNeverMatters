@@ -10,15 +10,35 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.unity3d.player.UnityPlayer;
 
+import org.json.JSONArray;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import apm.muei.distancenevermatters.R;
+import apm.muei.distancenevermatters.Server.Movement;
+import apm.muei.distancenevermatters.Server.ServerActions;
+import apm.muei.distancenevermatters.Server.SocketUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.socket.emitter.Emitter;
 
 public class UnityFragment extends Fragment {
 
     private OnUnityFragmentInteractionListener mListener;
+    private SocketUtils socketUtils;
+    private Gson gson;
+    //private String user = "user"; // TODO inicializar bien
+    private String user = "user2";
     protected UnityPlayer mUnityPlayer;
     public static UnityFragment instance; // Para poder acceder desde Unity
 
@@ -45,6 +65,15 @@ public class UnityFragment extends Fragment {
         }
 
         mUnityPlayer.requestFocus();
+
+        // Se crea el socket e inicializamos el listener para recibir los movimientos
+        socketUtils = SocketUtils.getInstance();
+        socketUtils.connect();
+        socketUtils.getSocket().on(ServerActions.RECEIVEMOVEMENT, onNewMovement);
+        //TODO pasarle el usuario y el código de partida
+        socketUtils.join("user", 7777); // Mock
+
+        gson = new GsonBuilder().create();
 
         return rootView;
     }
@@ -88,15 +117,14 @@ public class UnityFragment extends Fragment {
 
     @Override
     public void onDestroy() {
-        Log.d("weird", "quitting UnityPlayer");
         mUnityPlayer.quit();
         super.onDestroy();
+        this.socketUtils.disconnect();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.d("weird", "pausing");
         mUnityPlayer.pause();
     }
 
@@ -104,13 +132,11 @@ public class UnityFragment extends Fragment {
     public void onStart() {
         super.onStart();
         mUnityPlayer.start();
-        Log.d("weird", "start unity");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        Log.d("weird", "stopping");
         mUnityPlayer.stop();
         // We need to remove the view from the FrameLayout, or else app will crash next time we open this screen
         // Not putting the Unity view in the FrameLayout after the first creation DOES NOT WORK,
@@ -133,18 +159,31 @@ public class UnityFragment extends Fragment {
     public void getGameInfo() {
         String gameobjectName = "MapTarget";
         String method = "SetGameInfo";
-        // Example JSON
+        // Example JSON for user
+//        String arg =
+//                "{" +
+//                    "\"map\": \"map\"," +
+//                    "\"user\": \"user\"," +
+//                    "\"tracked\": [" +
+//                        "{ \"target\": \"Umbreon\", \"model\": \"RPGHeroHP\" }" +
+//                    "]," +
+//                    "\"external\": [" +
+//                        "{ \"model\": \"PurpleDragon\", \"user\": \"user2\", \"target\": \"Chandelure\" }" +
+//                    "]" +
+//                "}";
+
+        // Example JSON for user2
         String arg =
                 "{" +
-                            "\"Map\": \"map\"," +
-                            "\"User\": \"user\"," +
-                            "\"Tracked\": [" +
-                                "{ \"Target\": \"Umbreon\", \"Model\": \"RPGHeroHP\" }" +
-                            "]," +
-                            "\"External\": [" +
-                               "{ \"Model\": \"PurpleDragon\", \"User\": \"user2\", \"Target\": \"Chandelure\" }" +
-                            "]" +
-                            "}";
+                        "\"map\": \"map\"," +
+                        "\"user\": \"user2\"," +
+                        "\"tracked\": [" +
+                        "{ \"target\": \"Chandelure\", \"model\": \"PurpleDragon\" }" +
+                        "]," +
+                        "\"external\": [" +
+                        "{ \"model\": \"Umbreon\", \"user\": \"user\", \"target\": \"RPGHeroHP\" }" +
+                        "]" +
+                        "}";
         UnityPlayer.UnitySendMessage(gameobjectName, method, arg);
     }
 
@@ -156,6 +195,78 @@ public class UnityFragment extends Fragment {
     }
 
     public void log(String message) {
-        Log.d("Unity", message);
+        Log.d("UnitySockets", message);
     }
+
+    public void sendLocationInfo(String json) {
+        JsonParser parser = new JsonParser();
+        JsonArray jsonArray = parser.parse(json).getAsJsonArray();
+
+        for (JsonElement element : jsonArray) {
+            // Crear y enviar cada movimiento
+            JsonObject updateInfo = element.getAsJsonObject();
+            String target = updateInfo.get("target").getAsString();
+
+            if (!(updateInfo.get("distance") instanceof JsonNull)) {
+                JsonObject dist = updateInfo.get("distance").getAsJsonObject();
+                Map<String, Float> distance = new HashMap<>();
+                distance.put("x", dist.get("x").getAsFloat());
+                distance.put("y", dist.get("y").getAsFloat());
+                distance.put("z", dist.get("z").getAsFloat());
+
+                JsonObject rot = updateInfo.get("rotation").getAsJsonObject();
+                Map<String, Float> rotation = new HashMap<>();
+                rotation.put("x", rot.get("x").getAsFloat());
+                rotation.put("y", rot.get("y").getAsFloat());
+                rotation.put("z", rot.get("z").getAsFloat());
+                rotation.put("w", rot.get("w").getAsFloat());
+
+                // TODO inicializar correctamente
+                Movement movement = new Movement(user, target, distance, rotation);
+                Log.d("UnitySockets", movement.toString());
+                socketUtils.sendMovement(movement, 7777); // TODO replace mock code
+
+            } else {
+                // TODO inicializar sin rotación
+                Movement movement = new Movement(user, target, null, null);
+                socketUtils.sendMovement(movement, 7777); // TODO replace mock code
+            }
+        }
+    }
+
+    private Emitter.Listener onNewMovement = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    // TODO reemplazar por información de verdad
+                    Log.d("UnitySockets", "Movement received");
+                    Log.d("UnitySockets", args[0].toString());
+
+                    // No transmitir nuestros propios movimientos
+                    JsonParser parser = new JsonParser(); // TODO pasar a atributo
+                    JsonObject updateInfo = parser.parse(args[0].toString()).getAsJsonObject();
+                    if (!updateInfo.get("user").getAsString().equals(user)) {
+                        Log.d("UnitySockets", "Updating");
+                        mUnityPlayer.UnitySendMessage("MapTarget", "UpdateLocation", args[0].toString());
+                    }
+//                    Movement movement = gson.fromJson(args[0].toString(), Movement.class);
+//                    Map<String, Float> distance = movement.getDistance();
+//                    Map<String, Float> rotation = movement.getRotation();
+//
+//                    if (distance != null) {
+//                        float x = distance.get("x") + 1;
+//                        // TODO quitar update mock
+//                        String json =
+//                                "{ \"Target\": \"Chandelureuser2\"," +
+//                                        "\"Distance\": { \"x\":" + x + ", \"y\": " + distance.get("y") + ",\"z\": " + distance.get("z") + "}," +
+//                                        "\"Rotation\": { \"x\":" + rotation.get("x") + ", \"y\": " + rotation.get("y") + ",\"z\": " + rotation.get("z") + ",\"w\": " + rotation.get("w") + "}" +
+//                                        "}";
+//                        mUnityPlayer.UnitySendMessage("MapTarget", "UpdateLocation", json);
+//                    }
+                }
+            });
+        }
+    };
 }

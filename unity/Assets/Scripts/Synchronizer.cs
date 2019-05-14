@@ -64,7 +64,7 @@ public class Synchronizer : MonoBehaviour {
                     GameObject model = trackedObject.transform.GetChild(0).gameObject;
 
                     JObject modelInfo = new JObject();
-                    modelInfo.Add("Model", trackedObject.name);
+                    modelInfo.Add("target", trackedObject.name);
 
                     // Check if target is being tracked. We cannot send position information if we can't track the target
                     TrackableBehaviour targetBehaviour = trackedObject.GetComponent<TrackableBehaviour>();
@@ -86,15 +86,15 @@ public class Synchronizer : MonoBehaviour {
                         rotationInfo.Add("z", model.transform.rotation.z);
                         rotationInfo.Add("w", model.transform.rotation.w);
 
-                        modelInfo.Add("Distance", distanceInfo);
-                        modelInfo.Add("Rotation", rotationInfo);
+                        modelInfo.Add("distance", distanceInfo);
+                        modelInfo.Add("rotation", rotationInfo);
 
                         updateInfo.Add(modelInfo);
                     }
                     else
                     {
                         // Tell fragment to deactivate this model
-                        modelInfo.Add("Distance", null);
+                        modelInfo.Add("distance", null);
                         updateInfo.Add(modelInfo);
                     }
                 }
@@ -105,23 +105,25 @@ public class Synchronizer : MonoBehaviour {
                 foreach (GameObject target in trackedTargets)
                 {
                     JObject modelInfo = new JObject();
-                    modelInfo.Add("Model", target.name);
-                    modelInfo.Add("Distance", null);
+                    modelInfo.Add("target", target.name);
+                    modelInfo.Add("distance", null);
                     updateInfo.Add(modelInfo);
                 }
             }
 
-            // Enviar información
+            // Enviar información a Android
             Debug.Log(updateInfo);
+            fragment.Call("sendLocationInfo", updateInfo.ToString());
+
             // Actualización mock
-            MockUpdate(); // Unity
+            // MockUpdate(); // Unity
             // Android
             // Poner a la izquierda del marcador umbreon, con la misma rotación
             //Vector3 distanceMock = trackedTargets[0].transform.GetChild(0).position + new Vector3(2, 0, 0) - map.transform.position;
             //Quaternion rotation = trackedTargets[0].transform.GetChild(0).rotation;
             //string json =
             //    "[" +
-            //        "{ \"Model\": \"Chandelureuser2\"," +
+            //        "{ \"Target\": \"Chandelureuser2\"," +
             //            "\"Distance\": { \"x\":" + distanceMock.x + ", \"y\": " + distanceMock.y + ",\"z\": " + distanceMock.z + "}," +
             //            "\"Rotation\": { \"x\":" + rotation.x + ", \"y\": " + rotation.y + ",\"z\": " + rotation.z + ",\"w\": " + rotation.w + "}" +
             //        "}" +
@@ -137,7 +139,7 @@ public class Synchronizer : MonoBehaviour {
         Quaternion rotation = trackedTargets[0].transform.GetChild(0).rotation;
         string json =
             "[" +
-                "{ \"Model\": \"Chandelureuser2\"," +
+                "{ \"Target\": \"Chandelureuser2\"," +
                     "\"Distance\": { \"x\":" + distance.x + ", \"y\": " + distance.y + ",\"z\": " + distance.z + "}," +
                     "\"Rotation\": { \"x\":" + rotation.x + ", \"y\": " + rotation.y + ",\"z\": " + rotation.z + ",\"w\": " + rotation.w + "}" +
                 "}" +
@@ -145,36 +147,34 @@ public class Synchronizer : MonoBehaviour {
 
         Debug.Log(json);
 
-        UpdateLocations(json);
+        UpdateLocation(json);
     }
 
-    public void UpdateLocations(string updateInfo)
+    public void UpdateLocation(string updateInfo)
     {
-        JArray locationInfo = JArray.Parse(updateInfo);
-
-        foreach (JObject modelInfo in locationInfo)
+        fragment.Call("log", updateInfo);
+        JObject locationInfo = JObject.Parse(updateInfo);
+        fragment.Call("log", locationInfo.ToString());
+        string modelName = locationInfo["target"].Value<string>();
+        if (externalModels.ContainsKey(modelName))
         {
-            string modelName = modelInfo["Model"].Value<string>();
-            if (externalModels.ContainsKey(modelName))
+            if (locationInfo["distance"].ToString() != null)
             {
-                if (modelInfo["Distance"].ToString() != null)
-                {
-                    externalModels[modelName].SetActive(true);
+                externalModels[modelName].SetActive(true);
 
-                    JObject distanceInfo = (JObject) modelInfo["Distance"];
-                    Vector3 distance = new Vector3(distanceInfo["x"].Value<float>(), distanceInfo["y"].Value<float>(), distanceInfo["z"].Value<float>());
+                JObject distanceInfo = (JObject) locationInfo["distance"];
+                Vector3 distance = new Vector3(distanceInfo["x"].Value<float>(), distanceInfo["y"].Value<float>(), distanceInfo["z"].Value<float>());
 
-                    JObject rotationInfo = (JObject) modelInfo["Rotation"];
-                    Quaternion rotation = new Quaternion(rotationInfo["x"].Value<float>(), rotationInfo["y"].Value<float>(), rotationInfo["z"].Value<float>(),
-                        rotationInfo["w"].Value<float>());
+                JObject rotationInfo = (JObject) locationInfo["rotation"];
+                Quaternion rotation = new Quaternion(rotationInfo["x"].Value<float>(), rotationInfo["y"].Value<float>(), rotationInfo["z"].Value<float>(),
+                    rotationInfo["w"].Value<float>());
 
-                    externalModels[modelName].transform.position = map.transform.position + distance;
-                    externalModels[modelName].transform.rotation = rotation;
+                externalModels[modelName].transform.position = map.transform.position + distance;
+                externalModels[modelName].transform.rotation = rotation;
 
-                } else
-                {
-                    externalModels[modelName].SetActive(false);
-                }
+            } else
+            {
+                externalModels[modelName].SetActive(false);
             }
         }
     }

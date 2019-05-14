@@ -72,7 +72,7 @@ public class MapInitializer : MonoBehaviour {
         JObject info = JObject.Parse(gameInfo);
 
         // Mapa
-        string mapName = info["Map"].Value<string>();
+        string mapName = info["map"].Value<string>();
         
         foreach (Sprite sprite in maps)
         {
@@ -84,13 +84,13 @@ public class MapInitializer : MonoBehaviour {
         }
 
         // Objetos trackeados
-        JArray tracked = (JArray) info["Tracked"];
-        string currentUser = info["User"].Value<string>();
+        JArray tracked = (JArray) info["tracked"];
+        string currentUser = info["user"].Value<string>();
 
         foreach (JObject target in tracked)
         {
-            string targetName = target["Target"].Value<string>();
-            string modelName = target["Model"].Value<string>();
+            string targetName = target["target"].Value<string>();
+            string modelName = target["model"].Value<string>();
             Debug.Log("Target: " + targetName + ", model: " + modelName);
 
             if (targetsMap.ContainsKey(targetName) && modelsMap.ContainsKey(modelName)) {
@@ -125,14 +125,14 @@ public class MapInitializer : MonoBehaviour {
         }
 
         // Objetos externos
-        JArray externalModels = (JArray)info["External"];
+        JArray externalModels = (JArray)info["external"];
         if (externalModels != null)
         {
             foreach (JObject external in externalModels)
             {
-                string modelName = external["Model"].Value<string>();
-                string user = external["User"].Value<string>();
-                string targetName = external["Target"].Value<string>();
+                string modelName = external["model"].Value<string>();
+                string user = external["user"].Value<string>();
+                string targetName = external["target"].Value<string>();
 
                 Debug.Log("Model: " + modelName + ", user: " + user);
 
