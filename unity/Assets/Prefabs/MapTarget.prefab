@@ -138,8 +138,24 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   models:
-  - {fileID: 1365409623442104, guid: 5c5d3463e535265418c5947b0ecaf9ca, type: 2}
+  - {fileID: 1703751321931828, guid: 99fcd2b19e37c1a45a99d7104e6a3248, type: 2}
+  - {fileID: 1630220778124344, guid: 2cfa1cb96956b5b48aec5f3bbff19cf8, type: 2}
+  - {fileID: 1271572103090232, guid: 1120d804563653342b1d15d3cc0ddf80, type: 2}
+  - {fileID: 1275439853889524, guid: e4cf6a3da9b3af047b88c090d38af96d, type: 2}
+  - {fileID: 1495587605993994, guid: b344d777d31804041950d0835e5a5737, type: 2}
+  - {fileID: 1778131195685466, guid: 56491941c9233a14e8f19d1d8567b2b3, type: 2}
+  - {fileID: 1617778961073702, guid: 280e700fee4e2004e9cd8e34ca205682, type: 2}
+  - {fileID: 1838445736414278, guid: 05b3412a77e5fd1469bf89550122aaf4, type: 2}
+  - {fileID: 1238631448354106, guid: 102b2514e6a8d2e42a0343ebad1d4f90, type: 2}
+  - {fileID: 1002620292463472, guid: d45cc5f422128bc47b0e4f8cd4711255, type: 2}
+  - {fileID: 1225019954523586, guid: 33299bef9b86aba4ba69df1650ba2ede, type: 2}
+  - {fileID: 1824291256179448, guid: 1ff41c3f2050ef943b6e5cb3d308ce1b, type: 2}
+  - {fileID: 1404213886693740, guid: 68a4daaa2d020cb43b335be897038d04, type: 2}
+  - {fileID: 1692901628544842, guid: 430a7568a69eedc43bcad0a6b9be69ff, type: 2}
   - {fileID: 1937975549225578, guid: 489feae51f69d6045a6a9878576a84f3, type: 2}
+  - {fileID: 1579815361919534, guid: ddb74070455908741a04a002dcac0d7b, type: 2}
+  - {fileID: 1676003335956424, guid: 0b87f96930572a9478159df73b9b35ad, type: 2}
+  - {fileID: 1365409623442104, guid: 5c5d3463e535265418c5947b0ecaf9ca, type: 2}
 --- !u!114 &114573580781411672
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -162,7 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: -1631628248, guid: bab6fa851cf5a1a4bba3cec5f191cb8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mTrackableName: absol
+  mTrackableName: Map
   mPreserveChildSize: 0
   mInitializedInEditor: 1
   mDataSetPath: Vuforia/testTargets.xml
