@@ -62,28 +62,28 @@ public class DiceGridViewAdapter extends BaseAdapter {
         image.setImageResource(dice.getImg());
         image.setBackgroundColor(context.getResources().getColor(R.color.colorWhite));
 
-        fragment.getBtnLess().setEnabled(false);
-        fragment.getBtnMore().setEnabled(false);
-        fragment.getInputNumber().setEnabled(false);
         checkBox.setChecked(false);
         if (fragment.getItemSelected() == position) {
             checkBox.setChecked(true);
         }
+
+        if (fragment.getItemSelected() == -1) {
+            fragment.getInputNumber().setText("");
+        }
+
+        fragment.getBtnLess().setEnabled(fragment.getItemSelected() != -1);
+        fragment.getBtnMore().setEnabled(fragment.getItemSelected() != -1);
+        fragment.getInputNumber().setEnabled(fragment.getItemSelected() != -1);
 
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (fragment.getItemSelected() == position) {
                     fragment.setItemSelected(-1);
-                    fragment.getBtnLess().setEnabled(false);
-                    fragment.getBtnMore().setEnabled(false);
-                    fragment.getInputNumber().setText("");
-                    fragment.getInputNumber().setEnabled(false);
+
                 } else {
                      fragment.setItemSelected(position);
-                     fragment.getBtnLess().setEnabled(true);
-                     fragment.getBtnMore().setEnabled(true);
-                     fragment.getInputNumber().setEnabled(true);
+                     fragment.getInputNumber().setText(Integer.toString(fragment.getDiceValues()[position]));
                 }
                 notifyDataSetChanged();
             }

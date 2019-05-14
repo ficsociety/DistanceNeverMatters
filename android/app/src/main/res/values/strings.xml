@@ -52,6 +52,9 @@
     <string name="buscar">Buscar</string>
     <string name="codigo">Código</string>
     <string name="entrar">Entrar</string>
+    <string name="less">-</string>
+    <string name="more">+</string>
+
 
     <string name="eulaTitle">License Agreement</string>
     <string name="acceptEula">Aceptar</string>
