@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import apm.muei.ficsociety.backend.domain.game.GameState;
+import apm.muei.ficsociety.backend.domain.map.Map;
 import apm.muei.ficsociety.backend.domain.user.User;
 
 public class GameDetailsDto {
@@ -12,6 +13,7 @@ public class GameDetailsDto {
 	private String description;
 	private Date date;
 	private GameState state;
+	private Map map;
 	private long code;
 	private User master;
 	private List<PlayerDto> players;
@@ -19,7 +21,7 @@ public class GameDetailsDto {
 	public GameDetailsDto() {
 	}
 
-	public GameDetailsDto(String name, String description, User master, Date date, long code, GameState state,
+	public GameDetailsDto(String name, String description, User master, Date date, long code, GameState state, Map map,
 			List<PlayerDto> players) {
 		super();
 		this.name = name;
@@ -27,6 +29,7 @@ public class GameDetailsDto {
 		this.master = master;
 		this.date = date;
 		this.state = state;
+		this.map = map;
 		this.code = code;
 		this.players = players;
 	}
@@ -57,6 +60,10 @@ public class GameDetailsDto {
 
 	public long getCode() {
 		return code;
+	}
+
+	public Map getMap() {
+		return map;
 	}
 
 }

@@ -124,7 +124,7 @@ public class GameServiceImpl implements GameService {
 		}
 
 		return new GameDetailsDto(game.getName(), game.getDescription(), game.getMaster(), game.getDate(),
-				game.getCode(), game.getState(), players);
+				game.getCode(), game.getState(), game.getMap(), players);
 
 	}
 
