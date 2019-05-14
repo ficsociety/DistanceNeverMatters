@@ -8,6 +8,8 @@ import android.support.v4.app.DialogFragment;
 import android.widget.Toast;
 
 import apm.muei.distancenevermatters.R;
+import apm.muei.distancenevermatters.volley.VolleyCallback;
+import apm.muei.distancenevermatters.volley.WebService;
 
 public class SaveGameDetailsFragment extends DialogFragment {
     @Override
@@ -22,8 +24,12 @@ public class SaveGameDetailsFragment extends DialogFragment {
                         Toast.makeText(getActivity().getApplicationContext(),
                                 "Guardando cambios", Toast.LENGTH_SHORT).show();
                         Bundle b = getArguments();
-                        String description = b.getString("description");
-                        String gameName = b.getString("gameName");
+                        String game = b.getString("game");
+                        WebService.updateGame(getActivity().getApplicationContext(), game, new VolleyCallback() {
+                            @Override
+                            public void onSuccess(String result) {
+                            }
+                        });
                     }
                 }).setNegativeButton(R.string.cancel, null);
 

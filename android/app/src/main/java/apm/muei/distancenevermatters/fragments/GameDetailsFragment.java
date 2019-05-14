@@ -18,6 +18,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import apm.muei.distancenevermatters.R;
 import apm.muei.distancenevermatters.activities.MainActivity;
 import apm.muei.distancenevermatters.adapters.GameDetailsRecyclerAdapter;
@@ -49,6 +52,7 @@ public class GameDetailsFragment extends Fragment {
     RecyclerView recyclerView;
 
     GameDetailsDto gameDetails;
+    Gson gson;
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -59,9 +63,11 @@ public class GameDetailsFragment extends Fragment {
     private void toggleItemEdit(MenuItem item) {
         if (item.isChecked()) {
             SaveGameDetailsFragment dialog = new SaveGameDetailsFragment();
+            gameDetails.setName(gameName.getEditText().getText().toString());
+            gameDetails.setDescription(description.getEditText().getText().toString());
             Bundle args = new Bundle();
-            args.putString("description", description.getEditText().getText().toString());
-            args.putString("gameName", gameName.getEditText().getText().toString());
+            args.putString("game", gson.toJson(gameDetails));
+            //args.putString("gameName", gameName.getEditText().getText().toString());
             dialog.setArguments(args);
             dialog.show(getActivity().getSupportFragmentManager(), "saveGameDetails");
             description.getEditText().setEnabled(false);
@@ -98,6 +104,7 @@ public class GameDetailsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_game_details, container, false);
         ButterKnife.bind(this, rootView);
         setHasOptionsMenu(true);
+        gson = new GsonBuilder().create();
         gameDetails = ((MainActivity) getActivity()).getGameDetails();
 
         description.setEnabled(false);
