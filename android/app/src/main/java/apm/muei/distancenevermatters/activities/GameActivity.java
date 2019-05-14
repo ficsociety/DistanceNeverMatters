@@ -29,6 +29,7 @@ public class GameActivity extends AppCompatActivity
         implements UnityFragment.OnUnityFragmentInteractionListener {
 
     private UnityPlayer unityPlayer;
+    private String gameDetails;
     //private SocketUtils socketUtils;
 
 
@@ -42,12 +43,10 @@ public class GameActivity extends AppCompatActivity
 
         Intent intent = getIntent();
 
-        //TODO te dejo tanto el String como el objeto ;)
-        String gameDetails = intent.getStringExtra("gameDetails");
-        GameDetailsDto gameDetailsDto = new Gson().fromJson(gameDetails, GameDetailsDto.class);
+        gameDetails = intent.getStringExtra("gameDetails");
+        //GameDetailsDto gameDetailsDto = new Gson().fromJson(gameDetails, GameDetailsDto.class);
 
         // Create the UnityPlayer
-        Log.d("Weird", "Creating UnityPlayer");
         unityPlayer = new UnityPlayer(this);
         int glesMode = unityPlayer.getSettings().getInt("gles_mode", 1);
         boolean trueColor888 = false;
@@ -122,6 +121,11 @@ public class GameActivity extends AppCompatActivity
     @Override
     public UnityPlayer getUnityPlayer() {
         return unityPlayer;
+    }
+
+    @Override
+    public String getGameDetails() {
+        return gameDetails;
     }
 
     @Override

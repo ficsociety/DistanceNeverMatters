@@ -11,15 +11,12 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.unity3d.player.UnityPlayer;
-
-import org.json.JSONArray;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +25,9 @@ import apm.muei.distancenevermatters.R;
 import apm.muei.distancenevermatters.Server.Movement;
 import apm.muei.distancenevermatters.Server.ServerActions;
 import apm.muei.distancenevermatters.Server.SocketUtils;
+import apm.muei.distancenevermatters.SharedPreference.PreferenceManager;
+import apm.muei.distancenevermatters.entities.dto.GameDetailsDto;
+import apm.muei.distancenevermatters.entities.dto.PlayerDto;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.socket.emitter.Emitter;
@@ -36,9 +36,8 @@ public class UnityFragment extends Fragment {
 
     private OnUnityFragmentInteractionListener mListener;
     private SocketUtils socketUtils;
-    private Gson gson;
-    //private String user = "user"; // TODO inicializar bien
-    private String user = "user2";
+    private GameDetailsDto gameDetails;
+    private String user = "user";
     protected UnityPlayer mUnityPlayer;
     public static UnityFragment instance; // Para poder acceder desde Unity
 
@@ -55,7 +54,6 @@ public class UnityFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_unity, container, false);
 
-        Log.d("weird", "create unity fragment");
         ViewGroup frameLayout = rootView.findViewById(R.id.unityFrameLayout);
         if (frameLayout.getChildAt(0) == null) {
             FrameLayout.LayoutParams lp =
@@ -66,14 +64,15 @@ public class UnityFragment extends Fragment {
 
         mUnityPlayer.requestFocus();
 
+        // Usuario y código de partida
+        // TODO user = PreferenceManager.getInstance().getUserName();
+        long code = gameDetails.getCode();
+
         // Se crea el socket e inicializamos el listener para recibir los movimientos
         socketUtils = SocketUtils.getInstance();
         socketUtils.connect();
         socketUtils.getSocket().on(ServerActions.RECEIVEMOVEMENT, onNewMovement);
-        //TODO pasarle el usuario y el código de partida
-        socketUtils.join("user", 7777); // Mock
-
-        gson = new GsonBuilder().create();
+        socketUtils.join(user, 7777); // TODO cambiar código
 
         return rootView;
     }
@@ -86,6 +85,7 @@ public class UnityFragment extends Fragment {
                     (OnUnityFragmentInteractionListener) context;
             mListener = listener;
             mUnityPlayer = listener.getUnityPlayer();
+            gameDetails = new Gson().fromJson(listener.getGameDetails(), GameDetailsDto.class);
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnUnityFragmentInteractionListener");
@@ -97,7 +97,6 @@ public class UnityFragment extends Fragment {
         super.onResume();
         mUnityPlayer.resume();
 
-        Log.d("Weird", "resuming");
         // If Unity view is not set, set it
         // This can happen when blocking and unblocking mobile while in this screen
         FrameLayout frameLayout = getView().findViewById(R.id.unityFrameLayout);
@@ -153,6 +152,7 @@ public class UnityFragment extends Fragment {
 
     public interface OnUnityFragmentInteractionListener {
         UnityPlayer getUnityPlayer();
+        String getGameDetails();
     }
 
     // Method for Unity
@@ -160,38 +160,63 @@ public class UnityFragment extends Fragment {
         String gameobjectName = "MapTarget";
         String method = "SetGameInfo";
         // Example JSON for user
-//        String arg =
-//                "{" +
-//                    "\"map\": \"map\"," +
-//                    "\"user\": \"user\"," +
-//                    "\"tracked\": [" +
-//                        "{ \"target\": \"Umbreon\", \"model\": \"RPGHeroHP\" }" +
-//                    "]," +
-//                    "\"external\": [" +
-//                        "{ \"model\": \"PurpleDragon\", \"user\": \"user2\", \"target\": \"Chandelure\" }" +
-//                    "]" +
-//                "}";
-
-        // Example JSON for user2
         String arg =
                 "{" +
-                        "\"map\": \"map\"," +
-                        "\"user\": \"user2\"," +
-                        "\"tracked\": [" +
-                        "{ \"target\": \"Chandelure\", \"model\": \"PurpleDragon\" }" +
-                        "]," +
-                        "\"external\": [" +
-                        "{ \"model\": \"Umbreon\", \"user\": \"user\", \"target\": \"RPGHeroHP\" }" +
-                        "]" +
-                        "}";
+                    "\"map\": \"map\"," +
+                    "\"user\": \"user\"," +
+                    "\"tracked\": [" +
+                        "{ \"target\": \"Umbreon\", \"model\": \"RPGHeroHP\" }" +
+                    "]," +
+                    "\"external\": [" +
+                        "{ \"model\": \"PurpleDragon\", \"user\": \"user2\", \"target\": \"Chandelure\" }" +
+                    "]" +
+                "}";
+
+        // Example JSON for user2
+//        String arg =
+//                "{" +
+//                        "\"map\": \"map\"," +
+//                        "\"user\": \"user2\"," +
+//                        "\"tracked\": [" +
+//                        "{ \"target\": \"Chandelure\", \"model\": \"PurpleDragon\" }" +
+//                        "]," +
+//                        "\"external\": [" +
+//                        "{ \"model\": \"RPGHeroHP\", \"user\": \"user\", \"target\": \"Umbreon\" }" +
+//                        "]" +
+//                        "}";
+        // Create game info JSON for Unity
+        JsonObject json = new JsonObject();
+        json.addProperty("map", "map"); // TODO replace with actual map
+        json.addProperty("user", user);
+
+        JsonArray tracked = new JsonArray();
+        JsonArray external = new JsonArray();
+        // Clasify pairs of marker-models in tracked and external
+        for (PlayerDto player : gameDetails.getPlayers()) {
+            if (player.getUser().getUid().equals(user)) { // TODO comprobar que esto está bien
+                // Tracked model
+                JsonObject trackedTarget = new JsonObject();
+                trackedTarget.addProperty("target", player.getMarker().getName());
+                trackedTarget.addProperty("model", player.getModel().getName());
+                tracked.add(trackedTarget);
+            } else {
+                // External model
+                JsonObject externalModel = new JsonObject();
+                externalModel.addProperty("model", player.getModel().getName());
+                externalModel.addProperty("user", player.getUser().getUid());
+                externalModel.addProperty("target", player.getMarker().getName());
+                external.add(externalModel);
+            }
+        }
+
+        json.add("tracked", tracked);
+        json.add("external", external);
+
+        // String arg = json.toString();
+
+        Log.d("UnitySockets", "GameInfo: " + arg);
+
         UnityPlayer.UnitySendMessage(gameobjectName, method, arg);
-    }
-
-    public void mockUpdate(String json) {
-        String gameObject = "MapTarget";
-        String method = "UpdateLocations";
-
-        UnityPlayer.UnitySendMessage(gameObject, method, json);
     }
 
     public void log(String message) {
@@ -223,7 +248,7 @@ public class UnityFragment extends Fragment {
 
                 // TODO inicializar correctamente
                 Movement movement = new Movement(user, target, distance, rotation);
-                Log.d("UnitySockets", movement.toString());
+                Log.d("UnitySockets", "Movement: " + movement.toString());
                 socketUtils.sendMovement(movement, 7777); // TODO replace mock code
 
             } else {
@@ -240,31 +265,15 @@ public class UnityFragment extends Fragment {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    // TODO reemplazar por información de verdad
-                    Log.d("UnitySockets", "Movement received");
-                    Log.d("UnitySockets", args[0].toString());
 
                     // No transmitir nuestros propios movimientos
                     JsonParser parser = new JsonParser(); // TODO pasar a atributo
                     JsonObject updateInfo = parser.parse(args[0].toString()).getAsJsonObject();
                     if (!updateInfo.get("user").getAsString().equals(user)) {
-                        Log.d("UnitySockets", "Updating");
+                        Log.d("UnitySockets", "Updating with: " + args[0].toString());
                         mUnityPlayer.UnitySendMessage("MapTarget", "UpdateLocation", args[0].toString());
                     }
-//                    Movement movement = gson.fromJson(args[0].toString(), Movement.class);
-//                    Map<String, Float> distance = movement.getDistance();
-//                    Map<String, Float> rotation = movement.getRotation();
-//
-//                    if (distance != null) {
-//                        float x = distance.get("x") + 1;
-//                        // TODO quitar update mock
-//                        String json =
-//                                "{ \"Target\": \"Chandelureuser2\"," +
-//                                        "\"Distance\": { \"x\":" + x + ", \"y\": " + distance.get("y") + ",\"z\": " + distance.get("z") + "}," +
-//                                        "\"Rotation\": { \"x\":" + rotation.get("x") + ", \"y\": " + rotation.get("y") + ",\"z\": " + rotation.get("z") + ",\"w\": " + rotation.get("w") + "}" +
-//                                        "}";
-//                        mUnityPlayer.UnitySendMessage("MapTarget", "UpdateLocation", json);
-//                    }
+
                 }
             });
         }

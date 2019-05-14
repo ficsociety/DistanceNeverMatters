@@ -1,9 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Vuforia;
 
 public class MapInitializer : MonoBehaviour {
 
@@ -45,27 +42,7 @@ public class MapInitializer : MonoBehaviour {
 
         // Pedir datos de la partida a la actividad
         fragment.Call("getGameInfo");
-
-        // JSON de prueba con datos del juego
-        //string json =
-        //    "{" +
-        //    "\"Map\": \"map\"," +
-        //    "\"User\": \"user\"," +
-        //    "\"Tracked\": [" +
-        //        "{ \"Target\": \"Umbreon\", \"Model\": \"RPGHeroHP\" }" +
-        //    "]," +
-        //    "\"External\": [" +
-        //       "{ \"Model\": \"PurpleDragon\", \"User\": \"user2\", \"Target\": \"Chandelure\" }" +
-        //    "]" +
-        //    "}";
-        //SetGameInfo(json);
     }
-	
-	// Update is called once per frame
-	void Update () {
-        // Esperar a tener todos los datos? Aunque también puedo hacerlo en el "callback" que
-        // Android usará para comunicarse conmigo
-	}
 
     public void SetGameInfo(string gameInfo)
     {
@@ -102,7 +79,6 @@ public class MapInitializer : MonoBehaviour {
                 Transform child = newTarget.transform.GetChild(0);
                 newModel.transform.parent = newTarget.transform;
                 newModel.transform.position = child.position;
-                newModel.transform.rotation = child.rotation;
 
                 // Eliminar hijo vacío
                 Destroy(child.gameObject);
