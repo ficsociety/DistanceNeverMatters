@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Vuforia;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 public class Synchronizer : MonoBehaviour {
@@ -71,20 +69,19 @@ public class Synchronizer : MonoBehaviour {
                     if (targetBehaviour.CurrentStatus == TrackableBehaviour.Status.TRACKED)
                     {
                         Debug.Log("Model tracked");
-                        Vector3 distance = model.transform.position - map.transform.position;
-                        Debug.Log(distance);
-
                         // Send distance and rotation to fragment
+                        Vector3 distance = map.transform.InverseTransformPoint(model.transform.position);
                         JObject distanceInfo = new JObject();
-                        distanceInfo.Add("x", model.transform.position.x);
-                        distanceInfo.Add("y", model.transform.position.y);
-                        distanceInfo.Add("z", model.transform.position.z);
+                        distanceInfo.Add("x", distance.x);
+                        distanceInfo.Add("y", distance.y);
+                        distanceInfo.Add("z", distance.z);
 
                         JObject rotationInfo = new JObject();
-                        rotationInfo.Add("x", model.transform.rotation.x);
-                        rotationInfo.Add("y", model.transform.position.y);
-                        rotationInfo.Add("z", model.transform.rotation.z);
-                        rotationInfo.Add("w", model.transform.rotation.w);
+                        Quaternion rotation = Quaternion.Inverse(map.transform.rotation) * model.transform.rotation;
+                        rotationInfo.Add("x", rotation.x);
+                        rotationInfo.Add("y", rotation.y);
+                        rotationInfo.Add("z", rotation.z);
+                        rotationInfo.Add("w", rotation.w);
 
                         modelInfo.Add("distance", distanceInfo);
                         modelInfo.Add("rotation", rotationInfo);
@@ -114,67 +111,46 @@ public class Synchronizer : MonoBehaviour {
             // Enviar información a Android
             Debug.Log(updateInfo);
             fragment.Call("sendLocationInfo", updateInfo.ToString());
-
-            // Actualización mock
-            // MockUpdate(); // Unity
-            // Android
-            // Poner a la izquierda del marcador umbreon, con la misma rotación
-            //Vector3 distanceMock = trackedTargets[0].transform.GetChild(0).position + new Vector3(2, 0, 0) - map.transform.position;
-            //Quaternion rotation = trackedTargets[0].transform.GetChild(0).rotation;
-            //string json =
-            //    "[" +
-            //        "{ \"Target\": \"Chandelureuser2\"," +
-            //            "\"Distance\": { \"x\":" + distanceMock.x + ", \"y\": " + distanceMock.y + ",\"z\": " + distanceMock.z + "}," +
-            //            "\"Rotation\": { \"x\":" + rotation.x + ", \"y\": " + rotation.y + ",\"z\": " + rotation.z + ",\"w\": " + rotation.w + "}" +
-            //        "}" +
-            //    "]";
-            //fragment.Call("mockUpdate", json); // Android
         }
-    }
-
-    private void MockUpdate()
-    {
-        // Poner a la izquierda del marcador umbreon, con la misma rotación
-        Vector3 distance = trackedTargets[0].transform.GetChild(0).position + new Vector3(2, 0, 0) - map.transform.position;
-        Quaternion rotation = trackedTargets[0].transform.GetChild(0).rotation;
-        string json =
-            "[" +
-                "{ \"Target\": \"Chandelureuser2\"," +
-                    "\"Distance\": { \"x\":" + distance.x + ", \"y\": " + distance.y + ",\"z\": " + distance.z + "}," +
-                    "\"Rotation\": { \"x\":" + rotation.x + ", \"y\": " + rotation.y + ",\"z\": " + rotation.z + ",\"w\": " + rotation.w + "}" +
-                "}" +
-            "]";
-
-        Debug.Log(json);
-
-        UpdateLocation(json);
     }
 
     public void UpdateLocation(string updateInfo)
     {
-        fragment.Call("log", updateInfo);
-        JObject locationInfo = JObject.Parse(updateInfo);
-        fragment.Call("log", locationInfo.ToString());
-        string modelName = locationInfo["target"].Value<string>();
-        if (externalModels.ContainsKey(modelName))
+        if (trackableBehaviour.CurrentStatus == TrackableBehaviour.Status.TRACKED)
         {
-            if (locationInfo["distance"].ToString() != null)
+            JObject locationInfo = JObject.Parse(updateInfo);
+            fragment.Call("log", locationInfo.ToString());
+            string modelName = locationInfo["target"].Value<string>();
+            if (externalModels.ContainsKey(modelName))
             {
-                externalModels[modelName].SetActive(true);
+                if (locationInfo["distance"].ToString() != null)
+                {
+                    GameObject externalModel = externalModels[modelName];
+                    externalModel.SetActive(true);
 
-                JObject distanceInfo = (JObject) locationInfo["distance"];
-                Vector3 distance = new Vector3(distanceInfo["x"].Value<float>(), distanceInfo["y"].Value<float>(), distanceInfo["z"].Value<float>());
+                    JObject distanceInfo = (JObject)locationInfo["distance"];
+                    Vector3 distance = new Vector3(distanceInfo["x"].Value<float>(), distanceInfo["y"].Value<float>(), distanceInfo["z"].Value<float>());
+                    Vector3 newPosition = map.transform.TransformPoint(distance);
+                    
+                    JObject rotationInfo = (JObject)locationInfo["rotation"];
+                    Quaternion rotation = new Quaternion(rotationInfo["x"].Value<float>(), rotationInfo["y"].Value<float>(), rotationInfo["z"].Value<float>(),
+                        rotationInfo["w"].Value<float>());
+                    Quaternion newRotation = map.transform.rotation * rotation;
 
-                JObject rotationInfo = (JObject) locationInfo["rotation"];
-                Quaternion rotation = new Quaternion(rotationInfo["x"].Value<float>(), rotationInfo["y"].Value<float>(), rotationInfo["z"].Value<float>(),
-                    rotationInfo["w"].Value<float>());
-
-                externalModels[modelName].transform.position = map.transform.position + distance;
-                externalModels[modelName].transform.rotation = rotation;
-
-            } else
+                    externalModel.transform.position = newPosition;
+                    externalModel.transform.rotation = newRotation;
+                }
+                else
+                {
+                    externalModels[modelName].SetActive(false);
+                }
+            }
+        } else
+        {
+            // Deactivate all external models
+            foreach (GameObject model in externalModels.Values)
             {
-                externalModels[modelName].SetActive(false);
+                model.SetActive(false);
             }
         }
     }
