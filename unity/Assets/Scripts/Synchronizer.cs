@@ -70,6 +70,7 @@ public class Synchronizer : MonoBehaviour {
                     {
                         Debug.Log("Model tracked");
                         // Send distance and rotation to fragment
+                        // Transform model's world position to local position relative to map
                         Vector3 distance = map.transform.InverseTransformPoint(model.transform.position);
                         JObject distanceInfo = new JObject();
                         distanceInfo.Add("x", distance.x);
@@ -77,6 +78,7 @@ public class Synchronizer : MonoBehaviour {
                         distanceInfo.Add("z", distance.z);
 
                         JObject rotationInfo = new JObject();
+                        // Get rotation relative to map
                         Quaternion rotation = Quaternion.Inverse(map.transform.rotation) * model.transform.rotation;
                         rotationInfo.Add("x", rotation.x);
                         rotationInfo.Add("y", rotation.y);
@@ -106,9 +108,15 @@ public class Synchronizer : MonoBehaviour {
                     modelInfo.Add("distance", null);
                     updateInfo.Add(modelInfo);
                 }
+
+                // Deactivate all external models
+                foreach (GameObject model in externalModels.Values)
+                {
+                    model.SetActive(false);
+                }
             }
 
-            // Enviar información a Android
+            // Send information to Android
             Debug.Log(updateInfo);
             fragment.Call("sendLocationInfo", updateInfo.ToString());
         }
@@ -116,6 +124,7 @@ public class Synchronizer : MonoBehaviour {
 
     public void UpdateLocation(string updateInfo)
     {
+        // Update only if map is being tracked
         if (trackableBehaviour.CurrentStatus == TrackableBehaviour.Status.TRACKED)
         {
             JObject locationInfo = JObject.Parse(updateInfo);
@@ -130,11 +139,13 @@ public class Synchronizer : MonoBehaviour {
 
                     JObject distanceInfo = (JObject)locationInfo["distance"];
                     Vector3 distance = new Vector3(distanceInfo["x"].Value<float>(), distanceInfo["y"].Value<float>(), distanceInfo["z"].Value<float>());
+                    // Transform model's position relative to map to world position
                     Vector3 newPosition = map.transform.TransformPoint(distance);
                     
                     JObject rotationInfo = (JObject)locationInfo["rotation"];
                     Quaternion rotation = new Quaternion(rotationInfo["x"].Value<float>(), rotationInfo["y"].Value<float>(), rotationInfo["z"].Value<float>(),
                         rotationInfo["w"].Value<float>());
+                    // Apply relative rotation to map's rotation
                     Quaternion newRotation = map.transform.rotation * rotation;
 
                     externalModel.transform.position = newPosition;
@@ -144,13 +155,6 @@ public class Synchronizer : MonoBehaviour {
                 {
                     externalModels[modelName].SetActive(false);
                 }
-            }
-        } else
-        {
-            // Deactivate all external models
-            foreach (GameObject model in externalModels.Values)
-            {
-                model.SetActive(false);
             }
         }
     }
