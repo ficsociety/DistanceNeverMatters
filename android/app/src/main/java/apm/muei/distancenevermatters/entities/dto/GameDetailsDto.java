@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import apm.muei.distancenevermatters.entities.GameState;
+import apm.muei.distancenevermatters.entities.Map;
 import apm.muei.distancenevermatters.entities.User;
 
 public class GameDetailsDto {
@@ -16,12 +17,13 @@ public class GameDetailsDto {
     private GameState state;
     private long code;
     private User master;
+    private Map map;
     private List<PlayerDto> players;
 
     public GameDetailsDto() {
     }
 
-    public GameDetailsDto(String name, String description, User master, long code, GameState state,
+    public GameDetailsDto(String name, String description, User master, long code, GameState state, Map map,
                           List<PlayerDto> players) {
         super();
         this.name = name;
@@ -29,6 +31,7 @@ public class GameDetailsDto {
         this.master = master;
         //this.date = date;
         this.state = state;
+        this.map = map;
         this.code = code;
         this.players = players;
     }
@@ -61,6 +64,10 @@ public class GameDetailsDto {
         return code;
     }
 
+    public Map getMap() {
+        return map;
+    }
+
     @Override
     public String toString() {
         return "GameDetailsDto{" +
@@ -69,6 +76,7 @@ public class GameDetailsDto {
                 ", state=" + state +
                 ", code=" + code +
                 ", master=" + master +
+                ", map=" + map +
                 ", players=" + players +
                 '}';
     }

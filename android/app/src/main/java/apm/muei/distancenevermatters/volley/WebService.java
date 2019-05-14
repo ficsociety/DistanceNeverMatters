@@ -73,6 +73,8 @@ public class WebService {
     }
 
     public static void createGame(Context context, final CreateGameDto createGameDto, final VolleyCallback callback){
+
+        final GlobalVars gVars = new GlobalVars().getInstance();
         StringRequest request = new StringRequest(Request.Method.POST, URL + "games", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -91,10 +93,11 @@ public class WebService {
                 return gson.toJson(createGameDto).getBytes();
             }
 
+            @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<String, String>();
                 headers.put("Content-Type", "application/json");
-                headers.put("token", new GlobalVars().getInstance().getmAuth().getCurrentUser().getEmail());
+                headers.put("token", gVars.getmAuth().getCurrentUser().getEmail());
                 return headers;
             }
         };
@@ -103,6 +106,7 @@ public class WebService {
 
 
     public static void joinGame(Context context, final JoinGameDto joinGameDto, final VolleyCallback callback){
+        final GlobalVars gVars = new GlobalVars().getInstance();
         StringRequest request = new StringRequest(Request.Method.POST, URL + "game/join", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -121,10 +125,11 @@ public class WebService {
                 return gson.toJson(joinGameDto).getBytes();
             }
 
+            @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<String, String>();
                 headers.put("Content-Type", "application/json");
-                headers.put("token", new GlobalVars().getInstance().getmAuth().getCurrentUser().getEmail());
+                headers.put("token", gVars.getmAuth().getCurrentUser().getEmail());
                 return headers;
             }
         };
