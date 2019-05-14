@@ -2,6 +2,7 @@ package apm.muei.distancenevermatters.activities;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -15,6 +16,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -213,24 +215,29 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        int id = menuItem.getItemId();
-        if (id == R.id.nav_sign_out) {
-            CharSequence text = "Regresando a login";
-            Toast toast = Toast.makeText(this.getApplicationContext(), text, Toast.LENGTH_SHORT);
-            toast.show();
-            singOut();
+        switch (menuItem.getItemId()) {
+            case R.id.nav_sign_out:
+                CharSequence text = "Regresando a login";
+                Toast toast = Toast.makeText(this.getApplicationContext(), text, Toast.LENGTH_SHORT);
+                toast.show();
+                singOut();
+                return true;
+            case R.id.nav_find:
+                Intent intent = new Intent(this, FindGameActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.nav_help:
+                Toast.makeText(this.getApplicationContext(), R.string.help, Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.nav_profile:
+                showProfile();
+                return true;
+            case R.id.nav_languaje:
+                changeLanguage();
+                return true;
+            default:
+                return false;
         }
-        else if(id == R.id.nav_find){
-            Intent intent = new Intent(this, FindGameActivity.class);
-            startActivity(intent);
-        }
-        else if (id == R.id.nav_help) {
-            Toast.makeText(this.getApplicationContext(), R.string.help, Toast.LENGTH_SHORT).show();
-        }
-        else if (id == R.id.nav_profile) {
-            showProfile();
-        }
-        return true;
     }
 
     private void singOut() {
@@ -252,7 +259,22 @@ public class MainActivity extends AppCompatActivity
     private void showProfile() {
         Intent intent = new Intent(this, ProfileActivity.class);
         startActivity(intent);
-        this.finish();
+    }
+
+    private void changeLanguage(){
+        final String languages[] = new String[] {"es", "en"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.Seleccionar_idioma);
+        builder.setItems(languages, new DialogInterface.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                LocaleHelper.setLocale(MainActivity.this, languages[which]);
+                finish();
+                startActivity(getIntent());
+            }
+        });
+        builder.show();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)

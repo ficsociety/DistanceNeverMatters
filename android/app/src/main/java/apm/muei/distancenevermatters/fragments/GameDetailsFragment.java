@@ -1,7 +1,7 @@
 package apm.muei.distancenevermatters.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -23,6 +23,8 @@ import apm.muei.distancenevermatters.activities.MainActivity;
 import apm.muei.distancenevermatters.adapters.GameDetailsRecyclerAdapter;
 import apm.muei.distancenevermatters.dialogfragments.SaveGameDetailsFragment;
 import apm.muei.distancenevermatters.entities.dto.GameDetailsDto;
+import apm.muei.distancenevermatters.volley.VolleyCallback;
+import apm.muei.distancenevermatters.volley.WebService;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -40,8 +42,13 @@ public class GameDetailsFragment extends Fragment {
     @BindView(R.id.ginfTVdateValue)
     TextView gameDate;
 
+    @BindView(R.id.ginfTVcodeValue)
+    TextView gameCode;
+
     @BindView(R.id.ginfRecyclerView)
     RecyclerView recyclerView;
+
+    GameDetailsDto gameDetails;
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -52,6 +59,10 @@ public class GameDetailsFragment extends Fragment {
     private void toggleItemEdit(MenuItem item) {
         if (item.isChecked()) {
             SaveGameDetailsFragment dialog = new SaveGameDetailsFragment();
+            Bundle args = new Bundle();
+            args.putString("description", description.getEditText().getText().toString());
+            args.putString("gameName", gameName.getEditText().getText().toString());
+            dialog.setArguments(args);
             dialog.show(getActivity().getSupportFragmentManager(), "saveGameDetails");
             description.getEditText().setEnabled(false);
             gameName.getEditText().setEnabled(false);
@@ -87,13 +98,15 @@ public class GameDetailsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_game_details, container, false);
         ButterKnife.bind(this, rootView);
         setHasOptionsMenu(true);
-        GameDetailsDto gameDetails = ((MainActivity) getActivity()).getGameDetails();
+        gameDetails = ((MainActivity) getActivity()).getGameDetails();
 
         description.setEnabled(false);
         gameName.setEnabled(false);
 
         gameName.getEditText().setText(gameDetails.getName());
         description.getEditText().setText(gameDetails.getDescription());
+        gameCode.setText(String.valueOf(gameDetails.getCode()));
+
         //gameDate.setText(gameDetails.getDate().toString());
 
         Toolbar toolbar = getActivity().findViewById(R.id.mainToolbar);
@@ -127,11 +140,24 @@ public class GameDetailsFragment extends Fragment {
     public void onPressInvite(View view) {
         Toast.makeText(getActivity().getApplicationContext(),
                 "Invitar usuarios a partida.", Toast.LENGTH_SHORT).show();
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, R.string.app_name);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, String.valueOf(gameDetails.getCode()));
+        startActivity(Intent.createChooser(shareIntent, view.getContext().getResources().getString(R.string.share_code)));
     }
 
     @OnClick(R.id.gdetBtnDelete)
     public void onPressDelete(View view) {
         Toast.makeText(getActivity().getApplicationContext(),
                 "Eliminar la partida.", Toast.LENGTH_SHORT).show();
+        WebService.deleteGame(getActivity().getApplicationContext(), String.valueOf(gameDetails.getCode()), new VolleyCallback() {
+            @Override
+            public void onSuccess(String result) {
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
     }
 }

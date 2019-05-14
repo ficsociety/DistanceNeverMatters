@@ -37,6 +37,9 @@ public class CreateGameFragment extends Fragment {
     private int selectedMap = -1;
     TextInputLayout name;
     TextInputLayout description;
+    String nameValue = "";
+    String descriptionValue = "";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +54,9 @@ public class CreateGameFragment extends Fragment {
         ButterKnife.bind(this, rootView);
         name = rootView.findViewById(R.id.cGameName);
         description = rootView.findViewById(R.id.cGameDescription);
+
+        description.getEditText().setText(descriptionValue);
+        name.getEditText().setText(nameValue);
 
         drawMarkerModels(rootView);
 
@@ -124,6 +130,10 @@ public class CreateGameFragment extends Fragment {
                 .replace(R.id.create_game_fragments, markersModelsFragment)
                 .addToBackStack(null)
                 .commit();
+        nameValue = name.getEditText().getText().toString();
+        descriptionValue = description.getEditText().getText().toString();
+
+
     }
 
     @OnClick(R.id.cGameBtnCreateGame)
@@ -178,5 +188,4 @@ public class CreateGameFragment extends Fragment {
 
         return new CreateGameDto(name, description, mapId, markerModel);
     }
-
 }

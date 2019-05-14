@@ -47,7 +47,7 @@ public class MainFragment extends Fragment {
     @OnClick(R.id.gListAddFab)
     public void addGame() {
         startActivity(new Intent(getActivity(), CreateGameActivity.class));
-        getActivity().finish();
+        //getActivity().finish();
     }
 
     @BindView(R.id.gListViewPager)
@@ -98,63 +98,6 @@ public class MainFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.logout) {
-            CharSequence text = "Regresando a login";
-            Toast toast = Toast.makeText(getActivity().getApplicationContext(), text, Toast.LENGTH_SHORT);
-            toast.show();
-            singOut();
-        }
-        else if(id == R.id.buscarPartida){
-            Intent intent = new Intent(getActivity(), FindGameActivity.class);
-            startActivity(intent);
-        }
-        else if (id == R.id.help) {
-            Toast.makeText(getActivity().getApplicationContext(), R.string.help, Toast.LENGTH_SHORT).show();
-        }
-        else if (id == R.id.perfil) {
-            showProfile();
-        }
-        else if (id == R.id.lang) {
-            changeLanguage();
-        }
-        return true;
-    }
-
-    private void singOut() {
-        // Firebase sign out
-        gVars.getmAuth().signOut();
-
-        // Google sign out
-        gVars.getSignInClient().signOut().addOnCompleteListener(this.getActivity(),
-                new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Intent intent = new Intent(getActivity(), LoginActivity.class);
-                        startActivity(intent);
-                        getActivity().finish();
-                    }
-                });
-    }
-    
-    private void showProfile() {
-        Intent intent = new Intent(getActivity(), ProfileActivity.class);
-        startActivity(intent);
-        getActivity().finish();
-    }
-
-    private void changeLanguage(){
-        final String languages[] = new String[] {"es", "en"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle(R.string.Seleccionar_idioma);
-        builder.setItems(languages, new DialogInterface.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                LocaleHelper.setLocale(getActivity(), languages[which]);
-                getActivity().finish();
-                startActivity(getActivity().getIntent());
-            }
-        });
-        builder.show();
+        return false;
     }
 }
