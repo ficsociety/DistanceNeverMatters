@@ -85,7 +85,7 @@ public class MainFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        getActivity().setTitle("Lista de partidas"); // TODO change for string resource
+        getActivity().setTitle(R.string.game_list); // TODO change for string resource
         //((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
