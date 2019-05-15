@@ -1,5 +1,376 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="9b823159-e7af-4081-982d-5b03390b749c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/AssetBundles.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/AssetBundles/AssetBundles" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/AssetBundles/AssetBundles.manifest" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/AssetBundles/AssetBundles.manifest.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/AssetBundles/AssetBundles.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/AssetBundles/map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/AssetBundles/map.manifest" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/AssetBundles/map.manifest.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/AssetBundles/map.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/Editor/CreateAssetBundles.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/Editor/CreateAssetBundles.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonBoar.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonBoar/Die.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonBoar/Die.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonBoar/GetHit.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonBoar/GetHit.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonBoar/HornAttack.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonBoar/HornAttack.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonBoar/Scream.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonBoar/Scream.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonBoar/attack.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonBoar/attack.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonBoar/idle.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonBoar/idle.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonBoar/run.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonBoar/run.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonBoar/walk.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonBoar/walk.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer/AttackWingClaw.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer/AttackWingClaw.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer/Basic Attack.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer/Basic Attack.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer/Defend.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer/Defend.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer/Flame Attack.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer/Flame Attack.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer/FlyAttack.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer/FlyAttack.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer/FlyForward.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer/FlyForward.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer/FlyGlide.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer/FlyGlide.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer/FlyIdle.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer/FlyIdle.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer/GetHit.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer/GetHit.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer/Landing.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer/Landing.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer/Run.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer/Run.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer/TakeOff.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer/TakeOff.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer/die.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer/die.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer/idle01.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer/idle01.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer/idle02.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer/idle02.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer/scream.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer/scream.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer/sleep.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer/sleep.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer/walk.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animations/DragonTerrorBringer/walk.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animators.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animators/DragonBoarControl.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animators/DragonBoarControl.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animators/TerrorbringerCTRL.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Animators/TerrorbringerCTRL.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Materials/DragonBoar.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Materials/DragonBoar/DragonMaterial Blue.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Materials/DragonBoar/DragonMaterial Blue.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Materials/DragonBoar/DragonMaterial Gold.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Materials/DragonBoar/DragonMaterial Gold.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Materials/DragonBoar/DragonMaterial Green.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Materials/DragonBoar/DragonMaterial Green.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Materials/DragonBoar/DragonMaterial Red.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Materials/DragonBoar/DragonMaterial Red.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Materials/DragonTerrorBringer.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Materials/DragonTerrorBringer/AlbinoPBR.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Materials/DragonTerrorBringer/AlbinoPBR.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Materials/DragonTerrorBringer/BlueHP.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Materials/DragonTerrorBringer/BlueHP.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Materials/DragonTerrorBringer/GreenHP.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Materials/DragonTerrorBringer/GreenHP.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Materials/DragonTerrorBringer/GreenPBR.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Materials/DragonTerrorBringer/GreenPBR.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Materials/DragonTerrorBringer/GreyPBR.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Materials/DragonTerrorBringer/GreyPBR.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Materials/DragonTerrorBringer/PurpleHP.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Materials/DragonTerrorBringer/PurpleHP.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Materials/DragonTerrorBringer/RedHP.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Materials/DragonTerrorBringer/RedHP.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Materials/DragonTerrorBringer/RedPBR.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Materials/DragonTerrorBringer/RedPBR.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Materials/Stage.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Materials/Stage.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Mesh.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Mesh/DragonBoar.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Mesh/DragonBoar.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Mesh/DragonTerrorBringerMesh.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Mesh/DragonTerrorBringerMesh.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Mesh/Stage.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Mesh/Stage.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Prefab/DragonBoarPBR.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Prefab/DragonBoarPBR/BlueBoar.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Prefab/DragonBoarPBR/BlueBoar.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Prefab/DragonBoarPBR/GoldBoar.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Prefab/DragonBoarPBR/GoldBoar.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Prefab/DragonBoarPBR/GreenBoar.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Prefab/DragonBoarPBR/GreenBoar.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Prefab/DragonBoarPBR/RedBoar.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Prefab/DragonBoarPBR/RedBoar.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Prefab/HP.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Prefab/HP/Blue.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Prefab/HP/Blue.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Prefab/HP/Green.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Prefab/HP/Green.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Prefab/HP/Purple.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Prefab/HP/Purple.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Prefab/HP/Red.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Prefab/HP/Red.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Prefab/PBR.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Prefab/PBR/Albino.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Prefab/PBR/Albino.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Prefab/PBR/Green.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Prefab/PBR/Green.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Prefab/PBR/Grey.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Prefab/PBR/Grey.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Prefab/PBR/Red.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Prefab/PBR/Red.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonBoar.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonBoar/AO.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonBoar/AO.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonBoar/Blue.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonBoar/Blue/Albedo.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonBoar/Blue/Metallic.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonBoar/Blue/Metallic.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonBoar/Blue/Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonBoar/Emission.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonBoar/Emission.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonBoar/Gold.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonBoar/Gold/Albedo.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonBoar/Gold/Metallic.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonBoar/Gold/Metallic.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonBoar/Gold/Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonBoar/Green.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonBoar/Green/Albedo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonBoar/Green/Albedo.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonBoar/Green/Metallic.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonBoar/Green/Metallic.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonBoar/Green/Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonBoar/Green/Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonBoar/Red.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonBoar/Red/Albedo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonBoar/Red/Albedo.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonBoar/Red/Metallic.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonBoar/Red/Metallic.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonBoar/Red/Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Albino.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Albino/Ambient Occlusion Map from Mesh lambert1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Albino/Ambient Occlusion Map from Mesh lambert1.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Albino/ForSP_lambert1_AlbedoTransparency.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Albino/ForSP_lambert1_AlbedoTransparency.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Albino/ForSP_lambert1_Emission.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Albino/ForSP_lambert1_Emission.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Albino/ForSP_lambert1_MetallicSmoothness.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Albino/ForSP_lambert1_MetallicSmoothness.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Albino/ForSP_lambert1_Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Albino/ForSP_lambert1_Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/BlueHP.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/BlueHP.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Green.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Green/Ambient Occlusion Map from Mesh lambert1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Green/Ambient Occlusion Map from Mesh lambert1.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Green/ForSP_lambert1_AlbedoTransparency.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Green/ForSP_lambert1_AlbedoTransparency.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Green/ForSP_lambert1_Emission.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Green/ForSP_lambert1_Emission.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Green/ForSP_lambert1_MetallicSmoothness.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Green/ForSP_lambert1_MetallicSmoothness.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Green/ForSP_lambert1_Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Green/ForSP_lambert1_Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/GreenHP.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/GreenHP.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Grey.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Grey/Ambient Occlusion Map from Mesh lambert1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Grey/Ambient Occlusion Map from Mesh lambert1.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Grey/ForSP_lambert1_AlbedoTransparency.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Grey/ForSP_lambert1_AlbedoTransparency.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Grey/ForSP_lambert1_Emission.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Grey/ForSP_lambert1_Emission.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Grey/ForSP_lambert1_MetallicSmoothness.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Grey/ForSP_lambert1_MetallicSmoothness.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Grey/ForSP_lambert1_Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Grey/ForSP_lambert1_Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Red.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Red/Ambient Occlusion Map from Mesh lambert1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Red/Ambient Occlusion Map from Mesh lambert1.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Red/ForSP_lambert1_AlbedoTransparency.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Red/ForSP_lambert1_AlbedoTransparency.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Red/ForSP_lambert1_Emission.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Red/ForSP_lambert1_Emission.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Red/ForSP_lambert1_MetallicSmoothness.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Red/ForSP_lambert1_MetallicSmoothness.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Red/ForSP_lambert1_Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/Red/ForSP_lambert1_Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/RedHP.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/RedHP.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/purpleHP.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/FreeDragons/Texture/DragonTerrorBringer/purpleHP.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/Prefabs/ModelTarget.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/Prefabs/ModelTarget.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/Prefabs/RPGHeroHP.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/Prefabs/RPGHeroHP.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Animations.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Animations/DieRecover_SwordShield.anim" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Animations/DieRecover_SwordShield.anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Animations/Die_SwordShield.anim" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Animations/Die_SwordShield.anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Animations/GetHit_SwordShield.anim" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Animations/GetHit_SwordShield.anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Animations/Idle_SwordShield.anim" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Animations/Idle_SwordShield.anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Animations/NormalAttack01_SwordShield.anim" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Animations/NormalAttack01_SwordShield.anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Animations/NormalAttack02_SwordShield.anim" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Animations/NormalAttack02_SwordShield.anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Animations/Run_SwordShield.anim" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Animations/Run_SwordShield.anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Animations/Sprint_SwordShield.anim" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Animations/Sprint_SwordShield.anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Animations/Walk_SwordShield.anim" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Animations/Walk_SwordShield.anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Animator.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Animator/SwordAndShield.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Animator/SwordAndShield.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Materials/Ground.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Materials/Ground.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Materials/HandPainted.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Materials/HandPainted.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Materials/PBR.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Materials/PBR.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Materials/PolyArt.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Materials/PolyArt.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Meshes.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Meshes/NewFreeRPGHero.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Meshes/NewFreeRPGHero.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Meshes/NewFreeRPGHeroPolyart.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Meshes/NewFreeRPGHeroPolyart.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Meshes/PolyartShield.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Meshes/PolyartShield.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Meshes/PolyartSword.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Meshes/PolyartSword.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Meshes/Shield.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Meshes/Shield.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Meshes/Stage.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Meshes/Stage.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Meshes/Sword.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Meshes/Sword.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Prefabs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Prefabs/RPGHeroHP.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Prefabs/RPGHeroHP.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Prefabs/RPGHeroPBR.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Prefabs/RPGHeroPBR.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Prefabs/RPGHeroPolyart.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Prefabs/RPGHeroPolyart.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Textures.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Textures/HandPaintedTexture.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Textures/PBR_AO.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Textures/PBR_AO.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Textures/PBR_Albedo.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Textures/PBR_MS.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Textures/PBR_MS.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Textures/PBR_NM.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Textures/PolyArtTexture.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../unity/Assets/RPGHero/Textures/PolyArtTexture.png.meta" beforeDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view />
+      </state>
+    </system>
+  </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="1148982428">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="1" />
+          <entry key="project.open.time.1" value="1" />
+          <entry key="project.opened" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="gradle" value="1" />
+          <entry key="xml" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="Groovy" value="1" />
+          <entry key="XML" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="gradle" value="19" />
+          <entry key="xml" value="7" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="Groovy" value="19" />
+          <entry key="XML" value="7" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/AndroidManifest.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="176">
+              <caret line="8" column="25" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
+            </state>
+          </provider>
+          <provider editor-type-id="android-manifest" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/build.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="36" column="27" selection-start-line="36" selection-start-column="27" selection-end-line="36" selection-end-column="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/build.gradle" />
+      </list>
+    </option>
+  </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="952" />
     <option name="width" value="976" />
@@ -28,10 +399,53 @@
       </profile-state>
     </entry>
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane" />
+      <pane id="AndroidView">
+        <subPane>
+          <expand>
+            <path>
+              <item name="MapSync" type="1abcf292:AndroidViewProjectNode" />
+              <item name="MapSync" type="feadf853:AndroidModuleNode" />
+            </path>
+            <path>
+              <item name="MapSync" type="1abcf292:AndroidViewProjectNode" />
+              <item name="MapSync" type="feadf853:AndroidModuleNode" />
+              <item name="manifests" type="f94875db:AndroidManifestsGroupNode" />
+            </path>
+            <path>
+              <item name="MapSync" type="1abcf292:AndroidViewProjectNode" />
+              <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+    </panes>
+  </component>
   <component name="PropertiesComponent">
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
   </component>
   <component name="RunManager">
     <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
@@ -93,5 +507,64 @@
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9b823159-e7af-4081-982d-5b03390b749c" name="Default Changelist" comment="" />
+      <created>1557846099092</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1557846099092</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" visible="true" weight="0.32994652" />
+      <window_info id="Structure" side_tool="true" />
+      <window_info id="Build Variants" side_tool="true" />
+      <window_info id="Image Layers" />
+      <window_info id="Designer" />
+      <window_info id="Capture Tool" />
+      <window_info id="Favorites" side_tool="true" />
+      <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Logcat" />
+      <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
+      <window_info anchor="bottom" id="TODO" />
+      <window_info anchor="bottom" id="Android Profiler" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="bottom" id="Build" visible="true" weight="0.32922733" />
+      <window_info anchor="right" id="Device File Explorer" side_tool="true" />
+      <window_info anchor="right" id="Capture Analysis" />
+      <window_info anchor="right" id="Gradle" />
+      <window_info anchor="right" id="Theme Preview" />
+      <window_info anchor="right" id="Palette&#9;" />
+    </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="8" column="25" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-manifest" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="36" column="27" selection-start-line="36" selection-start-column="27" selection-end-line="36" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
   </component>
 </project>
