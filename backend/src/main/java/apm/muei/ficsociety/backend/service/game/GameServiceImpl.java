@@ -119,8 +119,7 @@ public class GameServiceImpl implements GameService {
 		List<PlayerDto> players = new ArrayList<>();
 
 		for (Player player : game.getPlayers()) {
-			if (!player.getUser().equals(game.getMaster()))
-				players.add(new PlayerDto(player));
+			players.add(new PlayerDto(player));
 		}
 
 		return new GameDetailsDto(game.getName(), game.getDescription(), game.getMaster(), game.getDate(),
