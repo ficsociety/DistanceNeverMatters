@@ -107,7 +107,7 @@ public class WebService {
 
 
     public static void joinGame(Context context, final JoinGameDto joinGameDto, final VolleyCallback callback){
-        final GlobalVars gVars = GlobalVars.getInstance();
+        final String email = GlobalVars.getInstance().getmAuth().getCurrentUser().getEmail();
         StringRequest request = new StringRequest(Request.Method.POST, URL + "game/join", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -130,7 +130,7 @@ public class WebService {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<String, String>();
                 headers.put("Content-Type", "application/json");
-                headers.put("token", gVars.getmAuth().getCurrentUser().getEmail());
+                headers.put("token", email);
                 return headers;
             }
         };
