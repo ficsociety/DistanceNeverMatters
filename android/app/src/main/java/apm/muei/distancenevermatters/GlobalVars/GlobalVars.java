@@ -3,6 +3,8 @@ package apm.muei.distancenevermatters.GlobalVars;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.StringTokenizer;
+
 import apm.muei.distancenevermatters.entities.User;
 
 public class GlobalVars {
@@ -15,10 +17,10 @@ public class GlobalVars {
     private String player_games;
     private String master_games;
 
-    public GlobalVars() {
+    private GlobalVars() {
     }
 
-    public GlobalVars getInstance(){
+    public static GlobalVars getInstance(){
         if(_instance == null) {
             _instance = new GlobalVars();
         }
@@ -71,5 +73,15 @@ public class GlobalVars {
 
     public void setMaster_games(int master_games) {
         this.master_games = Integer.toString(master_games);
+    }
+
+    public String getUsername() {
+        String email = getmAuth().getCurrentUser().getEmail();
+        String username = new StringTokenizer(email, "@").nextToken();
+
+        if (email.endsWith(".es")) {
+            username.concat("$");
+        }
+        return username;
     }
 }

@@ -50,7 +50,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
-        gVars = new GlobalVars().getInstance();
+        gVars = GlobalVars.getInstance();
 
         setSupportActionBar(toolbar);
 

@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity
         mainLayout.addView(contentLayout);
         ButterKnife.bind(this);
         gson = new GsonBuilder().create();
-        gVars = new GlobalVars().getInstance();
+        gVars = GlobalVars.getInstance();
 
 
         // Be sure to ALWAYS set up the support action bar, or else getSupportActionBar could return null

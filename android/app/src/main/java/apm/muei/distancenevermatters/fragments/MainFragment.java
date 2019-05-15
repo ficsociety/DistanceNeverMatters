@@ -70,7 +70,7 @@ public class MainFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, rootView);
-        gVars = new GlobalVars().getInstance();
+        gVars =  GlobalVars.getInstance();
 
         setHasOptionsMenu(true);
 
@@ -85,7 +85,7 @@ public class MainFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        getActivity().setTitle("Lista de partidas"); // TODO change for string resource
+        getActivity().setTitle(R.string.game_list); // TODO change for string resource
         //((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 

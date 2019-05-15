@@ -59,8 +59,7 @@ public class FindGameFragment extends Fragment {
             WebService.findGameByCode(getActivity().getApplicationContext(), code.getText().toString(), new VolleyCallback() {
                 @Override
                 public void onSuccess(String result) {
-                    Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-                    GameDetailsDto gameDetailsDto = gson.fromJson(result, GameDetailsDto.class);
+                    GameDetailsDto gameDetailsDto = new Gson().fromJson(result, GameDetailsDto.class);
                     if (userExistInGame(gameDetailsDto.getPlayers())){
                         Toast.makeText(getActivity().getApplicationContext(),
                                 "Ya pertenece a esta partida", Toast.LENGTH_SHORT).show();
@@ -68,7 +67,7 @@ public class FindGameFragment extends Fragment {
 
                         SelectPlayerFragment selectPlayerFragment = new SelectPlayerFragment();
                         Bundle bundle = new Bundle();
-                        bundle.putLong("code", gameDetailsDto.getCode());
+                        bundle.putLong("code", Long.valueOf(code.getText().toString()));
                         selectPlayerFragment.setArguments(bundle);
 
                         findGameFragment.getFragmentManager()
@@ -85,20 +84,12 @@ public class FindGameFragment extends Fragment {
 
     private boolean userExistInGame(List<PlayerDto> players){
 
-        // TODO pensar la forma de comprobar que un usuario ya está en una partida
-   /*       String email = new GlobalVars().getInstance().getmAuth().getCurrentUser().getEmail();
-
-      if (email == null){
-            return false;
-        } else{
-            for (User user : players){
-                String uid = user.getUid().endsWith("$") ? user.getUid().substring(0, user.getUid().length()-1) : user.getUid();
-
-                if (email.startsWith(uid)){
-                    return true;
-                }
+        String username = GlobalVars.getInstance().getUsername();
+        for (PlayerDto player : players){
+            if (player.getUser().getUid().equals(username)) {
+                return true;
             }
-        } */
+        }
         return false;
     }
 

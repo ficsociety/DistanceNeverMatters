@@ -28,4 +28,12 @@ public class Map {
         return url;
     }
 
+    @Override
+    public String toString() {
+        return "Map{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", url=" + url +
+                '}';
+    }
 }

@@ -54,7 +54,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
-        gVars = new GlobalVars().getInstance();
+        gVars = GlobalVars.getInstance();
         setSupportActionBar(toolbar);
         setTitle(R.string.perfil);
 

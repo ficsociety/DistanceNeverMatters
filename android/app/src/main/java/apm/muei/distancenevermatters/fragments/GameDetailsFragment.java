@@ -2,25 +2,24 @@ package apm.muei.distancenevermatters.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewDebug;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import apm.muei.distancenevermatters.R;
 import apm.muei.distancenevermatters.activities.MainActivity;
@@ -38,10 +37,10 @@ public class GameDetailsFragment extends Fragment {
     private GameDetailsRecyclerAdapter adapter;
 
     @BindView(R.id.ginfETdescription)
-    EditText description;
+    TextInputLayout description;
 
     @BindView(R.id.ginfETgameName)
-    EditText gameName;
+    TextInputLayout gameName;
 
     @BindView(R.id.ginfTVdateValue)
     TextView gameDate;
@@ -53,6 +52,7 @@ public class GameDetailsFragment extends Fragment {
     RecyclerView recyclerView;
 
     GameDetailsDto gameDetails;
+    Gson gson;
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -63,18 +63,19 @@ public class GameDetailsFragment extends Fragment {
     private void toggleItemEdit(MenuItem item) {
         if (item.isChecked()) {
             SaveGameDetailsFragment dialog = new SaveGameDetailsFragment();
+            gameDetails.setName(gameName.getEditText().getText().toString());
+            gameDetails.setDescription(description.getEditText().getText().toString());
             Bundle args = new Bundle();
-            args.putString("description", description.getText().toString());
-            args.putString("gameName", gameName.getText().toString());
+            args.putString("game", gson.toJson(gameDetails));
+            //args.putString("gameName", gameName.getEditText().getText().toString());
             dialog.setArguments(args);
             dialog.show(getActivity().getSupportFragmentManager(), "saveGameDetails");
-            description.setEnabled(false);
-            gameName.setEnabled(false);
+            description.getEditText().setEnabled(false);
+            gameName.getEditText().setEnabled(false);
             item.setIcon(R.drawable.ic_edit_white_24dp);
         } else {
             description.setEnabled(true);
             gameName.setEnabled(true);
-            gameName.requestFocus();
             item.setIcon(R.drawable.ic_save_white_24dp);
         }
         item.setChecked(!item.isChecked());
@@ -103,14 +104,16 @@ public class GameDetailsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_game_details, container, false);
         ButterKnife.bind(this, rootView);
         setHasOptionsMenu(true);
+        gson = new GsonBuilder().create();
         gameDetails = ((MainActivity) getActivity()).getGameDetails();
 
         description.setEnabled(false);
         gameName.setEnabled(false);
 
-        gameName.setText(gameDetails.getName());
-        description.setText(gameDetails.getDescription());
+        gameName.getEditText().setText(gameDetails.getName());
+        description.getEditText().setText(gameDetails.getDescription());
         gameCode.setText(String.valueOf(gameDetails.getCode()));
+
         //gameDate.setText(gameDetails.getDate().toString());
 
         Toolbar toolbar = getActivity().findViewById(R.id.mainToolbar);

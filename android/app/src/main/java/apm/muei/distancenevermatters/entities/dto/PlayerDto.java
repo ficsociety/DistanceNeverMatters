@@ -15,10 +15,10 @@ public class PlayerDto {
 
     }
 
-    public PlayerDto(Player player) {
-        this.marker = player.getMarker();
-        this.model = player.getModel();
-        this.user = player.getUser();
+    public PlayerDto(Marker maker, Model mode, User user) {
+        this.marker = marker;
+        this.model = model;
+        this.user = user;
     }
 
     public Marker getMarker() {
@@ -45,4 +45,12 @@ public class PlayerDto {
         this.user = user;
     }
 
+    @Override
+    public String toString() {
+        return "PlayerDto{" +
+                "marker=" + marker +
+                ", model=" + model +
+                ", user=" + user +
+                '}';
+    }
 }
