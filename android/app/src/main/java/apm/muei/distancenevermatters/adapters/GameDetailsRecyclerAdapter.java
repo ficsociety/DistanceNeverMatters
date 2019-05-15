@@ -14,9 +14,9 @@ import java.util.List;
 
 import apm.muei.distancenevermatters.R;
 import apm.muei.distancenevermatters.entities.GameState;
+import apm.muei.distancenevermatters.entities.Player;
 import apm.muei.distancenevermatters.entities.User;
 import apm.muei.distancenevermatters.entities.dto.GameDetailsDto;
-import apm.muei.distancenevermatters.entities.dto.PlayerDto;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -43,9 +43,9 @@ public class GameDetailsRecyclerAdapter extends RecyclerView.Adapter<GameDetails
         }
     }
 
-    public GameDetailsRecyclerAdapter(Fragment parentFragment, User master, List<PlayerDto> players) {
+    public GameDetailsRecyclerAdapter(Fragment parentFragment, User master, List<Player> players) {
         List<User> newUsers = new ArrayList<>();
-        for (PlayerDto player: players){
+        for (Player player: players){
             newUsers.add(player.getUser());
         }
 

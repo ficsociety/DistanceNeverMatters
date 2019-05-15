@@ -2,14 +2,16 @@ package apm.muei.distancenevermatters.entities.dto;
 
 import com.google.gson.annotations.Expose;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 import apm.muei.distancenevermatters.entities.GameState;
 import apm.muei.distancenevermatters.entities.Map;
+import apm.muei.distancenevermatters.entities.Player;
 import apm.muei.distancenevermatters.entities.User;
 
-public class GameDetailsDto {
+public class GameDetailsDto implements Serializable {
 
     private String name;
     private String description;
@@ -18,13 +20,13 @@ public class GameDetailsDto {
     private long code;
     private User master;
     private Map map;
-    private List<PlayerDto> players;
+    private List<Player> players;
 
     public GameDetailsDto() {
     }
 
     public GameDetailsDto(String name, String description, User master, long code, GameState state, Map map,
-                          List<PlayerDto> players) {
+                          List<Player> players) {
         super();
         this.name = name;
         this.description = description;
@@ -52,7 +54,7 @@ public class GameDetailsDto {
 //        return date;
 //    }
 
-    public List<PlayerDto> getPlayers() {
+    public List<Player> getPlayers() {
         return players;
     }
 
@@ -76,9 +78,6 @@ public class GameDetailsDto {
         this.description = description;
     }
 
-    public void setPlayers(List<PlayerDto> players) {
-        this.players = players;
-    }
 
     @Override
     public String toString() {
