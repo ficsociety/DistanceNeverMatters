@@ -19,6 +19,7 @@ import java.util.List;
 
 import apm.muei.distancenevermatters.GlobalVars.GlobalVars;
 import apm.muei.distancenevermatters.R;
+import apm.muei.distancenevermatters.entities.GameState;
 import apm.muei.distancenevermatters.entities.Player;
 import apm.muei.distancenevermatters.entities.dto.GameDetailsDto;
 import apm.muei.distancenevermatters.volley.VolleyCallback;
@@ -62,11 +63,14 @@ public class FindGameFragment extends Fragment {
                     if (userExistInGame(gameDetailsDto.getPlayers())){
                         Toast.makeText(getActivity().getApplicationContext(),
                                 "Ya pertenece a esta partida", Toast.LENGTH_SHORT).show();
-                    } else{
+                    } else if (!gameDetailsDto.getState().equals(GameState.PAUSED)){
+                        Toast.makeText(getActivity().getApplicationContext(),
+                                "Solo puede a unirse a partidas pausadas", Toast.LENGTH_SHORT).show();
+                    }else {
 
                         SelectPlayerFragment selectPlayerFragment = new SelectPlayerFragment();
                         Bundle bundle = new Bundle();
-                        bundle.putLong("code", Long.valueOf(code.getText().toString()));
+                        bundle.putString("gameDetails", result);
                         selectPlayerFragment.setArguments(bundle);
 
                         findGameFragment.getFragmentManager()
