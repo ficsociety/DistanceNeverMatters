@@ -2,11 +2,14 @@ package apm.muei.distancenevermatters.fragments;
 
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -19,6 +22,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,6 +35,7 @@ import apm.muei.distancenevermatters.adapters.DiceGridViewAdapter;
 import apm.muei.distancenevermatters.adapters.DiceResultRecyclerAdapter;
 import apm.muei.distancenevermatters.entities.Dice;
 import apm.muei.distancenevermatters.entities.DiceContainer;
+import apm.muei.distancenevermatters.entities.dto.DiceResultDto;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -73,6 +78,19 @@ public class DiceFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_dice, container, false);
         ButterKnife.bind(this, rootView);
+
+        Toolbar toolbar = getActivity().findViewById(R.id.gameToolbar);
+        AppBarLayout appBar = getActivity().findViewById(R.id.gameAppBar);
+        appBar.setVisibility(View.VISIBLE);
+
+        toolbar.setTitle("Tirada de dados");
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                Toast.makeText(getActivity().getApplicationContext(),
+                        "Volviendo a Unity", Toast.LENGTH_SHORT).show();
+                getActivity().onBackPressed();
+            }
+        });
 
         diceList = DiceContainer.getDiceList();
         diceTextInput.setText(R.string.ningundado);
@@ -158,21 +176,19 @@ public class DiceFragment extends Fragment {
     @OnClick(R.id.diceBtnRandom)
     public void random() {
         Random rand = new Random();
-        List<Map<String, Integer>> resultList = new ArrayList<>();
+        List<DiceResultDto> resultList = new ArrayList<>();
         int finalValue = 0;
         for (int i = 0; i < diceValues.length; i++) {
             int count = diceValues[i];
-            Map<String, Integer> data = new HashMap<>();
             while (count != 0) {
                 int value = rand.nextInt(diceList.get(i).getValue()) + 1;
                 finalValue += value;
-                data.put(diceList.get(i).getName(), value);
-                resultList.add(data);
+                DiceResultDto resultDto = new DiceResultDto(diceList.get(i).getName(), value);
+                resultList.add(resultDto);
                 count--;
             }
         }
 
-        System.out.println(resultList.size());
         // TODO Mandar resultado al server de sincronización
         resultLayout.setVisibility(View.VISIBLE);
         final DiceResultRecyclerAdapter adapter = new DiceResultRecyclerAdapter(this, resultList, diceList);

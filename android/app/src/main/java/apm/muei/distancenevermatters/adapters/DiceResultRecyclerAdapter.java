@@ -11,6 +11,7 @@ import java.util.Map;
 
 import apm.muei.distancenevermatters.R;
 import apm.muei.distancenevermatters.entities.Dice;
+import apm.muei.distancenevermatters.entities.dto.DiceResultDto;
 import apm.muei.distancenevermatters.fragments.DiceFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,7 +19,7 @@ import butterknife.ButterKnife;
 public class DiceResultRecyclerAdapter extends RecyclerView.Adapter<DiceResultRecyclerAdapter.DiceResultViewHolder> {
 
     private DiceFragment fragment;
-    private List<Map<String, Integer>> resultList;
+    private List<DiceResultDto> resultList;
     private List<Dice> diceList;
 
     // ViewHolder for game list items
@@ -37,7 +38,7 @@ public class DiceResultRecyclerAdapter extends RecyclerView.Adapter<DiceResultRe
         }
     }
 
-    public DiceResultRecyclerAdapter(DiceFragment parentFragment, List<Map<String, Integer>> resultList, List<Dice> diceList) {
+    public DiceResultRecyclerAdapter(DiceFragment parentFragment, List<DiceResultDto> resultList, List<Dice> diceList) {
 
         this.fragment = parentFragment;
         this.resultList = resultList;
@@ -55,12 +56,8 @@ public class DiceResultRecyclerAdapter extends RecyclerView.Adapter<DiceResultRe
 
     @Override
     public void onBindViewHolder(DiceResultRecyclerAdapter.DiceResultViewHolder holder, int position) {
-
-        System.out.println(position);
-        int i = 0;
-
-        holder.diceLabel.setText(resultList.get(position).);
-        holder.diceValue.setText(Integer.toString(subItem));
+        holder.diceLabel.setText(resultList.get(position).getName());
+        holder.diceValue.setText(Integer.toString(resultList.get(position).getValue()));
 
         /*
         for (List<Integer> item : resultList) {

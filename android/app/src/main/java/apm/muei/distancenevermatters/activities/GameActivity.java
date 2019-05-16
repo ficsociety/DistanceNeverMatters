@@ -2,21 +2,20 @@ package apm.muei.distancenevermatters.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
+import android.support.v7.widget.Toolbar;
 
 import com.unity3d.player.UnityPlayer;
 
 import apm.muei.distancenevermatters.R;
 import apm.muei.distancenevermatters.fragments.DiceFragment;
-import apm.muei.distancenevermatters.fragments.GameDetailsFragment;
 import apm.muei.distancenevermatters.fragments.UnityFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,10 +36,18 @@ public class GameActivity extends AppCompatActivity
     @BindView(R.id.gameFabBtnDice)
     FloatingActionButton diceFab;
 
+    @BindView(R.id.gameToolbar)
+    Toolbar gameToolbar;
+
+    @BindView(R.id.gameAppBar)
+    AppBarLayout gameAppBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
+
+        setSupportActionBar(gameToolbar);
 
         // Create the UnityPlayer
         Log.d("Weird", "Creating UnityPlayer");

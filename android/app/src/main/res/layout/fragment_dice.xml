@@ -91,37 +91,50 @@
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/diceBtnClear"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/diceTextLabel" />
+
+    <Button
+        android:id="@+id/diceBtnClear"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:paddingLeft="32dp"
+        android:paddingRight="32dp"
+        android:text="Clear"
+        app:layout_constraintBottom_toBottomOf="@+id/diceTextInput"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/diceTextLabel" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/diceLayoutResult"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
         android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/diceTextInput">
 
         <ScrollView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_marginStart="64dp"
-            android:layout_marginLeft="64dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/diceTVResult"
+            app:layout_constraintEnd_toEndOf="@+id/diceDesgloseLabel"
+            app:layout_constraintStart_toStartOf="@+id/diceDesgloseLabel"
             app:layout_constraintTop_toBottomOf="@+id/diceDesgloseLabel">
 
             <LinearLayout
@@ -133,6 +146,8 @@
                     android:id="@+id/resultRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
                     tools:listitem="@layout/dice_result_list_item" />
             </LinearLayout>
         </ScrollView>
@@ -156,8 +171,8 @@
             android:id="@+id/diceTotalLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginLeft="24dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
             android:layout_marginTop="8dp"
             android:text="Total"
             app:layout_constraintStart_toStartOf="parent"
@@ -168,8 +183,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginRight="24dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
             android:text="Desglose"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/diceResultLabel" />
@@ -201,7 +216,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/diceBtnClear"
+            android:id="@+id/diceBtnClearOff"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -234,7 +249,7 @@
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/diceBtnClear"
+            app:layout_constraintStart_toEndOf="@+id/diceBtnClearOff"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
     </android.support.constraint.ConstraintLayout>

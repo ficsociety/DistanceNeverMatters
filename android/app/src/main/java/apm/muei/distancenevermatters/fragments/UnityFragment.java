@@ -2,9 +2,11 @@ package apm.muei.distancenevermatters.fragments;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.widget.FrameLayout;
 import com.unity3d.player.UnityPlayer;
 
 import apm.muei.distancenevermatters.R;
+import apm.muei.distancenevermatters.activities.GameActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -35,6 +38,10 @@ public class UnityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_unity, container, false);
+
+        AppBarLayout appBar = getActivity().findViewById(R.id.gameAppBar);
+
+        appBar.setVisibility(View.GONE);
 
         FloatingActionButton quitFab = getActivity().findViewById(R.id.quitFab);
         FloatingActionButton diceFab = getActivity().findViewById(R.id.gameFabBtnDice);
