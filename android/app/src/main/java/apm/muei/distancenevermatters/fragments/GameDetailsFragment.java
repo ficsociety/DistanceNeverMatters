@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import apm.muei.distancenevermatters.R;
+import apm.muei.distancenevermatters.SharedPreference.PreferenceManager;
 import apm.muei.distancenevermatters.activities.MainActivity;
 import apm.muei.distancenevermatters.adapters.GameDetailsRecyclerAdapter;
 import apm.muei.distancenevermatters.dialogfragments.SaveGameDetailsFragment;
@@ -57,6 +58,11 @@ public class GameDetailsFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.game_details_menu, menu);
+        String userName = PreferenceManager.getInstance().getUserName();
+        if (!gameDetails.getMaster().getUid().equals(userName)) {
+            MenuItem item = menu.findItem(R.id.editGameDetails);
+            item.setVisible(false);
+        }
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -67,7 +73,6 @@ public class GameDetailsFragment extends Fragment {
             gameDetails.setDescription(description.getEditText().getText().toString());
             Bundle args = new Bundle();
             args.putString("game", gson.toJson(gameDetails));
-            //args.putString("gameName", gameName.getEditText().getText().toString());
             dialog.setArguments(args);
             dialog.show(getActivity().getSupportFragmentManager(), "saveGameDetails");
             description.getEditText().setEnabled(false);
@@ -113,7 +118,6 @@ public class GameDetailsFragment extends Fragment {
         gameName.getEditText().setText(gameDetails.getName());
         description.getEditText().setText(gameDetails.getDescription());
         gameCode.setText(String.valueOf(gameDetails.getCode()));
-
         //gameDate.setText(gameDetails.getDate().toString());
 
         Toolbar toolbar = getActivity().findViewById(R.id.mainToolbar);
@@ -127,8 +131,6 @@ public class GameDetailsFragment extends Fragment {
                 Toast.makeText(getActivity().getApplicationContext(),
                         "Mostrando lista de partidas", Toast.LENGTH_SHORT).show();
                 navigationView.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-                //((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-                //getActivity().onBackPressed();
                 ((MainActivity) getActivity()).onBack();
             }
         });
