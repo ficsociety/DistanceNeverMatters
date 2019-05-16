@@ -20,11 +20,15 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import apm.muei.distancenevermatters.R;
 import apm.muei.distancenevermatters.adapters.DiceGridViewAdapter;
+import apm.muei.distancenevermatters.adapters.DiceResultRecyclerAdapter;
 import apm.muei.distancenevermatters.entities.Dice;
 import apm.muei.distancenevermatters.entities.DiceContainer;
 import butterknife.BindView;
@@ -59,6 +63,9 @@ public class DiceFragment extends Fragment {
     @BindView(R.id.diceLayoutResult)
     ConstraintLayout resultLayout;
 
+    @BindView(R.id.resultRecyclerView)
+    RecyclerView resultRecyclerView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -68,7 +75,7 @@ public class DiceFragment extends Fragment {
         ButterKnife.bind(this, rootView);
 
         diceList = DiceContainer.getDiceList();
-        diceTextInput.setText("Ningún dado seleccionado");
+        diceTextInput.setText(R.string.ningundado);
         resultLayout.setVisibility(View.GONE);
         inputNumber.addTextChangedListener(new TextWatcher() {
             @Override
@@ -151,17 +158,26 @@ public class DiceFragment extends Fragment {
     @OnClick(R.id.diceBtnRandom)
     public void random() {
         Random rand = new Random();
+        List<Map<String, Integer>> resultList = new ArrayList<>();
         int finalValue = 0;
         for (int i = 0; i < diceValues.length; i++) {
             int count = diceValues[i];
+            Map<String, Integer> data = new HashMap<>();
             while (count != 0) {
                 int value = rand.nextInt(diceList.get(i).getValue()) + 1;
                 finalValue += value;
+                data.put(diceList.get(i).getName(), value);
+                resultList.add(data);
                 count--;
             }
         }
-        // TODO Mandar resutlado al server de sincronización
+
+        System.out.println(resultList.size());
+        // TODO Mandar resultado al server de sincronización
         resultLayout.setVisibility(View.VISIBLE);
+        final DiceResultRecyclerAdapter adapter = new DiceResultRecyclerAdapter(this, resultList, diceList);
+        resultRecyclerView.setAdapter(adapter);
+        resultRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         diceResult.setText(Integer.toString(finalValue));
     }
 
@@ -189,6 +205,6 @@ public class DiceFragment extends Fragment {
             }
         }
 
-        diceTextInput.setText(text == "" ? "Ningún dado seleccionado" : text);
+        if (text == "") diceTextInput.setText(R.string.ningundado); else diceTextInput.setText(text);
     }
 }

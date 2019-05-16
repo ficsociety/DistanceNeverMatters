@@ -130,8 +130,10 @@
                 android:orientation="vertical">
 
                 <android.support.v7.widget.RecyclerView
+                    android:id="@+id/resultRecyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    tools:listitem="@layout/dice_result_list_item" />
             </LinearLayout>
         </ScrollView>
 
