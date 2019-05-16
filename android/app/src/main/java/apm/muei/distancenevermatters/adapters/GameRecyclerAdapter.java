@@ -13,12 +13,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+
 import java.util.List;
 
 import apm.muei.distancenevermatters.R;
+import apm.muei.distancenevermatters.SharedPreference.PreferenceManager;
 import apm.muei.distancenevermatters.activities.GameActivity;
 import apm.muei.distancenevermatters.entities.GameState;
 import apm.muei.distancenevermatters.entities.dto.GameDetailsDto;
+import apm.muei.distancenevermatters.entities.dto.UpdateStateDto;
+import apm.muei.distancenevermatters.volley.VolleyCallback;
+import apm.muei.distancenevermatters.volley.WebService;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -51,9 +59,23 @@ public class GameRecyclerAdapter extends RecyclerView.Adapter<GameRecyclerAdapte
             CharSequence text = "Empezando partida";
             Toast toast = Toast.makeText(fragment.getActivity().getApplicationContext(), text, Toast.LENGTH_SHORT);
             toast.show();
+            //Change State
+            String userName = PreferenceManager.getInstance().getUserName();
+            int t = getLayoutPosition();
+            GameDetailsDto game = gameList.get(t);
+            if ((game.getMaster().getUid().equals(userName))) {
+                UpdateStateDto stateDto = new UpdateStateDto(GameState.PLAYING, game.getCode());
+                WebService.changeGameState(fragment.getActivity().getApplicationContext(), stateDto, new VolleyCallback() {
+                    @Override
+                    public void onSuccess(String result) {
+                    }
+                });
+            }
 
             // Launch GameActivity
             Intent intent = new Intent(fragment.getActivity(), GameActivity.class);
+            String jsonGame = new Gson().toJson(gameList.get(t), GameDetailsDto.class);
+            intent.putExtra("gameDetails", jsonGame);
             fragment.startActivity(intent);
         }
 
@@ -102,10 +124,10 @@ public class GameRecyclerAdapter extends RecyclerView.Adapter<GameRecyclerAdapte
         GameDetailsDto game = gameList.get(position);
 
         // TODO Settear los demás campos
-        if (game.getGameState() == GameState.PLAYING) {
+        if (game.getState() == GameState.PLAYING) {
             holder.status.setColorFilter(ContextCompat.getColor(fragment.getContext(), R.color.colorGamePlaying));
             holder.start.setText(R.string.joinGame);
-        } else if (game.getGameState() == GameState.PAUSED) {
+        } else if (game.getState() == GameState.PAUSED) {
             holder.status.setColorFilter(ContextCompat.getColor(fragment.getContext(), R.color.colorGamePaused));
             holder.start.setText(R.string.startGame);
         }

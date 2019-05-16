@@ -2,49 +2,40 @@ package apm.muei.distancenevermatters.entities.dto;
 
 import com.google.gson.annotations.Expose;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 import apm.muei.distancenevermatters.entities.GameState;
+import apm.muei.distancenevermatters.entities.Map;
+import apm.muei.distancenevermatters.entities.Player;
 import apm.muei.distancenevermatters.entities.User;
 
-public class GameDetailsDto {
+public class GameDetailsDto implements Serializable {
 
-    @Expose
     private String name;
-    @Expose
     private String description;
     //private Date date;
-    @Expose
-    private GameState gameState;
-    @Expose
+    private GameState state;
     private long code;
-    @Expose
     private User master;
-    @Expose
-    private List<User> players;
+    private Map map;
+    private List<Player> players;
 
     public GameDetailsDto() {
     }
 
-    public GameDetailsDto(String name, String description, User master, long code, GameState gameState,
-                          List<User> players) {
+    public GameDetailsDto(String name, String description, User master, long code, GameState state, Map map,
+                          List<Player> players) {
         super();
         this.name = name;
         this.description = description;
         this.master = master;
         //this.date = date;
-        this.gameState = gameState;
+        this.state = state;
+        this.map = map;
         this.code = code;
         this.players = players;
-    }
-
-    public GameDetailsDto(String name, String description, User master, GameState gameState) {
-        super();
-        this.name = name;
-        this.description = description;
-        this.master = master;
-        this.gameState = gameState;
     }
 
     public String getName() {
@@ -59,19 +50,45 @@ public class GameDetailsDto {
         return master;
     }
 
-    /*public Date getDate() {
-        return date;
-    }*/
+//    public Date getDate() {
+//        return date;
+//    }
 
-    public List<User> getPlayers() {
+    public List<Player> getPlayers() {
         return players;
     }
 
-    public GameState getGameState() {
-        return gameState;
+    public GameState getState() {
+        return state;
     }
 
     public long getCode() {
         return code;
+    }
+
+    public Map getMap() {
+        return map;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+
+    @Override
+    public String toString() {
+        return "GameDetailsDto{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", state=" + state +
+                ", code=" + code +
+                ", master=" + master +
+                ", map=" + map +
+                ", players=" + players +
+                '}';
     }
 }

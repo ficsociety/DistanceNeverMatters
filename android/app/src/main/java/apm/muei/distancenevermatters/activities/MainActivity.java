@@ -1,19 +1,33 @@
 package apm.muei.distancenevermatters.activities;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -23,6 +37,7 @@ import java.util.Date;
 import java.util.List;
 
 import apm.muei.distancenevermatters.GlobalVars.GlobalVars;
+import apm.muei.distancenevermatters.LocaleManager.LocaleHelper;
 import apm.muei.distancenevermatters.adapters.GameRecyclerAdapter;
 import apm.muei.distancenevermatters.entities.GameState;
 import apm.muei.distancenevermatters.entities.User;
@@ -37,7 +52,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity
-        implements GameRecyclerAdapter.OnGameDetailsListener {
+        implements GameRecyclerAdapter.OnGameDetailsListener, NavigationView.OnNavigationItemSelectedListener {
 
     private List<GameDetailsDto> gameDtoList = new ArrayList<>();
     private GameDetailsDto gameDetails;
@@ -56,17 +71,34 @@ public class MainActivity extends AppCompatActivity
 
     private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
 
+    private DrawerLayout mainLayout;
+    private LinearLayout contentLayout;
+    private GlobalVars gVars;
+
+    ActionBarDrawerToggle toggle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
+        setContentView(R.layout.navigation_view);
+        mainLayout = findViewById(R.id.drawer_layout);
+        contentLayout = (LinearLayout) View.inflate(this, R.layout.activity_main, null);
+        mainLayout.addView(contentLayout);
         ButterKnife.bind(this);
         gson = new GsonBuilder().create();
+        gVars = GlobalVars.getInstance();
 
 
         // Be sure to ALWAYS set up the support action bar, or else getSupportActionBar could return null
         setSupportActionBar(toolbar);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setupMenu();
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.bringToFront();
 
         if (fragmentContainer != null) {
             // If we are being restored, return or else we could end up
@@ -110,6 +142,15 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    private void setupMenu(){
+        toggle = new ActionBarDrawerToggle(
+                this, mainLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mainLayout.addDrawerListener(toggle);
+        toggle.setDrawerIndicatorEnabled(true);
+        toggle.syncState();
+
+    }
+
     @Override
     public void fetchGames(final SwipeRefreshLayout swipeRefresh) {
         WebService.getGames(getApplicationContext(), new VolleyCallback() {
@@ -138,9 +179,10 @@ public class MainActivity extends AppCompatActivity
         // Swap fragments
         this.gameDetails = gameDetails;
         GameDetailsFragment newFragment = new GameDetailsFragment();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.mainFrameLFragContainer, newFragment);
+        transaction.replace(R.id.mainFrameLFragContainer, newFragment, "GAME_DETAIL");
         transaction.addToBackStack(null);
         transaction.commit();
     }
@@ -158,6 +200,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent i = new Intent(this, GameStateService.class);
         startService(i);
     }
@@ -169,11 +212,88 @@ public class MainActivity extends AppCompatActivity
         stopService(i);
     }
 
-    /*
-    TODO Comportamiento back en main fragment vs details fragment
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.nav_sign_out:
+                CharSequence text = "Regresando a login";
+                Toast toast = Toast.makeText(this.getApplicationContext(), text, Toast.LENGTH_SHORT);
+                toast.show();
+                singOut();
+                return true;
+            case R.id.nav_find:
+                Intent intent = new Intent(this, FindGameActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.nav_help:
+                Toast.makeText(this.getApplicationContext(), R.string.help, Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.nav_profile:
+                showProfile();
+                return true;
+            case R.id.nav_languaje:
+                changeLanguage();
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private void singOut() {
+        // Firebase sign out
+        gVars.getmAuth().signOut();
+
+        // Google sign out
+        gVars.getSignInClient().signOut().addOnCompleteListener(this,
+                new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+    }
+
+    private void showProfile() {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        startActivity(intent);
+    }
+
+    private void changeLanguage(){
+        final String languages[] = new String[] {"es", "en"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.Seleccionar_idioma);
+        builder.setItems(languages, new DialogInterface.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                LocaleHelper.setLocale(MainActivity.this, languages[which]);
+                finish();
+                startActivity(getIntent());
+            }
+        });
+        builder.show();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.onAttach(base));
+    }
 
     @Override
     public void onBackPressed() {
+        final GameDetailsFragment fragment = (GameDetailsFragment) getSupportFragmentManager().findFragmentByTag("GAME_DETAIL");
+
+        if (fragment == null) {
+            super.onBackPressed();
+        }
     }
-    */
+
+    public void onBack() {
+        setupMenu();
+        super.onBackPressed();
+    }
+
 }

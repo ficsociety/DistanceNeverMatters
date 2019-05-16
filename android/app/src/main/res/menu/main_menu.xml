@@ -2,27 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/perfil"
-        android:icon="@drawable/ic_person_white_24dp"
-        android:orderInCategory="100"
-        android:title="@string/perfil"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/buscarPartida"
-        android:icon="@drawable/ic_person_white_24dp"
-        android:orderInCategory="100"
-        android:title="@string/buscarPartida"
-        app:showAsAction="never" />
-    <item
         android:id="@+id/help"
         android:icon="@drawable/ic_help_white_24dp"
         android:orderInCategory="100"
         android:title="@string/help"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/logout"
-        android:icon="@drawable/ic_exit_to_app_white_24dp"
-        android:orderInCategory="100"
-        android:title="@string/logout"
         app:showAsAction="never" />
 </menu>

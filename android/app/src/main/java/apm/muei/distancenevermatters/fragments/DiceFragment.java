@@ -31,6 +31,7 @@ import java.util.Map;
 import java.util.Random;
 
 import apm.muei.distancenevermatters.R;
+import apm.muei.distancenevermatters.activities.GameActivity;
 import apm.muei.distancenevermatters.adapters.DiceGridViewAdapter;
 import apm.muei.distancenevermatters.adapters.DiceResultRecyclerAdapter;
 import apm.muei.distancenevermatters.entities.Dice;
@@ -88,7 +89,7 @@ public class DiceFragment extends Fragment {
             @Override public void onClick(View v) {
                 Toast.makeText(getActivity().getApplicationContext(),
                         "Volviendo a Unity", Toast.LENGTH_SHORT).show();
-                getActivity().onBackPressed();
+                ((GameActivity) getActivity()).onBack();
             }
         });
 

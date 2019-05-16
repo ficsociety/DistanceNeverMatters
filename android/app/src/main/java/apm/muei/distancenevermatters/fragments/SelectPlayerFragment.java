@@ -35,9 +35,9 @@ import butterknife.OnClick;
 
 public class SelectPlayerFragment extends Fragment implements MarkersRecyclerViewAdapter.OnItemDownloadSelected, MarkerModelInterface {
     private Gson gson;
-    Marker marker;
-    Model model;
-    long code;
+    private Marker marker;
+    private Model model;
+    private long code;
 
     private MarkersRecyclerViewAdapter.OnItemDownloadSelected dSelected;
 
@@ -111,6 +111,7 @@ public class SelectPlayerFragment extends Fragment implements MarkersRecyclerVie
     public void addMarkerModel(){
         if ((this.model != null) && (this.marker != null)){
             JoinGameDto joinGameDto = new JoinGameDto(this.marker.getId(), this.model.getId(), this.code);
+            System.out.println("jpgp" + joinGameDto.toString());
             WebService.joinGame(getActivity().getApplicationContext(), joinGameDto, new VolleyCallback() {
                 @Override
                 public void onSuccess(String result) {
