@@ -1,8 +1,9 @@
 package apm.muei.distancenevermatters.entities;
 
+import java.io.Serializable;
 import java.net.URL;
 
-public class Model {
+public class Model implements Serializable {
 
     private long id;
     private String name;

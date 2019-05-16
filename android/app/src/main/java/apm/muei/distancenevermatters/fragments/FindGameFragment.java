@@ -19,9 +19,8 @@ import java.util.List;
 
 import apm.muei.distancenevermatters.GlobalVars.GlobalVars;
 import apm.muei.distancenevermatters.R;
-import apm.muei.distancenevermatters.entities.User;
+import apm.muei.distancenevermatters.entities.Player;
 import apm.muei.distancenevermatters.entities.dto.GameDetailsDto;
-import apm.muei.distancenevermatters.entities.dto.PlayerDto;
 import apm.muei.distancenevermatters.volley.VolleyCallback;
 import apm.muei.distancenevermatters.volley.WebService;
 import butterknife.ButterKnife;
@@ -82,10 +81,10 @@ public class FindGameFragment extends Fragment {
         }
     }
 
-    private boolean userExistInGame(List<PlayerDto> players){
+    private boolean userExistInGame(List<Player> players){
 
         String username = GlobalVars.getInstance().getUsername();
-        for (PlayerDto player : players){
+        for (Player player : players){
             if (player.getUser().getUid().equals(username)) {
                 return true;
             }

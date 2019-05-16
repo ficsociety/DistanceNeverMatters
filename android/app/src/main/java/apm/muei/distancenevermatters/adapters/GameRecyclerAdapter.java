@@ -74,7 +74,7 @@ public class GameRecyclerAdapter extends RecyclerView.Adapter<GameRecyclerAdapte
 
             // Launch GameActivity
             Intent intent = new Intent(fragment.getActivity(), GameActivity.class);
-            String jsonGame = new Gson().toJson(gameList.get(t));
+            String jsonGame = new Gson().toJson(gameList.get(t), GameDetailsDto.class);
             intent.putExtra("gameDetails", jsonGame);
             fragment.startActivity(intent);
         }
