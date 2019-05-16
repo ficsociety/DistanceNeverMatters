@@ -138,7 +138,7 @@ public class GameDetailsFragment extends Fragment {
         navigationView.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
         // TODO Populate RecyclerView with real data
-        adapter = new GameDetailsRecyclerAdapter(this, gameDetails.getMaster(), gameDetails.getPlayers());
+        adapter = new GameDetailsRecyclerAdapter(this, gameDetails);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
