@@ -26,10 +26,9 @@ import apm.muei.distancenevermatters.Server.Movement;
 import apm.muei.distancenevermatters.Server.ServerActions;
 import apm.muei.distancenevermatters.Server.SocketUtils;
 import apm.muei.distancenevermatters.SharedPreference.PreferenceManager;
+import apm.muei.distancenevermatters.entities.Player;
 import apm.muei.distancenevermatters.entities.dto.GameDetailsDto;
-import apm.muei.distancenevermatters.entities.dto.PlayerDto;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import io.socket.emitter.Emitter;
 
 public class UnityFragment extends Fragment {
@@ -195,7 +194,7 @@ public class UnityFragment extends Fragment {
         JsonArray tracked = new JsonArray();
         JsonArray external = new JsonArray();
         // Clasify pairs of marker-models in tracked and external
-        for (PlayerDto player : gameDetails.getPlayers()) {
+        for (Player player : gameDetails.getPlayers()) {
             if (player.getUser().getUid().equals(user)) {
                 // Tracked model
                 JsonObject trackedTarget = new JsonObject();
