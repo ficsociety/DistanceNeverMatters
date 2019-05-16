@@ -37,7 +37,9 @@ public class UnityFragment extends Fragment {
     private OnUnityFragmentInteractionListener mListener;
     private SocketUtils socketUtils;
     private GameDetailsDto gameDetails;
-    private String user = "user";
+    private String user;
+    private long code;
+    private JsonParser parser = new JsonParser();
     protected UnityPlayer mUnityPlayer;
     public static UnityFragment instance; // Para poder acceder desde Unity
 
@@ -65,14 +67,14 @@ public class UnityFragment extends Fragment {
         mUnityPlayer.requestFocus();
 
         // Usuario y código de partida
-        // TODO user = PreferenceManager.getInstance().getUserName();
-        long code = gameDetails.getCode();
+        user = PreferenceManager.getInstance().getUserName();
+        code = gameDetails.getCode();
 
         // Se crea el socket e inicializamos el listener para recibir los movimientos
         socketUtils = SocketUtils.getInstance();
         socketUtils.connect();
         socketUtils.getSocket().on(ServerActions.RECEIVEMOVEMENT, onNewMovement);
-        socketUtils.join(user, 7777); // TODO cambiar código
+        socketUtils.join(user, code);
 
         return rootView;
     }
@@ -159,18 +161,19 @@ public class UnityFragment extends Fragment {
     public void getGameInfo() {
         String gameobjectName = "MapTarget";
         String method = "SetGameInfo";
+        Log.d("UnitySockets", "getGameInfo");
         // Example JSON for user
-        String arg =
-                "{" +
-                    "\"map\": \"map\"," +
-                    "\"user\": \"user\"," +
-                    "\"tracked\": [" +
-                        "{ \"target\": \"Umbreon\", \"model\": \"RPGHeroHP\" }" +
-                    "]," +
-                    "\"external\": [" +
-                        "{ \"model\": \"PurpleDragon\", \"user\": \"user2\", \"target\": \"Chandelure\" }" +
-                    "]" +
-                "}";
+//        String arg =
+//                "{" +
+//                    "\"map\": \"map\"," +
+//                    "\"user\": \"user\"," +
+//                    "\"tracked\": [" +
+//                        "{ \"target\": \"Umbreon\", \"model\": \"RPGHeroHP\" }" +
+//                    "]," +
+//                    "\"external\": [" +
+//                        "{ \"model\": \"PurpleDragon\", \"user\": \"user2\", \"target\": \"Chandelure\" }" +
+//                    "]" +
+//                "}";
 
         // Example JSON for user2
 //        String arg =
@@ -186,14 +189,14 @@ public class UnityFragment extends Fragment {
 //                        "}";
         // Create game info JSON for Unity
         JsonObject json = new JsonObject();
-        json.addProperty("map", "map"); // TODO replace with actual map
+        json.addProperty("map", gameDetails.getMap().getName());
         json.addProperty("user", user);
 
         JsonArray tracked = new JsonArray();
         JsonArray external = new JsonArray();
         // Clasify pairs of marker-models in tracked and external
         for (PlayerDto player : gameDetails.getPlayers()) {
-            if (player.getUser().getUid().equals(user)) { // TODO comprobar que esto está bien
+            if (player.getUser().getUid().equals(user)) {
                 // Tracked model
                 JsonObject trackedTarget = new JsonObject();
                 trackedTarget.addProperty("target", player.getMarker().getName());
@@ -212,7 +215,7 @@ public class UnityFragment extends Fragment {
         json.add("tracked", tracked);
         json.add("external", external);
 
-        // String arg = json.toString();
+        String arg = json.toString();
 
         Log.d("UnitySockets", "GameInfo: " + arg);
 
@@ -231,6 +234,7 @@ public class UnityFragment extends Fragment {
             // Crear y enviar cada movimiento
             JsonObject updateInfo = element.getAsJsonObject();
             String target = updateInfo.get("target").getAsString();
+            Movement movement;
 
             if (!(updateInfo.get("distance") instanceof JsonNull)) {
                 JsonObject dist = updateInfo.get("distance").getAsJsonObject();
@@ -246,16 +250,17 @@ public class UnityFragment extends Fragment {
                 rotation.put("z", rot.get("z").getAsFloat());
                 rotation.put("w", rot.get("w").getAsFloat());
 
-                // TODO inicializar correctamente
-                Movement movement = new Movement(user, target, distance, rotation);
+                // Inicializar con todos los datos
+                movement = new Movement(user, target, distance, rotation);
                 Log.d("UnitySockets", "Movement: " + movement.toString());
-                socketUtils.sendMovement(movement, 7777); // TODO replace mock code
 
             } else {
-                // TODO inicializar sin rotación
-                Movement movement = new Movement(user, target, null, null);
-                socketUtils.sendMovement(movement, 7777); // TODO replace mock code
+                // Inicializar sin rotación
+                movement = new Movement(user, target, null, null);
             }
+
+            // Enviar movimiento
+            socketUtils.sendMovement(movement, code);
         }
     }
 
@@ -267,7 +272,6 @@ public class UnityFragment extends Fragment {
                 public void run() {
 
                     // No transmitir nuestros propios movimientos
-                    JsonParser parser = new JsonParser(); // TODO pasar a atributo
                     JsonObject updateInfo = parser.parse(args[0].toString()).getAsJsonObject();
                     if (!updateInfo.get("user").getAsString().equals(user)) {
                         Log.d("UnitySockets", "Updating with: " + args[0].toString());
