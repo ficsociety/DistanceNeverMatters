@@ -46,8 +46,8 @@ dependencies {
     //Cargar las imagenes, tiene caché
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     // Unity + Vuforia
-    implementation project(":MapSync-debug")
-    implementation project(":VuforiaWrapper")
+    implementation project(':MapSync-debug')
+    implementation project(':VuforiaWrapper')
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     //Comunicación servidor tiempo real

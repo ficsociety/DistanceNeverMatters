@@ -29,8 +29,8 @@ public class GameActivity extends AppCompatActivity
         implements UnityFragment.OnUnityFragmentInteractionListener {
 
     private UnityPlayer unityPlayer;
-    private boolean unityScreen = true;
-    private SocketUtils socketUtils;
+    private String gameDetails;
+    //private SocketUtils socketUtils;
 
 
     @BindView(R.id.gameFragmentContainer)
@@ -43,11 +43,10 @@ public class GameActivity extends AppCompatActivity
 
         Intent intent = getIntent();
 
-        //TODO te dejo tanto el String como el objeto ;)
-        String gameDetails = intent.getStringExtra("gameDetails");
-        GameDetailsDto gameDetailsDto = new Gson().fromJson(gameDetails, GameDetailsDto.class);
+        gameDetails = intent.getStringExtra("gameDetails");
+        //GameDetailsDto gameDetailsDto = new Gson().fromJson(gameDetails, GameDetailsDto.class);
+
         // Create the UnityPlayer
-        Log.d("Weird", "Creating UnityPlayer");
         unityPlayer = new UnityPlayer(this);
         int glesMode = unityPlayer.getSettings().getInt("gles_mode", 1);
         boolean trueColor888 = false;
@@ -79,9 +78,9 @@ public class GameActivity extends AppCompatActivity
         });
 
         //se crea el socket e inicializamos el listener para recibir los movimientos
-        socketUtils = SocketUtils.getInstance();
-        socketUtils.connect();
-        socketUtils.getSocket().on(ServerActions.RECEIVEMOVEMENT, onNewMovement);
+//        socketUtils = SocketUtils.getInstance();
+//        socketUtils.connect();
+//        socketUtils.getSocket().on(ServerActions.RECEIVEMOVEMENT, onNewMovement);
         //TODO pasarle el usuario y el código de partida
         //socketUtils.join(user, código partida);
 
@@ -99,17 +98,17 @@ public class GameActivity extends AppCompatActivity
     }
 
 
-    private Emitter.Listener onNewMovement = new Emitter.Listener() {
-        @Override
-        public void call(final Object... args) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    //TODO Aqui recibes args[0], que viene siendo el movimiento como string (json)
-                }
-            });
-        }
-    };
+//    private Emitter.Listener onNewMovement = new Emitter.Listener() {
+//        @Override
+//        public void call(final Object... args) {
+//            runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    //TODO Aqui recibes args[0], que viene siendo el movimiento como string (json)
+//                }
+//            });
+//        }
+//    };
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -125,9 +124,14 @@ public class GameActivity extends AppCompatActivity
     }
 
     @Override
+    public String getGameDetails() {
+        return gameDetails;
+    }
+
+    @Override
     public void onDestroy(){
         super.onDestroy();
-        this.socketUtils.disconnect();
+        //this.socketUtils.disconnect();
     }
 
     @Override

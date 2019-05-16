@@ -1,1 +1,1 @@
-include ':app', ':MapSync-debug', ':VuforiaWrapper'
+include ':app', ':VuforiaWrapper', ':MapSync-debug'
