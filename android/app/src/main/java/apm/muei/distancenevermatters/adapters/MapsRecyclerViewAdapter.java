@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -60,7 +61,7 @@ public class MapsRecyclerViewAdapter extends RecyclerView.Adapter<MapsRecyclerVi
     public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView image;
         TextView name;
-        CheckBox checkBox;
+        RadioButton checkBox;
 
         public ViewHolder(View itemView){
             super(itemView);

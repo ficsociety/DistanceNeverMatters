@@ -10,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -142,7 +142,7 @@ public class MarkersRecyclerViewAdapter extends RecyclerView.Adapter<MarkersRecy
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView image;
         TextView name;
-        CheckBox checkBox;
+        RadioButton checkBox;
         Button button;
 
         public ViewHolder(View itemView) {
