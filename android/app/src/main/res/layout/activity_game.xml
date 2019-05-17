@@ -46,7 +46,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        android:tint="@color/colorWhite"
+        app:srcCompat="@drawable/ic_baseline_casino_24px" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/quitFab"
@@ -55,8 +56,9 @@
         android:layout_gravity="bottom|start"
         android:layout_margin="@dimen/fab_margin"
         android:clickable="true"
+        android:tint="@color/colorWhite"
         app:layout_anchor="@+id/gameFragmentContainer"
         app:layout_anchorGravity="left|bottom"
-        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+        app:srcCompat="@drawable/ic_baseline_close_24px" />
 
 </android.support.design.widget.CoordinatorLayout>
