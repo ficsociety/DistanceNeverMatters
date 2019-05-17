@@ -27,9 +27,10 @@ public class MapsRecyclerViewAdapter extends RecyclerView.Adapter<MapsRecyclerVi
     private int lastClicked = -1;
 
 
-    public MapsRecyclerViewAdapter(Context mContext, CreateGameFragment fragment) {
+    public MapsRecyclerViewAdapter(Context mContext, CreateGameFragment fragment, int lastClicked) {
         this.mContext = mContext;
         this.fragment = fragment;
+        this.lastClicked = lastClicked;
     }
 
     public void setMaps(List<Map> maps) {

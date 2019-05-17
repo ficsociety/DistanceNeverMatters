@@ -60,7 +60,7 @@ public class CreateGameFragment extends Fragment {
 
         drawMarkerModels(rootView);
 
-        final MapsRecyclerViewAdapter adapter = new MapsRecyclerViewAdapter(getActivity().getApplicationContext(), this);
+        final MapsRecyclerViewAdapter adapter = new MapsRecyclerViewAdapter(getActivity().getApplicationContext(), this, getSelectedMap());
 
         WebService.getMaps(getActivity().getApplicationContext(), new VolleyCallback() {
             Gson gson = new GsonBuilder().create();

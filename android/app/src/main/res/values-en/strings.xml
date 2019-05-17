@@ -62,4 +62,6 @@
     <string name="game_description_placeholder">Description game</string>
     <string name="markers_models">Markers - Models</string>
     <string name="register">Sign Up</string>
+    <string name="code">Code</string>
+    <string name="configuracion">Configuration</string>
 </resources>
