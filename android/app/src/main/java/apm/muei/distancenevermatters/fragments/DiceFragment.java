@@ -298,4 +298,10 @@ public class DiceFragment extends Fragment {
             });
         }
     };
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        this.socketUtils.disconnect();
+    }
 }

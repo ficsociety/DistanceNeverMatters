@@ -12,13 +12,24 @@ import android.view.Window;
 import android.widget.FrameLayout;
 import android.support.v7.widget.Toolbar;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.unity3d.player.UnityPlayer;
 
 import apm.muei.distancenevermatters.R;
 import apm.muei.distancenevermatters.Server.DiceResult;
+import apm.muei.distancenevermatters.Server.Movement;
+import apm.muei.distancenevermatters.Server.ServerActions;
+import apm.muei.distancenevermatters.Server.SocketUtils;
+import apm.muei.distancenevermatters.SharedPreference.PreferenceManager;
+import apm.muei.distancenevermatters.entities.GameState;
+import apm.muei.distancenevermatters.entities.dto.GameDetailsDto;
+import apm.muei.distancenevermatters.entities.dto.UpdateStateDto;
 import apm.muei.distancenevermatters.fragments.DiceFragment;
 import apm.muei.distancenevermatters.fragments.DiceHistoricFragment;
 import apm.muei.distancenevermatters.fragments.UnityFragment;
+import apm.muei.distancenevermatters.volley.VolleyCallback;
+import apm.muei.distancenevermatters.volley.WebService;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -32,7 +43,9 @@ public class GameActivity extends AppCompatActivity
 
     private UnityPlayer unityPlayer;
     private String gameDetails;
+    private GameDetailsDto gameDetailsDto;
     //private SocketUtils socketUtils;
+    private Gson gson = new GsonBuilder().create();
 
     private Queue<DiceResult> fifo = EvictingQueue.create(20);
 
@@ -61,7 +74,7 @@ public class GameActivity extends AppCompatActivity
         Intent intent = getIntent();
 
         gameDetails = intent.getStringExtra("gameDetails");
-        //GameDetailsDto gameDetailsDto = new Gson().fromJson(gameDetails, GameDetailsDto.class);
+        gameDetailsDto = gson.fromJson(gameDetails, GameDetailsDto.class);
 
         // Create the UnityPlayer
         unityPlayer = new UnityPlayer(this);
@@ -83,6 +96,7 @@ public class GameActivity extends AppCompatActivity
 //                startActivity(intent);
 //                finish();
                 onBack();
+
             }
         });
 
@@ -169,6 +183,15 @@ public class GameActivity extends AppCompatActivity
     }
 
     public void onBack() {
+        String userName = PreferenceManager.getInstance().getUserName();
+        if ((gameDetailsDto.getMaster().getUid().equals(userName))) {
+            UpdateStateDto stateDto = new UpdateStateDto(GameState.PAUSED, gameDetailsDto.getCode());
+            WebService.changeGameState(getApplicationContext(), stateDto, new VolleyCallback() {
+                @Override
+                public void onSuccess(String result) {
+                }
+            });
+        }
         super.onBackPressed();
     }
 
