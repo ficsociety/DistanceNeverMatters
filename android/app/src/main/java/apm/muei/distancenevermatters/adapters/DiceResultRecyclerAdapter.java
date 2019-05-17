@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.List;
-import java.util.Map;
 
 import apm.muei.distancenevermatters.R;
 import apm.muei.distancenevermatters.entities.Dice;
@@ -58,19 +57,6 @@ public class DiceResultRecyclerAdapter extends RecyclerView.Adapter<DiceResultRe
     public void onBindViewHolder(DiceResultRecyclerAdapter.DiceResultViewHolder holder, int position) {
         holder.diceLabel.setText(resultList.get(position).getName());
         holder.diceValue.setText(Integer.toString(resultList.get(position).getValue()));
-
-        /*
-        for (List<Integer> item : resultList) {
-            if (item.size() > 0) {
-                for (Integer subItem : item) {
-                    System.out.println(subItem);
-                    holder.diceLabel.setText(diceList.get(i).getName());
-                    holder.diceValue.setText(Integer.toString(subItem));
-                }
-
-            }
-            i++;
-        }*/
     }
 
     @Override

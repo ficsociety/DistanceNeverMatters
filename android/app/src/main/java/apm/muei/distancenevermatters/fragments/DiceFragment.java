@@ -1,12 +1,11 @@
 package apm.muei.distancenevermatters.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -15,31 +14,39 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Queue;
 import java.util.Random;
 
 import apm.muei.distancenevermatters.R;
+import apm.muei.distancenevermatters.Server.DiceResult;
+import apm.muei.distancenevermatters.Server.ServerActions;
+import apm.muei.distancenevermatters.Server.SocketUtils;
+import apm.muei.distancenevermatters.SharedPreference.PreferenceManager;
 import apm.muei.distancenevermatters.activities.GameActivity;
 import apm.muei.distancenevermatters.adapters.DiceGridViewAdapter;
 import apm.muei.distancenevermatters.adapters.DiceResultRecyclerAdapter;
 import apm.muei.distancenevermatters.entities.Dice;
 import apm.muei.distancenevermatters.entities.DiceContainer;
 import apm.muei.distancenevermatters.entities.dto.DiceResultDto;
+import apm.muei.distancenevermatters.entities.dto.GameDetailsDto;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import io.socket.emitter.Emitter;
 
 public class DiceFragment extends Fragment {
 
@@ -47,6 +54,15 @@ public class DiceFragment extends Fragment {
     private int itemSelected = -1;
     private int[] diceValues = new int[6];
     private List<Dice> diceList;
+
+    private String user;
+    private long code;
+    private GameDetailsDto gameDetails;
+    private UnityFragment.OnUnityFragmentInteractionListener mListener;
+    private SocketUtils socketUtils;
+    private JsonParser parser = new JsonParser();
+
+    private Gson gson = new GsonBuilder().create();
 
     @BindView(R.id.diceGridView)
     GridView gridView;
@@ -59,6 +75,9 @@ public class DiceFragment extends Fragment {
 
     @BindView(R.id.diceBtnLess)
     Button btnLess;
+
+    @BindView(R.id.diceBtnRandom)
+    Button btnRand;
 
     @BindView(R.id.diceTextInput)
     TextView diceTextInput;
@@ -84,7 +103,8 @@ public class DiceFragment extends Fragment {
         AppBarLayout appBar = getActivity().findViewById(R.id.gameAppBar);
         appBar.setVisibility(View.VISIBLE);
 
-        toolbar.setTitle("Tirada de dados");
+        btnRand.setEnabled(false);
+        toolbar.setTitle(R.string.tirardados);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 Toast.makeText(getActivity().getApplicationContext(),
@@ -121,7 +141,31 @@ public class DiceFragment extends Fragment {
         quitFab.hide();
         final DiceGridViewAdapter adapter = new DiceGridViewAdapter(getActivity().getApplicationContext(), this, diceList);
         gridView.setAdapter(adapter);
+
+        // Usuario y código de partida
+        user = PreferenceManager.getInstance().getUserName();
+        code = gameDetails.getCode();
+
+        // Se crea el socket e inicializamos el listener para recibir los movimientos
+        socketUtils = SocketUtils.getInstance();
+        socketUtils.connect();
+        socketUtils.getSocket().on(ServerActions.RECEIVEDICE, onDiceResult);
+        socketUtils.join(user, code);
         return rootView;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof UnityFragment.OnUnityFragmentInteractionListener) {
+            UnityFragment.OnUnityFragmentInteractionListener listener =
+                    (UnityFragment.OnUnityFragmentInteractionListener) context;
+            mListener = listener;
+            gameDetails = new Gson().fromJson(listener.getGameDetails(), GameDetailsDto.class);
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnUnityFragmentInteractionListener");
+        }
     }
 
     public int getItemSelected() {
@@ -196,6 +240,8 @@ public class DiceFragment extends Fragment {
         resultRecyclerView.setAdapter(adapter);
         resultRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         diceResult.setText(Integer.toString(finalValue));
+        DiceResult diceResult = new DiceResult(user, resultList);
+        socketUtils.sendDice(diceResult, code);
     }
 
 
@@ -207,6 +253,11 @@ public class DiceFragment extends Fragment {
         final DiceGridViewAdapter adapter = new DiceGridViewAdapter(getActivity().getApplicationContext(), this, diceList);
         gridView.setAdapter(adapter);
         resultLayout.setVisibility(View.GONE);
+    }
+
+    @OnClick(R.id.diceBtnHist)
+    public void toHistoric() {
+        ((GameActivity) getActivity()).goToDiceHistoric();
     }
 
     private void updateSelectedDices() {
@@ -222,6 +273,29 @@ public class DiceFragment extends Fragment {
             }
         }
 
-        if (text == "") diceTextInput.setText(R.string.ningundado); else diceTextInput.setText(text);
+        if (text == "") {
+            diceTextInput.setText(R.string.ningundado);
+            btnRand.setEnabled(false);
+        } else {
+            diceTextInput.setText(text);
+            btnRand.setEnabled(true);
+        }
     }
+
+
+    private Emitter.Listener onDiceResult = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    DiceResult diceResult = gson.fromJson(args[0].toString(), DiceResult.class);
+                    ((GameActivity) getActivity()).getFifo().add(diceResult);
+
+                    Queue<DiceResult> fifo = ((GameActivity) getActivity()).getFifo();
+                    System.out.println(fifo.size());
+                }
+            });
+        }
+    };
 }

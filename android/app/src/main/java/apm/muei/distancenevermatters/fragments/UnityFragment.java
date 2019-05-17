@@ -82,7 +82,7 @@ public class UnityFragment extends Fragment {
         // Se crea el socket e inicializamos el listener para recibir los movimientos
         socketUtils = SocketUtils.getInstance();
         socketUtils.connect();
-        socketUtils.getSocket().on(ServerActions.RECEIVEMOVEMENT, onNewMovement);
+        //socketUtils.getSocket().on(ServerActions.RECEIVEMOVEMENT, onNewMovement);
         socketUtils.join(user, code);
 
         return rootView;

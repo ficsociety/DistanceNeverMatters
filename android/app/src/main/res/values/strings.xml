@@ -62,6 +62,8 @@
     <string name="clear">Borrar</string>
     <string name="generardados">Calcular</string>
     <string name="historico">Histórico</string>
+    <string name="historicotiradas">Histórico de tiradas</string>
+    <string name="tirardados">Tirar dados</string>
 
 
     <string name="eulaTitle">Acuerdo de licencia</string>

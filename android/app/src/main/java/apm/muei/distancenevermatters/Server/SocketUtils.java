@@ -3,7 +3,9 @@ package apm.muei.distancenevermatters.Server;
 import com.google.gson.Gson;
 
 import java.net.URISyntaxException;
+import java.util.List;
 
+import apm.muei.distancenevermatters.entities.dto.DiceResultDto;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 
@@ -50,6 +52,11 @@ public class SocketUtils {
     public void sendMovement(Movement movement, long code){
         String jsonMovement = new Gson().toJson(movement);
         socket.emit(ServerActions.SENDMOVEMENT, jsonMovement, code);
+    }
+
+    public void sendDice(DiceResult diceResult, long code){
+        String jsonDiceResult = new Gson().toJson(diceResult);
+        socket.emit(ServerActions.SEENDICE, jsonDiceResult, code);
     }
 
     public Socket getSocket(){

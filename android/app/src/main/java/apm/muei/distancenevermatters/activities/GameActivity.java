@@ -12,20 +12,20 @@ import android.view.Window;
 import android.widget.FrameLayout;
 import android.support.v7.widget.Toolbar;
 
-import com.google.gson.Gson;
 import com.unity3d.player.UnityPlayer;
 
 import apm.muei.distancenevermatters.R;
-import apm.muei.distancenevermatters.Server.Movement;
-import apm.muei.distancenevermatters.Server.ServerActions;
-import apm.muei.distancenevermatters.Server.SocketUtils;
-import apm.muei.distancenevermatters.entities.dto.GameDetailsDto;
+import apm.muei.distancenevermatters.Server.DiceResult;
 import apm.muei.distancenevermatters.fragments.DiceFragment;
+import apm.muei.distancenevermatters.fragments.DiceHistoricFragment;
 import apm.muei.distancenevermatters.fragments.UnityFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.socket.emitter.Emitter;
+
+import com.google.common.collect.EvictingQueue;
+
+import java.util.Queue;
 
 public class GameActivity extends AppCompatActivity
         implements UnityFragment.OnUnityFragmentInteractionListener {
@@ -33,6 +33,8 @@ public class GameActivity extends AppCompatActivity
     private UnityPlayer unityPlayer;
     private String gameDetails;
     //private SocketUtils socketUtils;
+
+    private Queue<DiceResult> fifo = EvictingQueue.create(20);
 
 
     @BindView(R.id.gameFragmentContainer)
@@ -135,6 +137,15 @@ public class GameActivity extends AppCompatActivity
         transaction.commit();
     }
 
+    public void goToDiceHistoric() {
+        DiceHistoricFragment newFragment = new DiceHistoricFragment();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.gameFragmentContainer, newFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
 
     @Override
     public UnityPlayer getUnityPlayer() {
@@ -159,5 +170,9 @@ public class GameActivity extends AppCompatActivity
 
     public void onBack() {
         super.onBackPressed();
+    }
+
+    public Queue<DiceResult> getFifo() {
+        return fifo;
     }
 }
