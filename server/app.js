@@ -9,35 +9,29 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-
-    console.log('user connected')
-
     
-    socket.on('join',  (user, code) => {
-        console.log(user + ' : has joined the game')
-
+    socket.on('join',  (code) => {
         socket.join(code)
     })
     
-    socket.on('leave', (user, code) => {
-
-        console.log(user + ' : has left')
-
+    socket.on('leave', (code) => {
         socket.leave(code)
     })
 
-
     socket.on('sendmovement', (movement, code) => {
-
-        console.log('send movement')
-
         io.to(code).emit('receivemovement', movement)
+    })
+
+    socket.on('senddice', (dice, code) => {
+        io.to(code).emit('receivedice', dice)
+    })
+
+    socket.on('sendmasterleave', (leave, code) => {
+        io.to(code).emit('receivemasterleave', leave)
     })
 
 })
 
 server.listen(8080, () => {
-
     console.log('Node app is running on port 8080')
-
 })
