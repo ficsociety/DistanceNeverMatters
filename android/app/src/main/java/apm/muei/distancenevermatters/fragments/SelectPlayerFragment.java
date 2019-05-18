@@ -71,7 +71,7 @@ public class SelectPlayerFragment extends Fragment implements MarkersRecyclerVie
             @Override
             public void onSuccess(String result) {
                 List<Model> models = Arrays.asList(gson.fromJson(result, Model[].class));
-                adapter.setModels(filterModels(gameDetailsDto.getPlayers(), models));
+                adapter.setModels(models);
                 RecyclerView recyclerView = getActivity().findViewById(R.id.markModModelsRecyclerView);
                 LinearLayoutManager layoutManagerModels = new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
                 recyclerView.setLayoutManager(layoutManagerModels);
@@ -106,7 +106,7 @@ public class SelectPlayerFragment extends Fragment implements MarkersRecyclerVie
         for (Marker marker : markers) {
             boolean add = true;
             for (Player player : players) {
-                if (marker.equals(player.getMarker()) || marker.getName().equals("Map")) {
+                if (marker.getName().equals("Map")) {
                     add = false;
                 }
             }
@@ -117,23 +117,6 @@ public class SelectPlayerFragment extends Fragment implements MarkersRecyclerVie
         return result;
     }
 
-    private List<Model> filterModels(List<Player> players, List<Model> models){
-        List<Model> result = new ArrayList<>();
-
-        for (Model model : models){
-            boolean add = true;
-            for (Player player : players){
-                if (model.equals(player.getModel())){
-                    add = false;
-                }
-            }
-            if (add){
-                result.add(model);
-            }
-        }
-
-        return result;
-    }
 
 
     public void setMarker(Marker marker) {
