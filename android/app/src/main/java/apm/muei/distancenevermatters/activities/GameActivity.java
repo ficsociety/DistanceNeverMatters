@@ -30,7 +30,6 @@ public class GameActivity extends AppCompatActivity
 
     private UnityPlayer unityPlayer;
     private String gameDetails;
-    //private SocketUtils socketUtils;
 
 
     @BindView(R.id.gameFragmentContainer)
@@ -44,7 +43,6 @@ public class GameActivity extends AppCompatActivity
         Intent intent = getIntent();
 
         gameDetails = intent.getStringExtra("gameDetails");
-        //GameDetailsDto gameDetailsDto = new Gson().fromJson(gameDetails, GameDetailsDto.class);
 
         // Create the UnityPlayer
         unityPlayer = new UnityPlayer(this);
@@ -70,19 +68,11 @@ public class GameActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
 //                Intent intent = new Intent(GameActivity.this, MainActivity.class);
-//                //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //                startActivity(intent);
 //                finish();
                 onBack();
             }
         });
-
-        //se crea el socket e inicializamos el listener para recibir los movimientos
-//        socketUtils = SocketUtils.getInstance();
-//        socketUtils.connect();
-//        socketUtils.getSocket().on(ServerActions.RECEIVEMOVEMENT, onNewMovement);
-        //TODO pasarle el usuario y el código de partida
-        //socketUtils.join(user, código partida);
 
         if (frameLayout != null) {
 
@@ -96,19 +86,6 @@ public class GameActivity extends AppCompatActivity
             transaction.commit();
         }
     }
-
-
-//    private Emitter.Listener onNewMovement = new Emitter.Listener() {
-//        @Override
-//        public void call(final Object... args) {
-//            runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    //TODO Aqui recibes args[0], que viene siendo el movimiento como string (json)
-//                }
-//            });
-//        }
-//    };
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -131,7 +108,6 @@ public class GameActivity extends AppCompatActivity
     @Override
     public void onDestroy(){
         super.onDestroy();
-        //this.socketUtils.disconnect();
     }
 
     @Override
