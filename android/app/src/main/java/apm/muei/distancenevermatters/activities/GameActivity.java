@@ -91,7 +91,6 @@ public class GameActivity extends AppCompatActivity
         socketUtils.join(code);
         socketUtils.getSocket().on(ServerActions.RECEIVEDICE, onDiceResult);
 
-
         // Create the UnityPlayer
         unityPlayer = new UnityPlayer(this);
         int glesMode = unityPlayer.getSettings().getInt("gles_mode", 1);
@@ -107,21 +106,10 @@ public class GameActivity extends AppCompatActivity
         quitFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(GameActivity.this, MainActivity.class);
-//                //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                startActivity(intent);
-//                finish();
                 onBack();
 
             }
         });
-
-        //se crea el socket e inicializamos el listener para recibir los movimientos
-//        socketUtils = SocketUtils.getInstance();
-//        socketUtils.connect();
-//        socketUtils.getSocket().on(ServerActions.RECEIVEMOVEMENT, onNewMovement);
-        //TODO pasarle el usuario y el código de partida
-        //socketUtils.join(user, código partida);
 
         if (frameLayout != null) {
 
@@ -135,7 +123,6 @@ public class GameActivity extends AppCompatActivity
             transaction.commit();
         }
     }
-
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
