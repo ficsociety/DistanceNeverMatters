@@ -17,6 +17,7 @@ import java.util.Map;
 
 import apm.muei.distancenevermatters.GlobalVars.GlobalVars;
 import apm.muei.distancenevermatters.entities.dto.CreateGameDto;
+import apm.muei.distancenevermatters.entities.dto.GameDetailsDto;
 import apm.muei.distancenevermatters.entities.dto.JoinGameDto;
 import apm.muei.distancenevermatters.entities.dto.UpdateStateDto;
 
@@ -49,7 +50,7 @@ public class WebService {
     }
 
     public static void getGames(Context context, final VolleyCallback callback) {
-        final GlobalVars gVars = new GlobalVars().getInstance();
+        final GlobalVars gVars = GlobalVars.getInstance();
         StringRequest request = new StringRequest(Request.Method.GET, URL.concat("games"), getOnSuccessCallback(callback), getOnErrorCallback())
         {
             @Override
@@ -73,6 +74,8 @@ public class WebService {
     }
 
     public static void createGame(Context context, final CreateGameDto createGameDto, final VolleyCallback callback){
+
+        final GlobalVars gVars = GlobalVars.getInstance();
         StringRequest request = new StringRequest(Request.Method.POST, URL + "games", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -91,10 +94,11 @@ public class WebService {
                 return gson.toJson(createGameDto).getBytes();
             }
 
+            @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<String, String>();
                 headers.put("Content-Type", "application/json");
-                headers.put("token", new GlobalVars().getInstance().getmAuth().getCurrentUser().getEmail());
+                headers.put("token", gVars.getmAuth().getCurrentUser().getEmail());
                 return headers;
             }
         };
@@ -103,6 +107,7 @@ public class WebService {
 
 
     public static void joinGame(Context context, final JoinGameDto joinGameDto, final VolleyCallback callback){
+        final String email = GlobalVars.getInstance().getmAuth().getCurrentUser().getEmail();
         StringRequest request = new StringRequest(Request.Method.POST, URL + "game/join", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -121,10 +126,11 @@ public class WebService {
                 return gson.toJson(joinGameDto).getBytes();
             }
 
+            @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<String, String>();
                 headers.put("Content-Type", "application/json");
-                headers.put("token", new GlobalVars().getInstance().getmAuth().getCurrentUser().getEmail());
+                headers.put("token", email);
                 return headers;
             }
         };
@@ -175,6 +181,37 @@ public class WebService {
                 return gson.toJson(stateDto).getBytes();
             }
 
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
+        VolleySingleton.getInstance(context).addRequestQueue(request);
+    }
+
+    public static void updateGame(Context context, final String gameDetailsDto, final VolleyCallback callback){
+
+        final GlobalVars gVars = GlobalVars.getInstance();
+        StringRequest request = new StringRequest(Request.Method.POST, URL + "game", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                callback.onSuccess(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("Error post Game",  error.toString());
+
+            }
+        }){
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                //Gson gson = new GsonBuilder().create();
+                return gameDetailsDto.getBytes();
+            }
+
+            @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<String, String>();
                 headers.put("Content-Type", "application/json");

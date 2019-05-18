@@ -1,25 +1,18 @@
 package apm.muei.distancenevermatters.entities;
 
-public class Player {
+import java.io.Serializable;
 
-    private long id;
+public class Player implements Serializable {
+
     private Marker marker;
     private Model model;
     private User user;
-
-
-    public Player() {
-    }
 
     public Player(User user, Marker marker, Model model) {
         super();
         this.marker = marker;
         this.model = model;
         this.user = user;
-    }
-
-    public long getId() {
-        return id;
     }
 
     public Marker getMarker() {
@@ -34,5 +27,16 @@ public class Player {
         return user;
     }
 
+    public void setMarker(Marker marker) {
+        this.marker = marker;
+    }
+
+    public void setModel(Model model) {
+        this.model = model;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
 

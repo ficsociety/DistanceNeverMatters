@@ -109,7 +109,7 @@ public class MarkersModelsFragment extends Fragment implements MarkersRecyclerVi
         CreateGameActivity activity = (CreateGameActivity) getActivity();
         Map<Marker, Model> selectedMarkerModels = activity.getMarkerModel();
         for(Marker marker : markers){
-            if (!selectedMarkerModels.containsKey(marker)){
+            if (!selectedMarkerModels.containsKey(marker) && (!marker.getName().equals("Map"))){
                 result.add(marker);
             }
         }

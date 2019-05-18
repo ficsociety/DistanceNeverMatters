@@ -16,7 +16,6 @@ allprojects {
         flatDir {
             dirs 'libs'
         }
-        // Added
         google()
         jcenter()
     }

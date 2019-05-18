@@ -7,22 +7,16 @@ public class Movement implements Serializable {
 
     private String user;
     private String target;
-    private float x;
-    private float y;
-    private float z;
-    private boolean active;
-    private Map<String, Object> rotation;
+    private Map<String, Float> distance;
+    private Map<String, Float> rotation;
 
     public Movement(){
     }
 
-    public Movement(String user, String target, float x, float y, float z, boolean active, Map<String, Object> rotation) {
+    public Movement(String user, String target, Map<String, Float> distance, Map<String, Float> rotation) {
         this.user = user;
         this.target = target;
-        this.x = x;
-        this.y = y;
-        this.z = z;
-        this.active = active;
+        this.distance = distance;
         this.rotation = rotation;
     }
 
@@ -34,23 +28,9 @@ public class Movement implements Serializable {
         return target;
     }
 
-    public float getX() {
-        return x;
-    }
+    public Map<String, Float> getDistance() { return distance; }
 
-    public float getY() {
-        return y;
-    }
-
-    public float getZ() {
-        return z;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public Map<String, Object> getRotation() {
+    public Map<String, Float> getRotation() {
         return rotation;
     }
 
@@ -62,23 +42,9 @@ public class Movement implements Serializable {
         this.target = target;
     }
 
-    public void setX(float x) {
-        this.x = x;
-    }
+    public void setDistance(Map<String, Float> distance) { this.distance = distance; }
 
-    public void setY(float y) {
-        this.y = y;
-    }
-
-    public void setZ(float z) {
-        this.z = z;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public void setRotation(Map<String, Object> rotation) {
+    public void setRotation(Map<String, Float> rotation) {
         this.rotation = rotation;
     }
 
@@ -87,11 +53,8 @@ public class Movement implements Serializable {
         return "Movement{" +
                 "user='" + user + '\'' +
                 ", target='" + target + '\'' +
-                ", x=" + x +
-                ", y=" + y +
-                ", z=" + z +
-                ", active=" + active +
+                ", distance=" + distance +
                 ", rotation=" + rotation +
-                '}';
+                "}";
     }
 }

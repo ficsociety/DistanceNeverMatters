@@ -2,13 +2,16 @@ package apm.muei.distancenevermatters.entities.dto;
 
 import com.google.gson.annotations.Expose;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 import apm.muei.distancenevermatters.entities.GameState;
+import apm.muei.distancenevermatters.entities.Map;
+import apm.muei.distancenevermatters.entities.Player;
 import apm.muei.distancenevermatters.entities.User;
 
-public class GameDetailsDto {
+public class GameDetailsDto implements Serializable {
 
     private String name;
     private String description;
@@ -16,19 +19,21 @@ public class GameDetailsDto {
     private GameState state;
     private long code;
     private User master;
-    private List<PlayerDto> players;
+    private Map map;
+    private List<Player> players;
 
     public GameDetailsDto() {
     }
 
-    public GameDetailsDto(String name, String description, User master, long code, GameState state,
-                          List<PlayerDto> players) {
+    public GameDetailsDto(String name, String description, User master, long code, GameState state, Map map,
+                          List<Player> players) {
         super();
         this.name = name;
         this.description = description;
         this.master = master;
         //this.date = date;
         this.state = state;
+        this.map = map;
         this.code = code;
         this.players = players;
     }
@@ -49,7 +54,7 @@ public class GameDetailsDto {
 //        return date;
 //    }
 
-    public List<PlayerDto> getPlayers() {
+    public List<Player> getPlayers() {
         return players;
     }
 
@@ -61,6 +66,19 @@ public class GameDetailsDto {
         return code;
     }
 
+    public Map getMap() {
+        return map;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+
     @Override
     public String toString() {
         return "GameDetailsDto{" +
@@ -69,6 +87,7 @@ public class GameDetailsDto {
                 ", state=" + state +
                 ", code=" + code +
                 ", master=" + master +
+                ", map=" + map +
                 ", players=" + players +
                 '}';
     }

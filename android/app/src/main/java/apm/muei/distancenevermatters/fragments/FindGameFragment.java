@@ -19,9 +19,9 @@ import java.util.List;
 
 import apm.muei.distancenevermatters.GlobalVars.GlobalVars;
 import apm.muei.distancenevermatters.R;
-import apm.muei.distancenevermatters.entities.User;
+import apm.muei.distancenevermatters.entities.GameState;
+import apm.muei.distancenevermatters.entities.Player;
 import apm.muei.distancenevermatters.entities.dto.GameDetailsDto;
-import apm.muei.distancenevermatters.entities.dto.PlayerDto;
 import apm.muei.distancenevermatters.volley.VolleyCallback;
 import apm.muei.distancenevermatters.volley.WebService;
 import butterknife.ButterKnife;
@@ -59,16 +59,18 @@ public class FindGameFragment extends Fragment {
             WebService.findGameByCode(getActivity().getApplicationContext(), code.getText().toString(), new VolleyCallback() {
                 @Override
                 public void onSuccess(String result) {
-                    Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-                    GameDetailsDto gameDetailsDto = gson.fromJson(result, GameDetailsDto.class);
+                    GameDetailsDto gameDetailsDto = new Gson().fromJson(result, GameDetailsDto.class);
                     if (userExistInGame(gameDetailsDto.getPlayers())){
                         Toast.makeText(getActivity().getApplicationContext(),
                                 "Ya pertenece a esta partida", Toast.LENGTH_SHORT).show();
-                    } else{
+                    } else if (!gameDetailsDto.getState().equals(GameState.PAUSED)){
+                        Toast.makeText(getActivity().getApplicationContext(),
+                                "Solo puede a unirse a partidas pausadas", Toast.LENGTH_SHORT).show();
+                    }else {
 
                         SelectPlayerFragment selectPlayerFragment = new SelectPlayerFragment();
                         Bundle bundle = new Bundle();
-                        bundle.putLong("code", gameDetailsDto.getCode());
+                        bundle.putString("gameDetails", result);
                         selectPlayerFragment.setArguments(bundle);
 
                         findGameFragment.getFragmentManager()
@@ -83,22 +85,14 @@ public class FindGameFragment extends Fragment {
         }
     }
 
-    private boolean userExistInGame(List<PlayerDto> players){
+    private boolean userExistInGame(List<Player> players){
 
-        // TODO pensar la forma de comprobar que un usuario ya está en una partida
-   /*       String email = new GlobalVars().getInstance().getmAuth().getCurrentUser().getEmail();
-
-      if (email == null){
-            return false;
-        } else{
-            for (User user : players){
-                String uid = user.getUid().endsWith("$") ? user.getUid().substring(0, user.getUid().length()-1) : user.getUid();
-
-                if (email.startsWith(uid)){
-                    return true;
-                }
+        String username = GlobalVars.getInstance().getUsername();
+        for (Player player : players){
+            if (player.getUser().getUid().equals(username)) {
+                return true;
             }
-        } */
+        }
         return false;
     }
 

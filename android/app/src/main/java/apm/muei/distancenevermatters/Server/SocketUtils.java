@@ -35,12 +35,12 @@ public class SocketUtils {
         }
     }
 
-    public void join(String user, long code){
-        socket.emit(ServerActions.JOIN, user, code);
+    public void join(long code){
+        socket.emit(ServerActions.JOIN, code);
     }
 
-    public void leave(String user, long code){
-        socket.emit(ServerActions.LEAVE, user, code);
+    public void leave(long code){
+        socket.emit(ServerActions.LEAVE, code);
     }
 
     public void disconnect(){
@@ -50,6 +50,10 @@ public class SocketUtils {
     public void sendMovement(Movement movement, long code){
         String jsonMovement = new Gson().toJson(movement);
         socket.emit(ServerActions.SENDMOVEMENT, jsonMovement, code);
+    }
+
+    public void sendMasterLeave(boolean leave, long code){
+        socket.emit(ServerActions.SENDMASTERLEAVE, leave, code);
     }
 
     public Socket getSocket(){

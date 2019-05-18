@@ -1,8 +1,9 @@
 package apm.muei.distancenevermatters.entities;
 
+import java.io.Serializable;
 import java.net.URL;
 
-public class Map {
+public class Map implements Serializable {
 
     private long id;
     private String name;
@@ -28,4 +29,12 @@ public class Map {
         return url;
     }
 
+    @Override
+    public String toString() {
+        return "Map{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", url=" + url +
+                '}';
+    }
 }
