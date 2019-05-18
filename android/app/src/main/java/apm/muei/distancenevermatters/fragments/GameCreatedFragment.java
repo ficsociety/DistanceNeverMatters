@@ -10,10 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import apm.muei.distancenevermatters.R;
-import apm.muei.distancenevermatters.activities.GameActivity;
 import apm.muei.distancenevermatters.activities.MainActivity;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -64,8 +62,6 @@ public class GameCreatedFragment extends Fragment {
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                Toast.makeText(getActivity().getApplicationContext(),
-                        "Mostrando lista de partidas", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
                 getActivity().finish();

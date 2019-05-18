@@ -1,12 +1,17 @@
 package apm.muei.distancenevermatters.activities;
 
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import apm.muei.distancenevermatters.LocaleManager.LocaleHelper;
 import apm.muei.distancenevermatters.entities.Marker;
 import apm.muei.distancenevermatters.entities.Model;
 import apm.muei.distancenevermatters.fragments.CreateGameFragment;
@@ -60,6 +65,12 @@ public class CreateGameActivity extends AppCompatActivity{
 
     public void onBack() {
         super.onBackPressed();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.onAttach(base));
     }
 
 }

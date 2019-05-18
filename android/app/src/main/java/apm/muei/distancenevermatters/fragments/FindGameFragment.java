@@ -2,6 +2,7 @@ package apm.muei.distancenevermatters.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import java.util.List;
 
 import apm.muei.distancenevermatters.GlobalVars.GlobalVars;
 import apm.muei.distancenevermatters.R;
+import apm.muei.distancenevermatters.activities.FindGameActivity;
 import apm.muei.distancenevermatters.entities.Player;
 import apm.muei.distancenevermatters.entities.dto.GameDetailsDto;
 import apm.muei.distancenevermatters.volley.VolleyCallback;
@@ -51,7 +53,7 @@ public class FindGameFragment extends Fragment {
     public void onClickBtn(View view){
 
         if (code.getText().toString().equals("")){
-            code.setError("Campo obligatorio");
+            code.setError(getText(R.string.campoObligatorio));
         } else{
 
             final FindGameFragment findGameFragment = this;
@@ -61,7 +63,7 @@ public class FindGameFragment extends Fragment {
                     GameDetailsDto gameDetailsDto = new Gson().fromJson(result, GameDetailsDto.class);
                     if (userExistInGame(gameDetailsDto.getPlayers())){
                         Toast.makeText(getActivity().getApplicationContext(),
-                                "Ya pertenece a esta partida", Toast.LENGTH_SHORT).show();
+                                R.string.perteneceapartida, Toast.LENGTH_SHORT).show();
                     } else{
 
                         SelectPlayerFragment selectPlayerFragment = new SelectPlayerFragment();

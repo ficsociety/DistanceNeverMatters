@@ -79,5 +79,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="game_details">Detalles Partida</string>
     <string name="Seleccionar_idioma">Selecciona un idioma</string>
-    <string name="code">Codigo</string>
+    <string name="code">Código</string>
+    <string name="campoObligatorio">Campo obligatorio</string>
+    <string name="perteneceapartida">Ya pertenece a esta partida</string>
 </resources>

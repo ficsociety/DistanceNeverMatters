@@ -100,7 +100,7 @@ public class GameDetailsRecyclerAdapter extends RecyclerView.Adapter<GameDetails
         String userName = PreferenceManager.getInstance().getUserName();
 
         holder.userName.setText(user.getUid());
-        holder.userRole.setText(position == 0 ? "Master" : "Jugador");
+        holder.userRole.setText(position == 0 ? R.string.master : R.string.player);
         if ((position == 0) || (!userList.get(0).getUid().equals(userName))) {
             holder.removeUserButton.setVisibility(View.GONE);
         }

@@ -1,7 +1,10 @@
 package apm.muei.distancenevermatters.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -15,6 +18,7 @@ import android.widget.FrameLayout;
 import com.google.gson.Gson;
 import com.unity3d.player.UnityPlayer;
 
+import apm.muei.distancenevermatters.LocaleManager.LocaleHelper;
 import apm.muei.distancenevermatters.R;
 import apm.muei.distancenevermatters.Server.Movement;
 import apm.muei.distancenevermatters.Server.ServerActions;
@@ -141,5 +145,11 @@ public class GameActivity extends AppCompatActivity
 
     public void onBack() {
         super.onBackPressed();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.onAttach(base));
     }
 }

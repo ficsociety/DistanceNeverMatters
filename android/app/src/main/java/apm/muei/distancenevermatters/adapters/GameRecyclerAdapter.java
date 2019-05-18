@@ -56,9 +56,6 @@ public class GameRecyclerAdapter extends RecyclerView.Adapter<GameRecyclerAdapte
 
         @OnClick(R.id.gListBtnStart)
         public void startGame() {
-            CharSequence text = "Empezando partida";
-            Toast toast = Toast.makeText(fragment.getActivity().getApplicationContext(), text, Toast.LENGTH_SHORT);
-            toast.show();
             //Change State
             String userName = PreferenceManager.getInstance().getUserName();
             int t = getLayoutPosition();
@@ -89,11 +86,8 @@ public class GameRecyclerAdapter extends RecyclerView.Adapter<GameRecyclerAdapte
                 @Override
                 public void onClick(View v) {
                     // Redraw the old selection and the new
-                    CharSequence text = "Detalles partida";
                     int t = getLayoutPosition();
                     GameDetailsDto dto = gameList.get(t);
-                    Toast toast = Toast.makeText(fragment.getActivity().getApplicationContext(), text + dto.getName(), Toast.LENGTH_SHORT);
-                    toast.show();
                     ((OnGameDetailsListener) fragment).onGameSelected(dto);
                 }
             });

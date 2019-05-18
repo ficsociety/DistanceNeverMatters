@@ -115,8 +115,6 @@ public class CreateGameFragment extends Fragment {
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                Toast.makeText(getActivity().getApplicationContext(),
-                        "Mostrando lista de partidas", Toast.LENGTH_SHORT).show();
                 ((CreateGameActivity) getActivity()).onBack();
             }
         });

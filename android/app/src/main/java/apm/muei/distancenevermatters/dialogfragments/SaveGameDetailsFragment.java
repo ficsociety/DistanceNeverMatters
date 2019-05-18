@@ -21,8 +21,6 @@ public class SaveGameDetailsFragment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Ok then, nothing to do here
-                        Toast.makeText(getActivity().getApplicationContext(),
-                                "Guardando cambios", Toast.LENGTH_SHORT).show();
                         Bundle b = getArguments();
                         String game = b.getString("game");
                         WebService.updateGame(getActivity().getApplicationContext(), game, new VolleyCallback() {

@@ -1,7 +1,10 @@
 package apm.muei.distancenevermatters.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
 import apm.muei.distancenevermatters.GlobalVars.GlobalVars;
+import apm.muei.distancenevermatters.LocaleManager.LocaleHelper;
 import apm.muei.distancenevermatters.R;
 
 import butterknife.BindView;
@@ -57,9 +61,6 @@ public class RegisterActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CharSequence text = "Volviendo a login";
-                Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
-                toast.show();
                 onBackPressed();
             }
         });
@@ -71,9 +72,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void register() {
-        CharSequence text = "Registrando y logueando user...";
-        Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
-        toast.show();
         String email = regTextEmail.getText().toString();
         String password = regTextPass.getText().toString();
         String name = regTextUser.getText().toString();
@@ -158,5 +156,11 @@ public class RegisterActivity extends AppCompatActivity {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.onAttach(base));
     }
 }

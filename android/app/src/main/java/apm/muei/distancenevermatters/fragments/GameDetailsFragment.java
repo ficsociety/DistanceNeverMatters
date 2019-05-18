@@ -121,15 +121,12 @@ public class GameDetailsFragment extends Fragment {
         //gameDate.setText(gameDetails.getDate().toString());
 
         Toolbar toolbar = getActivity().findViewById(R.id.mainToolbar);
-        // Debería ser el nombre de la partida ¿?
         getActivity().setTitle(R.string.game_details);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         final DrawerLayout navigationView = getActivity().findViewById(R.id.drawer_layout);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                Toast.makeText(getActivity().getApplicationContext(),
-                        "Mostrando lista de partidas", Toast.LENGTH_SHORT).show();
                 navigationView.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                 ((MainActivity) getActivity()).onBack();
             }
@@ -147,8 +144,6 @@ public class GameDetailsFragment extends Fragment {
 
     @OnClick(R.id.gdetBtnInvite)
     public void onPressInvite(View view) {
-        Toast.makeText(getActivity().getApplicationContext(),
-                "Invitar usuarios a partida.", Toast.LENGTH_SHORT).show();
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
         shareIntent.putExtra(Intent.EXTRA_SUBJECT, R.string.app_name);
@@ -158,8 +153,6 @@ public class GameDetailsFragment extends Fragment {
 
     @OnClick(R.id.gdetBtnDelete)
     public void onPressDelete(View view) {
-        Toast.makeText(getActivity().getApplicationContext(),
-                "Eliminar la partida.", Toast.LENGTH_SHORT).show();
         WebService.deleteGame(getActivity().getApplicationContext(), String.valueOf(gameDetails.getCode()), new VolleyCallback() {
             @Override
             public void onSuccess(String result) {
