@@ -52,6 +52,10 @@ public class SocketUtils {
         socket.emit(ServerActions.SENDMOVEMENT, jsonMovement, code);
     }
 
+    public void sendMasterLeave(boolean leave, long code){
+        socket.emit(ServerActions.SENDMASTERLEAVE, leave, code);
+    }
+
     public Socket getSocket(){
         return this.socket;
     }
