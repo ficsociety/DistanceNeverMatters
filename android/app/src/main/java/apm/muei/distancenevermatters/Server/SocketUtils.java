@@ -35,12 +35,12 @@ public class SocketUtils {
         }
     }
 
-    public void join(String user, long code){
-        socket.emit(ServerActions.JOIN, user, code);
+    public void join(long code){
+        socket.emit(ServerActions.JOIN, code);
     }
 
-    public void leave(String user, long code){
-        socket.emit(ServerActions.LEAVE, user, code);
+    public void leave(long code){
+        socket.emit(ServerActions.LEAVE, code);
     }
 
     public void disconnect(){

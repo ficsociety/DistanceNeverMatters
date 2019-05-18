@@ -73,7 +73,7 @@ public class UnityFragment extends Fragment {
         socketUtils = SocketUtils.getInstance();
         socketUtils.connect();
         socketUtils.getSocket().on(ServerActions.RECEIVEMOVEMENT, onNewMovement);
-        socketUtils.join(user, code);
+        socketUtils.join(code);
 
         return rootView;
     }
