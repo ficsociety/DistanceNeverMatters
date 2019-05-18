@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -27,9 +28,10 @@ public class MapsRecyclerViewAdapter extends RecyclerView.Adapter<MapsRecyclerVi
     private int lastClicked = -1;
 
 
-    public MapsRecyclerViewAdapter(Context mContext, CreateGameFragment fragment) {
+    public MapsRecyclerViewAdapter(Context mContext, CreateGameFragment fragment, int lastClicked) {
         this.mContext = mContext;
         this.fragment = fragment;
+        this.lastClicked = lastClicked;
     }
 
     public void setMaps(List<Map> maps) {
@@ -60,7 +62,7 @@ public class MapsRecyclerViewAdapter extends RecyclerView.Adapter<MapsRecyclerVi
     public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView image;
         TextView name;
-        CheckBox checkBox;
+        RadioButton checkBox;
 
         public ViewHolder(View itemView){
             super(itemView);

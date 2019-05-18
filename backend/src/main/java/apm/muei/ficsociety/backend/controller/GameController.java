@@ -2,6 +2,7 @@ package apm.muei.ficsociety.backend.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,5 +47,19 @@ public class GameController {
 		} catch (NotFoundException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Provide correct code");
 		}
+	}
+
+	@DeleteMapping("/game/{code}")
+	public void leaveGame(@PathVariable long code) {
+		try {
+			gameService.deleteGame(code);
+		} catch (NotFoundException e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game does not exist");
+		}
+	}
+
+	@PostMapping("/game")
+	public void updateGame(@RequestBody GameDetailsDto gameDetails) {
+		gameService.updateGame(gameDetails);
 	}
 }

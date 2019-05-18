@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class DiceGridViewAdapter extends BaseAdapter {
     private Context context;
     private List<Dice> diceList;
     private DiceFragment fragment;
-    CheckBox checkBox;
+    RadioButton checkBox;
 
     public DiceGridViewAdapter(Context context, DiceFragment fragment, List<Dice> diceList) {
         this.context = context;

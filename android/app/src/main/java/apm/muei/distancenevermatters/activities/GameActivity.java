@@ -33,6 +33,7 @@ import apm.muei.distancenevermatters.volley.WebService;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.socket.emitter.Emitter;
 
 import com.google.common.collect.EvictingQueue;
 
@@ -46,6 +47,10 @@ public class GameActivity extends AppCompatActivity
     private GameDetailsDto gameDetailsDto;
     //private SocketUtils socketUtils;
     private Gson gson = new GsonBuilder().create();
+
+    private String user;
+    private long code;
+    private SocketUtils socketUtils;
 
     private Queue<DiceResult> fifo = EvictingQueue.create(20);
 
@@ -75,6 +80,16 @@ public class GameActivity extends AppCompatActivity
 
         gameDetails = intent.getStringExtra("gameDetails");
         gameDetailsDto = gson.fromJson(gameDetails, GameDetailsDto.class);
+
+        user = PreferenceManager.getInstance().getUserName();
+        code = gameDetailsDto.getCode();
+
+        // Se crea el socket e inicializamos el listener para recibir los movimientos
+        socketUtils = SocketUtils.getInstance();
+        socketUtils.connect();
+        socketUtils.join(code);
+        socketUtils.getSocket().on(ServerActions.RECEIVEDICE, onDiceResult);
+
 
         // Create the UnityPlayer
         unityPlayer = new UnityPlayer(this);
@@ -120,18 +135,6 @@ public class GameActivity extends AppCompatActivity
         }
     }
 
-
-//    private Emitter.Listener onNewMovement = new Emitter.Listener() {
-//        @Override
-//        public void call(final Object... args) {
-//            runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    //TODO Aqui recibes args[0], que viene siendo el movimiento como string (json)
-//                }
-//            });
-//        }
-//    };
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -197,5 +200,26 @@ public class GameActivity extends AppCompatActivity
 
     public Queue<DiceResult> getFifo() {
         return fifo;
+    }
+
+    private Emitter.Listener onDiceResult = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    DiceResult diceResult = gson.fromJson(args[0].toString(), DiceResult.class);
+                    getFifo().add(diceResult);
+
+                    Queue<DiceResult> fifo = getFifo();
+                    System.out.println(fifo.size());
+
+                }
+            });
+        }
+    };
+
+    public SocketUtils getSocketUtils() {
+        return socketUtils;
     }
 }

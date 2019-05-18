@@ -7,7 +7,8 @@ public class ServerActions {
     public static String LEAVE ="leave";
     public static String SENDMOVEMENT = "sendmovement";
     public static String RECEIVEMOVEMENT = "receivemovement";
-    public static String SEENDICE = "senddice";
+    public static String SENDDICE = "senddice";
     public static String RECEIVEDICE = "receivedice";
-
+    public static String SENDMASTERLEAVE = "sendmasterleave";
+    public static String RECEIVEMASTERLEAVE = "receivemasterleave";
 }

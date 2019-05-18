@@ -74,5 +74,6 @@
     <string name="historico">Historic</string>
     <string name="historicotiradas">Historic</string>
     <string name="tirardados">Roll dice</string>
-
+    <string name="code">Code</string>
+    <string name="configuracion">Configuration</string>
 </resources>

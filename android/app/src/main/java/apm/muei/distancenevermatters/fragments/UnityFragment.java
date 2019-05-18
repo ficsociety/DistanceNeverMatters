@@ -6,7 +6,6 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +23,7 @@ import com.unity3d.player.UnityPlayer;
 import java.util.HashMap;
 import java.util.Map;
 
+import apm.muei.distancenevermatters.GlobalVars.GlobalVars;
 import apm.muei.distancenevermatters.R;
 import apm.muei.distancenevermatters.Server.Movement;
 import apm.muei.distancenevermatters.Server.ServerActions;
@@ -81,9 +81,8 @@ public class UnityFragment extends Fragment {
 
         // Se crea el socket e inicializamos el listener para recibir los movimientos
         socketUtils = SocketUtils.getInstance();
-        socketUtils.connect();
-        //socketUtils.getSocket().on(ServerActions.RECEIVEMOVEMENT, onNewMovement);
-        socketUtils.join(user, code);
+        socketUtils.getSocket().on(ServerActions.RECEIVEMOVEMENT, onNewMovement);
+        socketUtils.getSocket().on(ServerActions.RECEIVEMASTERLEAVE, onMasterLeave);
 
         return rootView;
     }
@@ -129,6 +128,10 @@ public class UnityFragment extends Fragment {
     public void onDestroy() {
         mUnityPlayer.quit();
         super.onDestroy();
+        if (gameDetails.getMaster().equals(GlobalVars.getInstance().getUser())){
+            this.socketUtils.sendMasterLeave(true, gameDetails.getCode());
+        }
+
         this.socketUtils.disconnect();
     }
 
@@ -272,6 +275,21 @@ public class UnityFragment extends Fragment {
             socketUtils.sendMovement(movement, code);
         }
     }
+
+    private Emitter.Listener onMasterLeave = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    boolean leave = new Gson().fromJson(args[0].toString(), Boolean.class);
+                    if (leave){
+                        onDestroy();
+                    }
+                }
+            });
+        }
+    };
 
     private Emitter.Listener onNewMovement = new Emitter.Listener() {
         @Override

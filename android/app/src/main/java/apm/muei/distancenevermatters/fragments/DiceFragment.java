@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,11 +59,6 @@ public class DiceFragment extends Fragment {
     private String user;
     private long code;
     private GameDetailsDto gameDetails;
-    private UnityFragment.OnUnityFragmentInteractionListener mListener;
-    private SocketUtils socketUtils;
-    private JsonParser parser = new JsonParser();
-
-    private Gson gson = new GsonBuilder().create();
 
     @BindView(R.id.diceGridView)
     GridView gridView;
@@ -147,10 +143,6 @@ public class DiceFragment extends Fragment {
         code = gameDetails.getCode();
 
         // Se crea el socket e inicializamos el listener para recibir los movimientos
-        socketUtils = SocketUtils.getInstance();
-        socketUtils.connect();
-        socketUtils.getSocket().on(ServerActions.RECEIVEDICE, onDiceResult);
-        socketUtils.join(user, code);
         return rootView;
     }
 
@@ -160,7 +152,6 @@ public class DiceFragment extends Fragment {
         if (context instanceof UnityFragment.OnUnityFragmentInteractionListener) {
             UnityFragment.OnUnityFragmentInteractionListener listener =
                     (UnityFragment.OnUnityFragmentInteractionListener) context;
-            mListener = listener;
             gameDetails = new Gson().fromJson(listener.getGameDetails(), GameDetailsDto.class);
         } else {
             throw new RuntimeException(context.toString()
@@ -241,7 +232,7 @@ public class DiceFragment extends Fragment {
         resultRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         diceResult.setText(Integer.toString(finalValue));
         DiceResult diceResult = new DiceResult(user, resultList);
-        socketUtils.sendDice(diceResult, code);
+        ((GameActivity) getActivity()).getSocketUtils().sendDice(diceResult, code);
     }
 
 
@@ -283,25 +274,11 @@ public class DiceFragment extends Fragment {
     }
 
 
-    private Emitter.Listener onDiceResult = new Emitter.Listener() {
-        @Override
-        public void call(final Object... args) {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    DiceResult diceResult = gson.fromJson(args[0].toString(), DiceResult.class);
-                    ((GameActivity) getActivity()).getFifo().add(diceResult);
 
-                    Queue<DiceResult> fifo = ((GameActivity) getActivity()).getFifo();
-                    System.out.println(fifo.size());
-                }
-            });
-        }
-    };
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        this.socketUtils.disconnect();
+        ((GameActivity) getActivity()).getSocketUtils().disconnect();
     }
 }

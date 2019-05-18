@@ -40,4 +40,8 @@ public class Model {
 		return preview;
 	}
 
+	public long getId() {
+		return id;
+	}
+
 }
