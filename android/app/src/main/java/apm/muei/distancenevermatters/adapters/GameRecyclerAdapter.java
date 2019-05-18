@@ -69,11 +69,26 @@ public class GameRecyclerAdapter extends RecyclerView.Adapter<GameRecyclerAdapte
                 });
             }
 
-            // Launch GameActivity
-            Intent intent = new Intent(fragment.getActivity(), GameActivity.class);
-            String jsonGame = new Gson().toJson(gameList.get(t), GameDetailsDto.class);
-            intent.putExtra("gameDetails", jsonGame);
-            fragment.startActivity(intent);
+            if(game.getState().equals(GameState.PAUSED) && (game.getMaster().getUid().equals(userName))){
+                UpdateStateDto stateDto = new UpdateStateDto(GameState.PLAYING, game.getCode());
+                WebService.changeGameState(fragment.getActivity().getApplicationContext(), stateDto, new VolleyCallback() {
+                    @Override
+                    public void onSuccess(String result) {
+                    }
+                });
+                // Launch GameActivity
+                Intent intent = new Intent(fragment.getActivity(), GameActivity.class);
+                String jsonGame = new Gson().toJson(gameList.get(t), GameDetailsDto.class);
+                intent.putExtra("gameDetails", jsonGame);
+                fragment.startActivity(intent);
+            }
+
+            else if(game.getState().equals(GameState.PLAYING)){
+                Intent intent = new Intent(fragment.getActivity(), GameActivity.class);
+                String jsonGame = new Gson().toJson(gameList.get(t), GameDetailsDto.class);
+                intent.putExtra("gameDetails", jsonGame);
+                fragment.startActivity(intent);
+            }
         }
 
         @BindView(R.id.gListImgStatus)
@@ -116,6 +131,7 @@ public class GameRecyclerAdapter extends RecyclerView.Adapter<GameRecyclerAdapte
     @Override
     public void onBindViewHolder(GameRecyclerAdapter.GameViewHolder holder, int position) {
         GameDetailsDto game = gameList.get(position);
+        String userName = PreferenceManager.getInstance().getUserName();
 
         // TODO Settear los demás campos
         if (game.getState() == GameState.PLAYING) {
@@ -124,6 +140,9 @@ public class GameRecyclerAdapter extends RecyclerView.Adapter<GameRecyclerAdapte
         } else if (game.getState() == GameState.PAUSED) {
             holder.status.setColorFilter(ContextCompat.getColor(fragment.getContext(), R.color.colorGamePaused));
             holder.start.setText(R.string.startGame);
+            if(!game.getMaster().getUid().equals(userName)){
+                holder.start.setEnabled(false);
+            }
         }
 
         holder.nameView.setText(game.getName());

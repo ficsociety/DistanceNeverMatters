@@ -2,6 +2,8 @@ package apm.muei.distancenevermatters.fragments;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +23,7 @@ import com.unity3d.player.UnityPlayer;
 import java.util.HashMap;
 import java.util.Map;
 
+import apm.muei.distancenevermatters.GlobalVars.GlobalVars;
 import apm.muei.distancenevermatters.R;
 import apm.muei.distancenevermatters.Server.Movement;
 import apm.muei.distancenevermatters.Server.ServerActions;
@@ -28,8 +31,8 @@ import apm.muei.distancenevermatters.Server.SocketUtils;
 import apm.muei.distancenevermatters.SharedPreference.PreferenceManager;
 import apm.muei.distancenevermatters.entities.Player;
 import apm.muei.distancenevermatters.entities.dto.GameDetailsDto;
-
 import io.socket.emitter.Emitter;
+
 
 public class UnityFragment extends Fragment {
 
@@ -55,6 +58,13 @@ public class UnityFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_unity, container, false);
 
+        FloatingActionButton quitFab = getActivity().findViewById(R.id.quitFab);
+        FloatingActionButton diceFab = getActivity().findViewById(R.id.gameFabBtnDice);
+        diceFab.show();
+        quitFab.show();
+
+        AppBarLayout appBar = getActivity().findViewById(R.id.gameAppBar);
+        appBar.setVisibility(View.GONE);
         ViewGroup frameLayout = rootView.findViewById(R.id.unityFrameLayout);
         if (frameLayout.getChildAt(0) == null) {
             FrameLayout.LayoutParams lp =
@@ -71,9 +81,8 @@ public class UnityFragment extends Fragment {
 
         // Se crea el socket e inicializamos el listener para recibir los movimientos
         socketUtils = SocketUtils.getInstance();
-        socketUtils.connect();
         socketUtils.getSocket().on(ServerActions.RECEIVEMOVEMENT, onNewMovement);
-        socketUtils.join(user, code);
+        socketUtils.getSocket().on(ServerActions.RECEIVEMASTERLEAVE, onMasterLeave);
 
         return rootView;
     }
@@ -119,6 +128,10 @@ public class UnityFragment extends Fragment {
     public void onDestroy() {
         mUnityPlayer.quit();
         super.onDestroy();
+        if (gameDetails.getMaster().equals(GlobalVars.getInstance().getUser())){
+            this.socketUtils.sendMasterLeave(true, gameDetails.getCode());
+        }
+
         this.socketUtils.disconnect();
     }
 
@@ -263,20 +276,33 @@ public class UnityFragment extends Fragment {
         }
     }
 
+    private Emitter.Listener onMasterLeave = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    boolean leave = new Gson().fromJson(args[0].toString(), Boolean.class);
+                    if (leave){
+                        onDestroy();
+                    }
+                }
+            });
+        }
+    };
+
     private Emitter.Listener onNewMovement = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-
                     // No transmitir nuestros propios movimientos
                     JsonObject updateInfo = parser.parse(args[0].toString()).getAsJsonObject();
                     if (!updateInfo.get("user").getAsString().equals(user)) {
                         Log.d("UnitySockets", "Updating with: " + args[0].toString());
                         mUnityPlayer.UnitySendMessage("MapTarget", "UpdateLocation", args[0].toString());
                     }
-
                 }
             });
         }

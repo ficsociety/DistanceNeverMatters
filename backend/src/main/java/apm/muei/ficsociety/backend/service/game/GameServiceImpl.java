@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import apm.muei.ficsociety.backend.controller.dto.CreateGameDto;
 import apm.muei.ficsociety.backend.controller.dto.GameDetailsDto;
+import apm.muei.ficsociety.backend.controller.dto.PlayerDto;
 import apm.muei.ficsociety.backend.controller.dto.UpdateStateDto;
 import apm.muei.ficsociety.backend.domain.game.CodeGenerator;
 import apm.muei.ficsociety.backend.domain.game.Game;
@@ -115,15 +116,14 @@ public class GameServiceImpl implements GameService {
 	}
 
 	private GameDetailsDto gameToGameDetailsDto(Game game) {
-		List<User> players = new ArrayList<>();
+		List<PlayerDto> players = new ArrayList<>();
 
 		for (Player player : game.getPlayers()) {
-			if (!player.getUser().equals(game.getMaster()))
-				players.add(player.getUser());
+			players.add(new PlayerDto(player));
 		}
 
 		return new GameDetailsDto(game.getName(), game.getDescription(), game.getMaster(), game.getDate(),
-				game.getCode(), game.getState(), players);
+				game.getCode(), game.getState(), game.getMap(), players);
 
 	}
 
@@ -136,5 +136,50 @@ public class GameServiceImpl implements GameService {
 			game.setState(updateStateDto.getState());
 			gameRepository.save(game);
 		}
+	}
+
+	@Override
+	public void deleteGame(long code) throws NotFoundException {
+		Game game = this.gameRepository.findByCode(code);
+
+		if (game == null) {
+			throw new NotFoundException("Invalid code");
+		} else {
+			this.gameRepository.delete(game);
+		}
+	}
+
+	@Override
+	public void updateGame(GameDetailsDto gameDetails) {
+		Game game = this.gameRepository.findByCode(gameDetails.getCode());
+
+		game.setState(gameDetails.getState());
+		game.setName(gameDetails.getName());
+		game.setDescription(gameDetails.getDescription());
+
+		List<Player> players = new ArrayList<>(game.getPlayers());
+
+		for (Player player : players) {
+
+			if (removePlayer(gameDetails, player)) {
+				game.getPlayers().remove(player);
+				playerRepository.delete(player);
+			}
+		}
+
+		this.gameRepository.save(game);
+
+	}
+
+	private boolean removePlayer(GameDetailsDto gameDetails, Player player) {
+
+		for (PlayerDto playerDto : gameDetails.getPlayers()) {
+			if (playerDto.getUser().equals(player.getUser()) && playerDto.getMarker().equals(player.getMarker())) {
+				return false;
+			}
+
+		}
+
+		return true;
 	}
 }

@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +52,9 @@ public class GameDetailsFragment extends Fragment {
 
     @BindView(R.id.ginfRecyclerView)
     RecyclerView recyclerView;
+
+    @BindView(R.id.gdetBtnDelete)
+    Button btnDelete;
 
     GameDetailsDto gameDetails;
     Gson gson;
@@ -138,6 +142,11 @@ public class GameDetailsFragment extends Fragment {
         adapter = new GameDetailsRecyclerAdapter(this, gameDetails);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        String userName = PreferenceManager.getInstance().getUserName();
+        if (!(gameDetails.getMaster().getUid().equals(userName))) {
+            btnDelete.setEnabled(false);
+        }
 
         return rootView;
     }

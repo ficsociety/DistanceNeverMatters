@@ -35,10 +35,11 @@ public class CreateGameFragment extends Fragment {
     private List<apm.muei.distancenevermatters.entities.Map> maps = new ArrayList<>();
 
     private int selectedMap = -1;
-    TextInputLayout name;
-    TextInputLayout description;
-    String nameValue = "";
-    String descriptionValue = "";
+    private TextInputLayout name;
+    private TextInputLayout description;
+    private String nameValue = "";
+    private String descriptionValue = "";
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,7 @@ public class CreateGameFragment extends Fragment {
 
         drawMarkerModels(rootView);
 
-        final MapsRecyclerViewAdapter adapter = new MapsRecyclerViewAdapter(getActivity().getApplicationContext(), this);
+        final MapsRecyclerViewAdapter adapter = new MapsRecyclerViewAdapter(getActivity().getApplicationContext(), this, getSelectedMap());
 
         WebService.getMaps(getActivity().getApplicationContext(), new VolleyCallback() {
             Gson gson = new GsonBuilder().create();
@@ -130,8 +131,6 @@ public class CreateGameFragment extends Fragment {
                 .commit();
         nameValue = name.getEditText().getText().toString();
         descriptionValue = description.getEditText().getText().toString();
-
-
     }
 
     @OnClick(R.id.cGameBtnCreateGame)

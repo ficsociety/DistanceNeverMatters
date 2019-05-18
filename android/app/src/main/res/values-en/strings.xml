@@ -62,7 +62,22 @@
     <string name="game_description_placeholder">Description game</string>
     <string name="markers_models">Markers - Models</string>
     <string name="register">Sign Up</string>
-    <string name="code">Code</string>
     <string name="campoObligatorio">Mandatory field</string>
     <string name="perteneceapartida">You are already in this game</string>
+    <string name="less">-</string>
+    <string name="more">+</string>
+    <string name="ningundado">No dice selected</string>
+    <string name="resultado">Result</string>
+    <string name="dicesSelected">Selected dice</string>
+    <string name="total">Total</string>
+    <string name="desglose">Breakdown</string>
+    <string name="clear">Clear</string>
+    <string name="generardados">Generate</string>
+    <string name="historico">Historic</string>
+    <string name="historicotiradas">Historic</string>
+    <string name="tirardados">Roll dice</string>
+    <string name="code">Code</string>
+    <string name="configuracion">Configuration</string>
+    <string name="eljugador">Player</string>
+    <string name="halanzado">has made a dice roll</string>
 </resources>

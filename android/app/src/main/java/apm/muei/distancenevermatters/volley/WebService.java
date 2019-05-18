@@ -130,6 +130,7 @@ public class WebService {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<String, String>();
                 headers.put("Content-Type", "application/json");
+                System.out.println("jpgp"+email);
                 headers.put("token", email);
                 return headers;
             }

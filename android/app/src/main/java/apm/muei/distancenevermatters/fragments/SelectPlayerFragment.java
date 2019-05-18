@@ -27,6 +27,8 @@ import apm.muei.distancenevermatters.adapters.MarkersRecyclerViewAdapter;
 import apm.muei.distancenevermatters.adapters.ModelsRecyclerViewAdapter;
 import apm.muei.distancenevermatters.entities.Marker;
 import apm.muei.distancenevermatters.entities.Model;
+import apm.muei.distancenevermatters.entities.Player;
+import apm.muei.distancenevermatters.entities.dto.GameDetailsDto;
 import apm.muei.distancenevermatters.entities.dto.JoinGameDto;
 import apm.muei.distancenevermatters.volley.VolleyCallback;
 import apm.muei.distancenevermatters.volley.WebService;
@@ -55,7 +57,10 @@ public class SelectPlayerFragment extends Fragment implements MarkersRecyclerVie
 
         View rootView = inflater.inflate(R.layout.fragment_marker_model, container, false);
 
-        code = getArguments().getLong("code");
+        String result = getArguments().getString("gameDetails");
+        final GameDetailsDto gameDetailsDto = new Gson().fromJson(result, GameDetailsDto.class);
+        code = gameDetailsDto.getCode();
+
         ButterKnife.bind(this, rootView);
         gson = new GsonBuilder().create();
 
@@ -85,7 +90,7 @@ public class SelectPlayerFragment extends Fragment implements MarkersRecyclerVie
             @Override
             public void onSuccess(String result) {
                 List<Marker> markers = Arrays.asList(gson.fromJson(result, Marker[].class));
-                adapterMarkers.setMarkers(markers);
+                adapterMarkers.setMarkers(filterMarkers(gameDetailsDto.getPlayers(), markers));
                 RecyclerView recyclerViewMarkers = getActivity().findViewById(R.id.markModMarkersRecyclerView);
                 LinearLayoutManager layoutManagerMarkers = new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
                 recyclerViewMarkers.setLayoutManager(layoutManagerMarkers);
@@ -94,6 +99,25 @@ public class SelectPlayerFragment extends Fragment implements MarkersRecyclerVie
         });
         return rootView;
     }
+
+    private List<Marker> filterMarkers(List<Player> players, List<Marker> markers){
+        List<Marker> result = new ArrayList<>();
+
+        for (Marker marker : markers) {
+            boolean add = true;
+            for (Player player : players) {
+                if (marker.getName().equals("Map")) {
+                    add = false;
+                }
+            }
+            if (add){
+                result.add(marker);
+            }
+        }
+        return result;
+    }
+
+
 
     public void setMarker(Marker marker) {
         this.marker = marker;
@@ -111,7 +135,6 @@ public class SelectPlayerFragment extends Fragment implements MarkersRecyclerVie
     public void addMarkerModel(){
         if ((this.model != null) && (this.marker != null)){
             JoinGameDto joinGameDto = new JoinGameDto(this.marker.getId(), this.model.getId(), this.code);
-            System.out.println("jpgp" + joinGameDto.toString());
             WebService.joinGame(getActivity().getApplicationContext(), joinGameDto, new VolleyCallback() {
                 @Override
                 public void onSuccess(String result) {

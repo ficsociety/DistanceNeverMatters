@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.mainFrameLFragContainer)
     FrameLayout fragmentContainer;
 
-
     @BindView(R.id.mainProgressBar)
     ProgressBar progressBar;
 
