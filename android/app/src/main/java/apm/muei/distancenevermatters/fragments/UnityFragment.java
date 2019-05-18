@@ -297,14 +297,12 @@ public class UnityFragment extends Fragment {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-
                     // No transmitir nuestros propios movimientos
                     JsonObject updateInfo = parser.parse(args[0].toString()).getAsJsonObject();
                     if (!updateInfo.get("user").getAsString().equals(user)) {
                         Log.d("UnitySockets", "Updating with: " + args[0].toString());
                         mUnityPlayer.UnitySendMessage("MapTarget", "UpdateLocation", args[0].toString());
                     }
-
                 }
             });
         }

@@ -138,11 +138,8 @@ public class DiceFragment extends Fragment {
         final DiceGridViewAdapter adapter = new DiceGridViewAdapter(getActivity().getApplicationContext(), this, diceList);
         gridView.setAdapter(adapter);
 
-        // Usuario y código de partida
         user = PreferenceManager.getInstance().getUserName();
         code = gameDetails.getCode();
-
-        // Se crea el socket e inicializamos el listener para recibir los movimientos
         return rootView;
     }
 
@@ -271,14 +268,5 @@ public class DiceFragment extends Fragment {
             diceTextInput.setText(text);
             btnRand.setEnabled(true);
         }
-    }
-
-
-
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        ((GameActivity) getActivity()).getSocketUtils().disconnect();
     }
 }

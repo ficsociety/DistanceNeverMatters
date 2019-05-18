@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -177,7 +178,7 @@ public class GameActivity extends AppCompatActivity
     @Override
     public void onDestroy(){
         super.onDestroy();
-        //this.socketUtils.disconnect();
+        this.socketUtils.disconnect();
     }
 
     @Override
@@ -210,9 +211,7 @@ public class GameActivity extends AppCompatActivity
                 public void run() {
                     DiceResult diceResult = gson.fromJson(args[0].toString(), DiceResult.class);
                     getFifo().add(diceResult);
-
-                    Queue<DiceResult> fifo = getFifo();
-                    System.out.println(fifo.size());
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.eljugador) + " '" + diceResult.getUser() + "' " + getResources().getString(R.string.halanzado), Toast.LENGTH_SHORT).show();
 
                 }
             });

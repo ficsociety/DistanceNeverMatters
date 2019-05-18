@@ -76,4 +76,6 @@
     <string name="tirardados">Roll dice</string>
     <string name="code">Code</string>
     <string name="configuracion">Configuration</string>
+    <string name="eljugador">Player</string>
+    <string name="halanzado">has made a dice roll</string>
 </resources>

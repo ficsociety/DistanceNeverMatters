@@ -94,4 +94,6 @@
     <string name="Seleccionar_idioma">Selecciona un idioma</string>
     <string name="code">Código</string>
     <string name="configuracion">Configuración</string>
+    <string name="eljugador">El jugador</string>
+    <string name="halanzado">ha hecho una tirada de dados</string>
 </resources>
