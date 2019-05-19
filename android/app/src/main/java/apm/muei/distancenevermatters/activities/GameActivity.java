@@ -215,8 +215,9 @@ public class GameActivity extends AppCompatActivity
                 public void run() {
                     DiceResult diceResult = gson.fromJson(args[0].toString(), DiceResult.class);
                     getFifo().add(diceResult);
-                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.eljugador) + " '" + diceResult.getUser() + "' " + getResources().getString(R.string.halanzado), Toast.LENGTH_SHORT).show();
-
+                    if (!diceResult.getUser().equals(user)) {
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.eljugador) + " '" + diceResult.getUser() + "' " + getResources().getString(R.string.halanzado), Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
         }
