@@ -24,16 +24,6 @@
                 android:contentDescription="@string/resources"
                 app:srcCompat="@drawable/ic_launcher_background" />
 
-            <CheckBox
-                android:id="@+id/checkBoxResource"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:checked="false"
-                android:clickable="false"
-                android:text="" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
@@ -45,6 +35,17 @@
                 android:textColor="#000"
                 android:layout_marginBottom="5dp"
             />
+
+            <RadioButton
+                android:id="@+id/checkBoxResource"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginRight="0dp" />
 
 
         </RelativeLayout>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
+  <Tracking>
+    <ImageTarget name="FireAndIce" size="1.000000 1.000000" />
+    <ImageTarget name="IceSword" size="1.000000 1.000000" />
+    <ImageTarget name="FireSword" size="1.000000 1.000000" />
+    <ImageTarget name="FireDragon" size="1.000000 1.000000" />
+    <ImageTarget name="IceDragon" size="1.000000 1.000000" />
+    <ImageTarget name="Staff" size="1.000000 1.000000" />
+    <ImageTarget name="Map" size="1.000000 1.000000" />
+    <ImageTarget name="chandelure" size="1.000000 1.000000" />
+    <ImageTarget name="dragonair" size="1.000000 1.000000" />
+    <ImageTarget name="togekiss" size="1.000000 0.957798" />
+    <ImageTarget name="absol" size="1.000000 1.000000" />
+    <ImageTarget name="umbreon" size="1.000000 1.000000" />
+    <ImageTarget name="espeon" size="1.000000 1.000000" />
+  </Tracking>
+</QCARConfig>

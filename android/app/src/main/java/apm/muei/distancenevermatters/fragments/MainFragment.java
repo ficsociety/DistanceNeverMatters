@@ -1,20 +1,19 @@
 package apm.muei.distancenevermatters.fragments;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,13 +25,14 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-import java.util.List;
-import java.util.concurrent.Executor;
-
 import apm.muei.distancenevermatters.GlobalVars.GlobalVars;
+import apm.muei.distancenevermatters.LocaleManager.LocaleHelper;
 import apm.muei.distancenevermatters.R;
 import apm.muei.distancenevermatters.activities.CreateGameActivity;
+import apm.muei.distancenevermatters.activities.FindGameActivity;
 import apm.muei.distancenevermatters.activities.LoginActivity;
+import apm.muei.distancenevermatters.activities.MainActivity;
+import apm.muei.distancenevermatters.activities.ProfileActivity;
 import apm.muei.distancenevermatters.adapters.GameTabsPagerAdapter;
 
 import butterknife.BindView;
@@ -47,6 +47,7 @@ public class MainFragment extends Fragment {
     @OnClick(R.id.gListAddFab)
     public void addGame() {
         startActivity(new Intent(getActivity(), CreateGameActivity.class));
+        //getActivity().finish();
     }
 
     @BindView(R.id.gListViewPager)
@@ -69,7 +70,7 @@ public class MainFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, rootView);
-        gVars = new GlobalVars().getInstance();
+        gVars =  GlobalVars.getInstance();
 
         setHasOptionsMenu(true);
 
@@ -84,42 +85,20 @@ public class MainFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        getActivity().setTitle("Lista de partidas"); // TODO change for string resource
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getActivity().setTitle(R.string.game_list); // TODO change for string resource
+        //((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.main_menu, menu);
+        // Show overflow menu
+        //inflater.inflate(R.menu.main_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.logout:
-                CharSequence text = "Regresando a login";
-                Toast toast = Toast.makeText(getActivity().getApplicationContext(), text, Toast.LENGTH_SHORT);
-                toast.show();
-                singOut();
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        int id = item.getItemId();
+        return false;
     }
-
-    private void singOut() {
-        // Firebase sign out
-        gVars.getmAuth().signOut();
-
-        // Google sign out
-        gVars.getSignInClient().signOut().addOnCompleteListener(this.getActivity(),
-                new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Intent intent = new Intent(getActivity(), LoginActivity.class);
-                        startActivity(intent);
-                    }
-                });
-    }
-
 }

@@ -7,6 +7,7 @@
     <string name="start">Inicio</string>
     <string name="joinGame">Unirse</string>
     <string name="startGame">Empezar</string>
+    <string name="dicesSelected">Dados Seleccionados</string>
     <string name="game_name_placeholder">Nombre de la partida</string>
     <string name="game_description_placeholder">Descripción de la partida</string>
     <string name="name">Nombre</string>
@@ -17,7 +18,8 @@
     <string name="password">Contraseña</string>
     <string name="games">Partidas</string>
     <string name="register">Registro</string>
-    <string name="registrarse">Registrarse</string>
+    <string name="regis">Registrarse</string>
+    <string name="login">Iniciar Sesión</string>
     <string name="logoDescription">Logo de la aplicación DNM</string>
     <string name="username">Nombre de usuario</string>
     <string name="email">Correo electrónico</string>
@@ -29,6 +31,7 @@
     <string name="game_name">Nombre de la partida</string>
     <string name="creationdate">Fecha de creación</string>
     <string name="player_list">Lista de Jugadores</string>
+    <string name="game_list">Lista de Partidas</string>
     <string name="participants">Participantes</string>
     <string name="descriptionshort">Breve descripción de la Partida en unas cuantas líneas.</string>
     <string name="date">01/01/2019</string>
@@ -39,10 +42,33 @@
     <string name="game_created">Partida creada</string>
     <string name="game_created_ok">¡Partida creada correctamente!</string>
     <string name="game_created_share">Código para compartir: </string>
+    <string name="share_code">COMPARTIR</string>
     <string name="markers">Marcadores </string>
     <string name="models">Modelos</string>
     <string name="resources">Recursos</string>
     <string name="add">Añadir</string>
+    <string name="help">Ayuda</string>
+    <string name="perfil">Perfil</string>
+    <string name="buscarPartida">Buscar Partida</string>
+    <string name="buscar">Buscar</string>
+    <string name="codigo">Código</string>
+    <string name="entrar">Entrar</string>
+    <string name="less">-</string>
+    <string name="more">+</string>
+    <string name="ningundado">Ningún dado seleccionado</string>
+    <string name="resultado">Resultado</string>
+    <string name="total">Total</string>
+    <string name="desglose">Desglose</string>
+    <string name="clear">Borrar</string>
+    <string name="generardados">Calcular</string>
+    <string name="historico">Histórico</string>
+    <string name="historicotiradas">Histórico de tiradas</string>
+    <string name="tirardados">Tirar dados</string>
+
+
+    <string name="eulaTitle">Acuerdo de licencia</string>
+    <string name="acceptEula">Aceptar</string>
+    <string name="denyEula">Rechazar</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -53,4 +79,24 @@
     <string name="cancel">Cancelar</string>
     <string name="save_game_details">Guardar los datos de la partida</string>
     <string name="save_game_details_exp">Está usted seguro de querer actualizar los datos de la partida?</string>
+
+    <string name="eulaContent">"DistanceNeverMatters 1.0.0                          Copyright (c) 5 FicSociety                                                    *** END USER LICENSE AGREEMENT ***                                                    IMPORTANT: PLEASE READ THIS LICENSE CAREFULLY BEFORE USING THIS SOFTWARE.                                                    1. LICENSE                                                    By receiving, opening the file package, and/or using DistanceNeverMatters 1.0.0(\\Software\\) containing this software, you agree that this End User User License Agreement(EULA) is a legally binding and valid contract and agree to be bound by it. You agree to abide by the intellectual property laws and all of the terms and conditions of this Agreement.                                                    Unless you have a different license agreement signed by FicSociety your use of DistanceNeverMatters 1.0.0 indicates your acceptance of this license agreement and warranty.                                                    Subject to the terms of this Agreement, FicSociety grants to you a limited, non-exclusive, non-transferable license, without right to sub-license, to use DistanceNeverMatters 1.0.0 in accordance with this Agreement and any other written agreement with FicSociety. FicSociety does not transfer the title of DistanceNeverMatters 1.0.0 to you; the license granted to you is not a sale. This agreement is a binding legal agreement between FicSociety and the purchasers or users of DistanceNeverMatters 1.0.0.                                                    If you do not agree to be bound by this agreement, remove DistanceNeverMatters 1.0.0 from your computer now and, if applicable, promptly return to FicSociety by mail any copies of DistanceNeverMatters 1.0.0 and related documentation and packaging in your possession.                                                    2. DISTRIBUTION                                                    DistanceNeverMatters 1.0.0 and the license herein granted shall not be copied, shared, distributed, re-sold, offered for re-sale, transferred or sub-licensed in whole or in part except that you may make one copy for archive purposes only. For information about redistribution of DistanceNeverMatters 1.0.0 contact FicSociety.                                                    3. USER AGREEMENT                                                    3.1 Use                                                    Your license to use DistanceNeverMatters 1.0.0 is limited to the number of licenses purchased by you. You shall not allow others to use, copy or evaluate copies of DistanceNeverMatters 1.0.0.                                                    3.2 Use Restrictions                                                    You shall use DistanceNeverMatters 1.0.0 in compliance with all applicable laws and not for any unlawful purpose. Without limiting the foregoing, use, display or distribution of DistanceNeverMatters 1.0.0 together with material that is pornographic, racist, vulgar, obscene, defamatory, libelous, abusive, promoting hatred, discriminating or displaying prejudice based on religion, ethnic heritage, race, sexual orientation or age is strictly prohibited.                                                    Each licensed copy of DistanceNeverMatters 1.0.0 may be used on one single computer location by one user. Use of DistanceNeverMatters 1.0.0 means that you have loaded, installed, or run DistanceNeverMatters 1.0.0 on a computer or similar device. If you install DistanceNeverMatters 1.0.0 onto a multi-user platform, server or network, each and every individual user of DistanceNeverMatters 1.0.0 must be licensed separately.                                                    You may make one copy of DistanceNeverMatters 1.0.0 for backup purposes, providing you only have one copy installed on one computer being used by one person. Other users may not use your copy of DistanceNeverMatters 1.0.0 . The assignment, sublicense, networking, sale, or distribution of copies of DistanceNeverMatters 1.0.0 are strictly forbidden without the prior written consent of FicSociety. It is a violation of this agreement to assign, sell, share, loan, rent, lease, borrow, network or transfer the use of DistanceNeverMatters 1.0.0. If any person other than yourself uses DistanceNeverMatters 1.0.0 registered in your name, regardless of whether it is at the same time or different times, then this agreement is being violated and you are responsible for that violation!                                                    3.3 Copyright Restriction                                                    This Software contains copyrighted material, trade secrets and other proprietary material. You shall not, and shall not attempt to, modify, reverse engineer, disassemble or decompile DistanceNeverMatters 1.0.0. Nor can you create any derivative works or other works that are based upon or derived from DistanceNeverMatters 1.0.0 in whole or in part.                                                    FicSocietys name, logo and graphics file that represents DistanceNeverMatters 1.0.0 shall not be used in any way to promote products developed with DistanceNeverMatters 1.0.0 . FicSociety retains sole and exclusive ownership of all right, title and interest in and to DistanceNeverMatters 1.0.0 and all Intellectual Property rights relating thereto.                                                    Copyright law and international copyright treaty provisions protect all parts of DistanceNeverMatters 1.0.0, products and services. No program, code, part, image, audio sample, or text may be copied or used in any way by the user except as intended within the bounds of the single user program. All rights not expressly granted hereunder are reserved for FicSociety.                                                    3.4 Limitation of Responsibility                                                    You will indemnify, hold harmless, and defend FicSociety , its employees, agents and distributors against any and all claims, proceedings, demand and costs resulting from or in any way connected with your use of FicSocietys Software.                                                    In no event (including, without limitation, in the event of negligence) will FicSociety , its employees, agents or distributors be liable for any consequential, incidental, indirect, special or punitive damages whatsoever (including, without limitation, damages for loss of profits, loss of use, business interruption, loss of information or data, or pecuniary loss), in connection with or arising out of or related to this Agreement, DistanceNeverMatters 1.0.0 or the use or inability to use DistanceNeverMatters 1.0.0 or the furnishing, performance or use of any other matters hereunder whether based upon contract, tort or any other theory including negligence.                                                    FicSocietys entire liability, without exception, is limited to the customers reimbursement of the purchase price of the Software (maximum being the lesser of the amount paid by you and the suggested retail price as listed by FicSociety ) in exchange for the return of the product, all copies, registration papers and manuals, and all materials that constitute a transfer of license from the customer back to FicSociety.                                                    3.5 Warranties                                                    Except as expressly stated in writing, FicSociety makes no representation or warranties in respect of this Software and expressly excludes all other warranties, expressed or implied, oral or written, including, without limitation, any implied warranties of merchantable quality or fitness for a particular purpose.                                                    3.6 Governing Law                                                    This Agreement shall be governed by the law of the Spain applicable therein. You hereby irrevocably attorn and submit to the non-exclusive jurisdiction of the courts of Spain therefrom. If any provision shall be considered unlawful, void or otherwise unenforceable, then that provision shall be deemed severable from this License and not affect the validity and enforceability of any other provisions.                                                    3.7 Termination                                                    Any failure to comply with the terms and conditions of this Agreement will result in automatic and immediate termination of this license. Upon termination of this license granted herein for any reason, you agree to immediately cease use of DistanceNeverMatters 1.0.0 and destroy all copies of DistanceNeverMatters 1.0.0 supplied under this Agreement. The financial obligations incurred by you shall survive the expiration or termination of this license.                                                    4. DISCLAIMER OF WARRANTY                                                    THIS SOFTWARE AND THE ACCOMPANYING FILES ARE SOLD \\AS IS AND WITHOUT WARRANTIES AS TO PERFORMANCE OR MERCHANTABILITY OR ANY OTHER WARRANTIES WHETHER EXPRESSED OR IMPLIED. THIS DISCLAIMER CONCERNS ALL FILES GENERATED AND EDITED BY DistanceNeverMatters 1.0.0 AS WELL.                                                    5. CONSENT OF USE OF DATA                                                    You agree that FicSociety may collect and use information gathered in any manner as part of the product support services provided to you, if any, related to DistanceNeverMatters 1.0.0.FicSociety may also use this information to provide notices to you which may be of use or interest to you.)                 "</string>
+    <string name="title_activity_game">GameActivity</string>
+    <string name="nav_header_title">Distance Never Matters</string>
+    <string name="nav_header_subtitle"></string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_idiom">Idioma</string>
+    <string name="user">Usuario</string>
+    <string name="find_game">Buscar partida</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="game_details">Detalles Partida</string>
+    <string name="Seleccionar_idioma">Selecciona un idioma</string>
+    <string name="code">Código</string>
+    <string name="campoObligatorio">Campo obligatorio</string>
+    <string name="perteneceapartida">Ya pertenece a esta partida</string>
+    <string name="configuracion">Configuración</string>
+    <string name="eljugador">El jugador</string>
+    <string name="halanzado">ha hecho una tirada de dados</string>
+    <string name="unirsecodigotexto">Si tienes el código de alguna partida puedes introducirlo aquí para unirte a ella!</string>
 </resources>

@@ -1,9 +1,13 @@
 package apm.muei.distancenevermatters.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -29,8 +33,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.util.StringTokenizer;
+
 import apm.muei.distancenevermatters.GlobalVars.GlobalVars;
+import apm.muei.distancenevermatters.LocaleManager.LocaleHelper;
 import apm.muei.distancenevermatters.R;
+import apm.muei.distancenevermatters.SharedPreference.PreferenceManager;
+import apm.muei.distancenevermatters.dialogfragments.EulaDialogFragment;
 import apm.muei.distancenevermatters.dialogfragments.NoCameraDialogFragment;
 import apm.muei.distancenevermatters.entities.User;
 import butterknife.BindView;
@@ -59,13 +68,20 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        new PreferenceManager().initPreference(getApplicationContext());
 
         // Check if a camera is available before anything else
         checkCamera();
+        SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
+        if (!sharedPreferences.getBoolean("EULA", false)) {
+            EulaDialogFragment dialog = new EulaDialogFragment();
+            dialog.setCancelable(false);
+            dialog.show(getSupportFragmentManager(), "eula");
+        }
 
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        gVars = new GlobalVars().getInstance();
+        gVars =  GlobalVars.getInstance();
 
         GoogleSignInOptions gso =
                 new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -93,6 +109,8 @@ public class LoginActivity extends AppCompatActivity {
             dialog.show(getSupportFragmentManager(), "noCamera");
         }
     }
+
+
 
     @OnClick(R.id.logBtnSignInGoogle)
 
@@ -149,8 +167,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         // Comprobamos si el usuario ya esta registrado
         FirebaseUser currentUser = gVars.getmAuth().getCurrentUser();
-        if (currentUser != null) gVars.setUser(new User(currentUser.getEmail()));
+        if (currentUser != null) {
+            gVars.setUser(new User(currentUser.getEmail()));
+        }
         updateUI(currentUser);
+
     }
 
     @Override
@@ -183,8 +204,7 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = gVars.getmAuth().getCurrentUser();
                             gVars.setUser(new User(user.getEmail()));
-                            updateUI(user);
-                            saveCredentials(user.getUid());
+                            saveCredentials(user);
                         } else {
                             //  Fallo al iniciar sesion con Firebase.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
@@ -204,7 +224,7 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = gVars.getmAuth().getCurrentUser();
                             gVars.setUser(new User(user.getEmail()));
-                            updateUI(user);
+                            saveCredentials(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -216,20 +236,35 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    private void saveCredentials(String userId){
-        //LLamar al backend para guardar las credenciales
-    }
+    private void saveCredentials(FirebaseUser user){
+        String username;
+        username = new StringTokenizer(user.getEmail(), "@").nextToken();
 
-    @Override
-    public void onBackPressed() {
+        if (user.getEmail().endsWith(".es")) {
+            username = username.concat("$");
+        }
+
+        PreferenceManager.getInstance().setUserName(username);
+        updateUI(user);
     }
 
     private void updateUI(FirebaseUser user) {
-        if (user != null) {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-        }
         progressBarSign.setVisibility(View.INVISIBLE);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
+        if (user != null) {
+            LoginActivity.this.finish();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            this.finish();
+        }
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    @Override
+    protected void attachBaseContext(Context base) {
+        new PreferenceManager().initPreference(base);
+        super.attachBaseContext(LocaleHelper.onAttach(base, "es"));
     }
 }

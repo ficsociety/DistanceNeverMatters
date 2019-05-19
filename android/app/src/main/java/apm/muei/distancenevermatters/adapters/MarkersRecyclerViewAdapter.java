@@ -1,17 +1,23 @@
 package apm.muei.distancenevermatters.adapters;
 
+import android.Manifest;
+import android.app.DownloadManager;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +34,9 @@ import java.util.List;
 
 import apm.muei.distancenevermatters.R;
 import apm.muei.distancenevermatters.entities.Marker;
+import apm.muei.distancenevermatters.entities.Model;
+import apm.muei.distancenevermatters.fragments.MarkerModelInterface;
+import apm.muei.distancenevermatters.fragments.MarkersModelsFragment;
 import butterknife.ButterKnife;
 
 
@@ -37,17 +46,21 @@ public class MarkersRecyclerViewAdapter extends RecyclerView.Adapter<MarkersRecy
     private Context mContext;
     private int lastClicked = -1;
 
-    private Fragment fragment;
+    private MarkerModelInterface fragment;
+
+    public void setMarkers(List<Marker> markers) {
+        this.markers = markers;
+    }
 
     public interface OnItemDownloadSelected {
         void onDownloadSelected();
     }
 
-    public MarkersRecyclerViewAdapter(Context mContext, List<Marker> markers, Fragment parentFragment) {
+    public MarkersRecyclerViewAdapter(Context mContext, MarkerModelInterface fragment) {
         this.markers = markers;
         this.mContext = mContext;
-        if (parentFragment instanceof OnItemDownloadSelected) {
-            fragment = parentFragment;
+        if (fragment instanceof OnItemDownloadSelected) {
+            this.fragment = fragment;
         } else {
             throw new RuntimeException(fragment.toString()
                     + " must implement OnGameDetailsListener");
@@ -71,9 +84,7 @@ public class MarkersRecyclerViewAdapter extends RecyclerView.Adapter<MarkersRecy
                 .apply(requestOptions)
                 .into(viewHolder.image);
 
-        viewHolder.name.setText(markers.get(position).getName());
-
-        viewHolder.checkBox.setChecked(position == lastClicked);
+        viewHolder.bind(markers.get(position));
 
 
         viewHolder.button.setOnClickListener(new View.OnClickListener() {
@@ -83,56 +94,46 @@ public class MarkersRecyclerViewAdapter extends RecyclerView.Adapter<MarkersRecy
                 String url = markers.get(positiondownload).getUrl().toString();
                 String name = markers.get(positiondownload).getName();
                 Context cxt = fragment.getActivity().getApplicationContext();
-                String folder = cxt.getFilesDir().getAbsolutePath();
                 descargar(cxt, url, name);
-                Toast.makeText(cxt, "Descargando", Toast.LENGTH_LONG).show();
 
-            }
-
-
-
-            public File getAlbumStorageDir(String albumName) {
-                // Get the directory for the user's public pictures directory.
-                File file = new File(Environment.getExternalStoragePublicDirectory(
-                        Environment.DIRECTORY_PICTURES), albumName);
-                if (!file.exists()) {
-                    file.mkdirs();
-//                    Log.e("","Directory not created");
-                }
-                return file;
             }
 
             public void descargar(Context cxt, String urldownload, String name) {
-                try {
-                    URL url = new URL(urldownload);
-                    InputStream in = new BufferedInputStream(url.openStream());
-                    ByteArrayOutputStream out = new ByteArrayOutputStream();
-                    byte[] buf = new byte[1024];
-                    int n = 0;
-                    while (-1 != (n = in.read(buf))) {
-                        out.write(buf, 0, n);
+                if (ContextCompat.checkSelfPermission(fragment.getActivity(),
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(cxt, "Descargando", Toast.LENGTH_LONG).show();
+                    File direct =
+                            new File(Environment
+                                    .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                                    .getAbsolutePath() + "/" + "Marcadores" + "/");
+
+                    if (!direct.exists()) {
+                        direct.mkdir();
                     }
-                    out.close();
-                    in.close();
-                    byte[] response = out.toByteArray();
-                    name = name.concat(".jpg");
-                    FileOutputStream outputStream = new FileOutputStream(new File(getAlbumStorageDir("Marcadores"), name));
-                    outputStream.write(response);
-                    outputStream.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
+
+                    DownloadManager dm = (DownloadManager) fragment.getActivity().getApplicationContext().getSystemService(Context.DOWNLOAD_SERVICE);
+                    Uri downloadUri = Uri.parse(urldownload);
+                    DownloadManager.Request request = new DownloadManager.Request(downloadUri);
+                    request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE)
+                            .setAllowedOverRoaming(false)
+                            .setTitle(name)
+                            .setMimeType("image/jpg")
+                            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                            .setDestinationInExternalPublicDir(Environment.DIRECTORY_PICTURES,
+                                    File.separator + "Marcadores" + File.separator + name +".jpg");
+
+                    dm.enqueue(request);
+                }
+                else{
+                    ActivityCompat.requestPermissions(fragment.getActivity(),
+                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            2);
                 }
             }
 
         });
 
-        viewHolder.image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                lastClicked = viewHolder.getAdapterPosition();
-                notifyDataSetChanged();
-            }
-        });
     }
 
     @Override
@@ -144,7 +145,7 @@ public class MarkersRecyclerViewAdapter extends RecyclerView.Adapter<MarkersRecy
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView image;
         TextView name;
-        CheckBox checkBox;
+        RadioButton checkBox;
         Button button;
 
         public ViewHolder(View itemView) {
@@ -157,6 +158,34 @@ public class MarkersRecyclerViewAdapter extends RecyclerView.Adapter<MarkersRecy
             button = itemView.findViewById(R.id.buttonResourceGridDownload);
         }
 
+
+        void bind(final Marker marker) {
+            if (lastClicked == -1) {
+                checkBox.setChecked(false);
+            } else {
+                if (lastClicked == getAdapterPosition()) {
+                    checkBox.setChecked(true);
+                } else {
+                    checkBox.setChecked(false);
+                }
+            }
+
+            name.setText(marker.getName());
+
+            image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    checkBox.setChecked(true);
+                    if (lastClicked != getAdapterPosition()) {
+                        fragment.setMarker(markers.get(getAdapterPosition()));
+                        notifyItemChanged(lastClicked);
+                        lastClicked = getAdapterPosition();
+
+                    }
+
+                }
+            });
+        }
     }
 
 }

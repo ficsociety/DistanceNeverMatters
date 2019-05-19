@@ -1,5 +1,6 @@
 package apm.muei.distancenevermatters.adapters;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -12,11 +13,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+
 import java.util.List;
 
 import apm.muei.distancenevermatters.R;
+import apm.muei.distancenevermatters.SharedPreference.PreferenceManager;
+import apm.muei.distancenevermatters.activities.GameActivity;
 import apm.muei.distancenevermatters.entities.GameState;
 import apm.muei.distancenevermatters.entities.dto.GameDetailsDto;
+import apm.muei.distancenevermatters.entities.dto.UpdateStateDto;
+import apm.muei.distancenevermatters.volley.VolleyCallback;
+import apm.muei.distancenevermatters.volley.WebService;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -46,9 +56,43 @@ public class GameRecyclerAdapter extends RecyclerView.Adapter<GameRecyclerAdapte
 
         @OnClick(R.id.gListBtnStart)
         public void startGame() {
-            CharSequence text = "Empezando partida";
-            Toast toast = Toast.makeText(fragment.getActivity().getApplicationContext(), text, Toast.LENGTH_SHORT);
-            toast.show();
+            //Change State
+            String userName = PreferenceManager.getInstance().getUserName();
+            int t = getLayoutPosition();
+            GameDetailsDto game = gameList.get(t);
+            if ((game.getMaster().getUid().equals(userName))) {
+                UpdateStateDto stateDto = new UpdateStateDto(GameState.PLAYING, game.getCode());
+                WebService.changeGameState(fragment.getActivity().getApplicationContext(), stateDto, new VolleyCallback() {
+                    @Override
+                    public void onSuccess(String result) {
+                    }
+                });
+            }
+
+            if(game.getState().equals(GameState.PAUSED) && (game.getMaster().getUid().equals(userName))){
+                UpdateStateDto stateDto = new UpdateStateDto(GameState.PLAYING, game.getCode());
+                WebService.changeGameState(fragment.getActivity().getApplicationContext(), stateDto, new VolleyCallback() {
+                    @Override
+                    public void onSuccess(String result) {
+                    }
+                });
+                // Launch GameActivity
+                Intent intent = new Intent(fragment.getActivity(), GameActivity.class);
+                String jsonGame = new Gson().toJson(gameList.get(t), GameDetailsDto.class);
+                intent.putExtra("gameDetails", jsonGame);
+                fragment.startActivity(intent);
+                fragment.getActivity().finish();
+
+            }
+
+            else if(game.getState().equals(GameState.PLAYING)){
+                Intent intent = new Intent(fragment.getActivity(), GameActivity.class);
+                String jsonGame = new Gson().toJson(gameList.get(t), GameDetailsDto.class);
+                intent.putExtra("gameDetails", jsonGame);
+                fragment.startActivity(intent);
+                fragment.getActivity().finish();
+
+            }
         }
 
         @BindView(R.id.gListImgStatus)
@@ -61,11 +105,8 @@ public class GameRecyclerAdapter extends RecyclerView.Adapter<GameRecyclerAdapte
                 @Override
                 public void onClick(View v) {
                     // Redraw the old selection and the new
-                    CharSequence text = "Detalles partida";
                     int t = getLayoutPosition();
                     GameDetailsDto dto = gameList.get(t);
-                    Toast toast = Toast.makeText(fragment.getActivity().getApplicationContext(), text + dto.getName(), Toast.LENGTH_SHORT);
-                    toast.show();
                     ((OnGameDetailsListener) fragment).onGameSelected(dto);
                 }
             });
@@ -94,14 +135,18 @@ public class GameRecyclerAdapter extends RecyclerView.Adapter<GameRecyclerAdapte
     @Override
     public void onBindViewHolder(GameRecyclerAdapter.GameViewHolder holder, int position) {
         GameDetailsDto game = gameList.get(position);
+        String userName = PreferenceManager.getInstance().getUserName();
 
         // TODO Settear los demás campos
-        if (game.getGameState() == GameState.PLAYING) {
+        if (game.getState() == GameState.PLAYING) {
             holder.status.setColorFilter(ContextCompat.getColor(fragment.getContext(), R.color.colorGamePlaying));
             holder.start.setText(R.string.joinGame);
-        } else if (game.getGameState() == GameState.PAUSED) {
+        } else if (game.getState() == GameState.PAUSED) {
             holder.status.setColorFilter(ContextCompat.getColor(fragment.getContext(), R.color.colorGamePaused));
             holder.start.setText(R.string.startGame);
+            if(!game.getMaster().getUid().equals(userName)){
+                holder.start.setEnabled(false);
+            }
         }
 
         holder.nameView.setText(game.getName());
