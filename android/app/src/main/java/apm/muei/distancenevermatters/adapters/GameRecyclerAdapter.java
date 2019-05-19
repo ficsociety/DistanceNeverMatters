@@ -81,6 +81,8 @@ public class GameRecyclerAdapter extends RecyclerView.Adapter<GameRecyclerAdapte
                 String jsonGame = new Gson().toJson(gameList.get(t), GameDetailsDto.class);
                 intent.putExtra("gameDetails", jsonGame);
                 fragment.startActivity(intent);
+                fragment.getActivity().finish();
+
             }
 
             else if(game.getState().equals(GameState.PLAYING)){
@@ -88,6 +90,8 @@ public class GameRecyclerAdapter extends RecyclerView.Adapter<GameRecyclerAdapte
                 String jsonGame = new Gson().toJson(gameList.get(t), GameDetailsDto.class);
                 intent.putExtra("gameDetails", jsonGame);
                 fragment.startActivity(intent);
+                fragment.getActivity().finish();
+
             }
         }
 

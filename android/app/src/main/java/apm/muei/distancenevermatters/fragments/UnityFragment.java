@@ -1,7 +1,10 @@
 package apm.muei.distancenevermatters.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -29,6 +32,8 @@ import apm.muei.distancenevermatters.Server.Movement;
 import apm.muei.distancenevermatters.Server.ServerActions;
 import apm.muei.distancenevermatters.Server.SocketUtils;
 import apm.muei.distancenevermatters.SharedPreference.PreferenceManager;
+import apm.muei.distancenevermatters.activities.GameActivity;
+import apm.muei.distancenevermatters.activities.MainActivity;
 import apm.muei.distancenevermatters.entities.Player;
 import apm.muei.distancenevermatters.entities.dto.GameDetailsDto;
 import io.socket.emitter.Emitter;
@@ -127,12 +132,13 @@ public class UnityFragment extends Fragment {
     @Override
     public void onDestroy() {
         mUnityPlayer.quit();
-        super.onDestroy();
-        if (gameDetails.getMaster().equals(GlobalVars.getInstance().getUser())){
+        if (gameDetails.getMaster().getUid().equals(PreferenceManager.getInstance().getUserName())){
             this.socketUtils.sendMasterLeave(true, gameDetails.getCode());
         }
 
         this.socketUtils.disconnect();
+
+        super.onDestroy();
     }
 
     @Override
@@ -284,7 +290,9 @@ public class UnityFragment extends Fragment {
                 public void run() {
                     boolean leave = new Gson().fromJson(args[0].toString(), Boolean.class);
                     if (leave){
-                        onDestroy();
+                        mUnityPlayer.quit();
+                        socketUtils.disconnect();
+                        ((GameActivity)getActivity()).leaveGame();
                     }
                 }
             });

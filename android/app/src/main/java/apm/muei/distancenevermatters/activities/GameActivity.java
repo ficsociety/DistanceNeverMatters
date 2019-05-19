@@ -110,7 +110,7 @@ public class GameActivity extends AppCompatActivity
         quitFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBack();
+                leaveGame();
 
             }
         });
@@ -177,7 +177,7 @@ public class GameActivity extends AppCompatActivity
 
     }
 
-    public void onBack() {
+    public void leaveGame() {
         String userName = PreferenceManager.getInstance().getUserName();
         if ((gameDetailsDto.getMaster().getUid().equals(userName))) {
             UpdateStateDto stateDto = new UpdateStateDto(GameState.PAUSED, gameDetailsDto.getCode());
@@ -187,6 +187,12 @@ public class GameActivity extends AppCompatActivity
                 }
             });
         }
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void onBack() {
         super.onBackPressed();
     }
 

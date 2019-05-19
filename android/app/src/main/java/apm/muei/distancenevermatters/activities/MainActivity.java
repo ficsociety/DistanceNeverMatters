@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(null);
         //setContentView(R.layout.activity_main);
         setContentView(R.layout.navigation_view);
         mainLayout = findViewById(R.id.drawer_layout);
@@ -101,14 +101,11 @@ public class MainActivity extends AppCompatActivity
         navigationView.bringToFront();
 
         if (fragmentContainer != null) {
-            // If we are being restored, return or else we could end up
-            if (savedInstanceState != null) {
-                return;
+            if(fragment == null){
+                fragment = new MainFragment();
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.mainFrameLFragContainer, fragment).commit();
             }
-            // Add the first fragment to the fragment container in the layout
-            fragment = new MainFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.mainFrameLFragContainer, fragment).commit();
         }
 
 
@@ -295,5 +292,4 @@ public class MainActivity extends AppCompatActivity
         setupMenu();
         super.onBackPressed();
     }
-
 }
