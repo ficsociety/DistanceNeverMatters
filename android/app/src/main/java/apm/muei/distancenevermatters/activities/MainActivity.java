@@ -222,9 +222,6 @@ public class MainActivity extends AppCompatActivity
                 Intent intent = new Intent(this, FindGameActivity.class);
                 startActivity(intent);
                 return true;
-            case R.id.nav_help:
-                Toast.makeText(this.getApplicationContext(), R.string.help, Toast.LENGTH_SHORT).show();
-                return true;
             case R.id.nav_profile:
                 showProfile();
                 return true;

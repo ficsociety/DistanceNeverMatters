@@ -8,10 +8,6 @@
             android:id="@+id/nav_find"
             android:icon="@mipmap/ic_find"
             android:title="@string/find_game" />
-        <item
-            android:id="@+id/nav_help"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="@string/configuracion" />
     </group>
 
     <item android:title="@string/user">
